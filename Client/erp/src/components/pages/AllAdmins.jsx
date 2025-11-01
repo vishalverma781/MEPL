@@ -11,7 +11,7 @@ const AllAdmins = () => {
   const fetchAdmins = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admins`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/admins`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

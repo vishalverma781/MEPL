@@ -32,12 +32,12 @@ const ReportScheduler = () => {
   const fetchReports = async () => {
     try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/projects`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/projects`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const projectsData = await res.json();
 
-    const plazaRes = await fetch(`${import.meta.env.VITE_API_URL}/api/plazas`, {
+    const plazaRes = await fetch(`${import.meta.env.VITE_API_URL}/plazas`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const plazasData = await plazaRes.json();
@@ -46,7 +46,7 @@ const ReportScheduler = () => {
       const withEmails = await Promise.all(
         projectsData.map(async (project) => {
           const emailRes = await axios.get(
-            `${import.meta.env.VITE_API_URL}/api/emails/${project._id}`
+            `${import.meta.env.VITE_API_URL}/emails/${project._id}`
           );
           const projectPlazas = plazasData.filter(
             (plaza) => plaza.projectId?._id === project._id
@@ -95,13 +95,13 @@ const ReportScheduler = () => {
       });
 
    // 1️⃣ Save emails in EmailModel
-    await axios.post(`${import.meta.env.VITE_API_URL}/api/emails/save`, {
+    await axios.post(`${import.meta.env.VITE_API_URL}/emails/save`, {
       projectId: addEmailReport._id,
       emails: newEmails,
     });
 
       // 2️⃣ Send report
-  await axios.post(`${import.meta.env.VITE_API_URL}/api/reports/send`, {
+  await axios.post(`${import.meta.env.VITE_API_URL}/reports/send`, {
       emails: newEmails,
     });
 
@@ -126,7 +126,7 @@ const ReportScheduler = () => {
   // 🧩 Remove email (also remove from DB)
   const handleRemoveEmail = async (email, report) => {
       try {
-    await axios.post(`${import.meta.env.VITE_API_URL}/api/emails/remove`, {
+    await axios.post(`${import.meta.env.VITE_API_URL}/emails/remove`, {
       projectId: report._id,
       email,
     });

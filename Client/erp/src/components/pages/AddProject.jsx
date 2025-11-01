@@ -40,7 +40,7 @@ const AddProject = ({ projects, setProjects }) => {
 
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/projects`, // ✅ fixed here
+        `${import.meta.env.VITE_API_URL}/projects`, // ✅ fixed here
         {
           ...formData,
           startDate: formData.startDate

@@ -14,7 +14,7 @@ const AllPayroll = () => {
 useEffect(() => {
     const fetchPayrolls = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/payrolls`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/payrolls`);
         setAllRecords(res.data);
       } catch (err) {
         console.error(err);
@@ -39,7 +39,7 @@ useEffect(() => {
   const handleSaveEdit = async () => {
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/payrolls/${editRecord._id}`,
+        `${import.meta.env.VITE_API_URL}/payrolls/${editRecord._id}`,
         editRecord
       );
       setAllRecords((prev) =>
@@ -57,7 +57,7 @@ useEffect(() => {
   const handleDelete = async (_id) => {
     if (!window.confirm("Are you sure you want to delete this record?")) return;
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/payrolls/${_id}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/payrolls/${_id}`);
       setAllRecords((prev) => prev.filter((r) => r._id !== _id));
       Swal.fire("Deleted", "Payroll record deleted", "success");
     } catch (err) {

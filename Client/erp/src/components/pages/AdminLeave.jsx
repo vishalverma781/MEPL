@@ -31,7 +31,7 @@ const AdminLeave = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/leaves/all`,
+          `${import.meta.env.VITE_API_URL}/leaves/all`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -71,7 +71,7 @@ const AdminLeave = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/leaves/update/${editableLeave._id}`,
+        `${import.meta.env.VITE_API_URL}/leaves/update/${editableLeave._id}`,
         { status: statusUpdate },
         { headers: { Authorization: `Bearer ${token}` } }
       );

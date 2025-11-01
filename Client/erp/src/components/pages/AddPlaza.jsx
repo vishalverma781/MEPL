@@ -13,7 +13,7 @@ const AddPlaza = () => {
   const fetchProjects = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/projects`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/projects`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -44,7 +44,7 @@ const AddPlaza = () => {
 
    try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/plazas`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/plazas`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

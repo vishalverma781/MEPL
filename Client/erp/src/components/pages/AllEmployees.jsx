@@ -13,7 +13,8 @@ const getImageSrc = (pic) => {
       if (pic.startsWith("http")) return pic;
       if (pic.startsWith("uploads/")) {
         // ✅ backend ke uploads se serve hoga
-          return `http://localhost:5000/${pic.replace(/\\/g, "/")}`;
+        return `${import.meta.env.VITE_API_URL.replace("/api", "")}/${pic.replace(/\\/g, "/")}`;
+
       }
     }
     return null;
@@ -33,7 +34,7 @@ const AllEmployees = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/employees`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/employees`);
         if (!res.ok) throw new Error("Failed to fetch employees");
         const data = await res.json();
         setEmployees(data);
@@ -63,7 +64,7 @@ const AllEmployees = () => {
       const formData = new FormData();
       formData.append("profilePic", file);
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/employees/${empId}/photo`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/employees/${empId}/photo`, {
         method: "PUT",
         body: formData,
       });

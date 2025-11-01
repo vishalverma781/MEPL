@@ -51,7 +51,7 @@ const AddAdmin = ({ admins, setAdmins }) => {
     };
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admins`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/admins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

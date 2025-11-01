@@ -14,14 +14,14 @@ const AllPlaza = () => {
 
 
       // ✅ Fetch plazas
-      const plazaRes = await fetch(`${import.meta.env.VITE_API_URL}/api/plazas`, {
+      const plazaRes = await fetch(`${import.meta.env.VITE_API_URL}/plazas`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const plazasData = await plazaRes.json();
 
 
     // ✅ Fetch all roles (to get employee assignments)
-      const roleRes = await fetch(`${import.meta.env.VITE_API_URL}/api/roles`, {
+      const roleRes = await fetch(`${import.meta.env.VITE_API_URL}/roles`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const rolesData = await roleRes.json();
@@ -53,7 +53,7 @@ const AllPlaza = () => {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await fetch(`${import.meta.env.VITE_API_URL}/api/plazas/${id}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/plazas/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

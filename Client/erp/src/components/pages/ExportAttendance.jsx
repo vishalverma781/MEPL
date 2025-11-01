@@ -22,7 +22,7 @@ const ExportAttendance = () => {
     const fetchEmployees = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/employees`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/employees`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
         const data = await res.json();
@@ -50,7 +50,7 @@ const ExportAttendance = () => {
 
       const token = localStorage.getItem("token");
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/attendance/filter?${params.toString()}`,
+        `${import.meta.env.VITE_API_URL}/attendance/filter?${params.toString()}`,
         {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         }

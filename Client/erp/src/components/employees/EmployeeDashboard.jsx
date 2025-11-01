@@ -31,7 +31,7 @@ const EmployeeDashboardFull = () => {
         const token = localStorage.getItem("token");
 
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/dashboard/employee-counts`,
+          `${import.meta.env.VITE_API_URL}/dashboard/employee-counts`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -27,7 +27,7 @@ const MyPayroll = () => {
     const fetchPayrolls = async () => {
       if (!user || !user.username) return;
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/payrolls`,);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/payrolls`,);
         const filtered = res.data.filter((rec) => rec.username === user.username);
         setMyRecords(filtered);
       } catch (err) {

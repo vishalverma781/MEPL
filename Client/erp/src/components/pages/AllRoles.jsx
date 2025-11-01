@@ -11,7 +11,7 @@ const AllRoles = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/roles`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/roles`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();

@@ -39,7 +39,7 @@ const MarkAttendance = () => {
       const token = localStorage.getItem("token");
 
        const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/attendance`, // ✅ Fixed backticks
+        `${import.meta.env.VITE_API_URL}/attendance`, // ✅ Fixed backticks
         { markedBy: username },
         { headers: token ? { Authorization: `Bearer ${token}` } : {} }
       );

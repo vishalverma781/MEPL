@@ -48,8 +48,8 @@ const CallLeave = () => {
         const token = localStorage.getItem("token");
         const url =
                  currentUser.role === "Admin"
-            ? `${import.meta.env.VITE_API_URL}/api/leaves/all`
-            : `${import.meta.env.VITE_API_URL}/api/leaves/user`;
+            ? `${import.meta.env.VITE_API_URL}/leaves/all`
+            : `${import.meta.env.VITE_API_URL}/leaves/user`;
 
         const res = await axios.get(url, {
           headers: { Authorization: `Bearer ${token}` },

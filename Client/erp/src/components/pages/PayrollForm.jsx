@@ -28,7 +28,7 @@ const PayrollForm = () => {
     const fetchEmployees = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/employees`
+          `${import.meta.env.VITE_API_URL}/employees`
         );
         setEmployees(res.data);
       } catch (err) {
@@ -43,7 +43,7 @@ const PayrollForm = () => {
     const fetchPayrolls = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/payrolls`
+          `${import.meta.env.VITE_API_URL}/payrolls`
         );
         setRecords(res.data);
       } catch (err) {
@@ -128,7 +128,7 @@ const PayrollForm = () => {
 
   try {
    await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/payrolls`,
+        `${import.meta.env.VITE_API_URL}/payrolls`,
         newRecord
       );
 

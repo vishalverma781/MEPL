@@ -21,7 +21,7 @@ const ManageAdmins = () => {
   const fetchAdmins = async () => {
    try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admins`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/admins`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.status === 403) {
@@ -61,7 +61,7 @@ const ManageAdmins = () => {
     if (!window.confirm("Are you sure you want to delete this admin?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admins/${_id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/admins/${_id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -102,7 +102,7 @@ const ManageAdmins = () => {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admins/${editAdmin._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/admins/${editAdmin._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(formData),

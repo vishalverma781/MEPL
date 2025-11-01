@@ -11,10 +11,10 @@ const AllEngineers = () => {
     const fetchData = async () => {
       try {
           // ✅ Proper URL interpolation (no quotes!)
-        const empRes = await fetch(`${import.meta.env.VITE_API_URL}/api/allemployees`);
+        const empRes = await fetch(`${import.meta.env.VITE_API_URL}/allemployees`);
         const employees = await empRes.json();
 
-        const roleRes = await fetch(`${import.meta.env.VITE_API_URL}/api/allroles`);
+        const roleRes = await fetch(`${import.meta.env.VITE_API_URL}/allroles`);
         const roles = await roleRes.json();
 
 

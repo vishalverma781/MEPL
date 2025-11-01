@@ -40,7 +40,7 @@ const AddRoles = ({ setRoles }) => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/employees`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/employees`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -56,7 +56,7 @@ const AddRoles = ({ setRoles }) => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/projects`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/projects`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -72,7 +72,7 @@ const AddRoles = ({ setRoles }) => {
   useEffect(() => {
     const fetchPlazas = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/plazas`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/plazas`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -130,7 +130,7 @@ const AddRoles = ({ setRoles }) => {
     };
 
     try {
-      const res = await fetch("${import.meta.env.VITE_API_URL}/api/roles", {
+      const res = await fetch("${import.meta.env.VITE_API_URL}/roles", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

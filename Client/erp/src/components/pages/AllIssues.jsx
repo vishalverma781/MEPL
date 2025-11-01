@@ -25,7 +25,7 @@ const AllIssues = () => {
   const fetchIssues = async () => {
        try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/issues`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/issues`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setIssues(res.data);
@@ -65,7 +65,7 @@ const AllIssues = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/issues/${id}/resolve`,
+        `${import.meta.env.VITE_API_URL}/issues/${id}/resolve`,
         {
           status: newStatus,
           remarks: newRemarks || "",

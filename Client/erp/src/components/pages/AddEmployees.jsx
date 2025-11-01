@@ -41,7 +41,7 @@ const [departments, setDepartments] = useState([]);
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/departments`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/departments`);
         const departmentNames = Array.isArray(res.data)
           ? res.data.map((d) => d.name)
           : [];
@@ -84,7 +84,7 @@ const [departments, setDepartments] = useState([]);
         }
       });
 
- const res = await fetch(`${import.meta.env.VITE_API_URL}/api/employees`, {
+ const res = await fetch(`${import.meta.env.VITE_API_URL}/employees`, {
         method: "POST",
         body: data,
       });

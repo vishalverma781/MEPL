@@ -19,7 +19,7 @@ const AdminAttendance = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/employees`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/employees`);
         setEmployees(res.data);
       } catch (err) {
         console.error("Error fetching employees:", err);
@@ -34,7 +34,7 @@ const AdminAttendance = () => {
   const fetchAttendance = async (selectedDate = markDate) => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/attendance?date=${selectedDate}`
+        `${import.meta.env.VITE_API_URL}/attendance?date=${selectedDate}`
       );
       setRecords(res.data.reverse());
     } catch (err) {
@@ -76,7 +76,7 @@ const AdminAttendance = () => {
 
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/attendance`,
+        `${import.meta.env.VITE_API_URL}/attendance`,
         newRecord,
         {
           headers: {
@@ -101,7 +101,7 @@ const AdminAttendance = () => {
   const handleUpdateStatus = async (id, newStatus) => {
     try {
       const res = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/api/attendance/${id}`,
+        `${import.meta.env.VITE_API_URL}/attendance/${id}`,
         { status: newStatus },
         { headers: { "Content-Type": "application/json" } }
       );

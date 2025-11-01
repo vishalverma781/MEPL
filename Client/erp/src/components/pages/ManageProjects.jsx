@@ -27,7 +27,7 @@ const ManageProjects = () => {
   const fetchProjects = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/projects`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/projects`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -57,7 +57,7 @@ const ManageProjects = () => {
     if (!window.confirm("Are you sure you want to delete this project?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/projects/${_id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/projects/${_id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -90,7 +90,7 @@ const ManageProjects = () => {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/projects/${editProject._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/projects/${editProject._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(formData),
