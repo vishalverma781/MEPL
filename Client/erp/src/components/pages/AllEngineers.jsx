@@ -10,11 +10,13 @@ const AllEngineers = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const empRes = await fetch("${import.meta.env.VITE_API_URL}/api/allemployees");
+          // ✅ Proper URL interpolation (no quotes!)
+        const empRes = await fetch(`${import.meta.env.VITE_API_URL}/api/allemployees`);
         const employees = await empRes.json();
 
-        const roleRes = await fetch("${import.meta.env.VITE_API_URL}/api/allroles");
+        const roleRes = await fetch(`${import.meta.env.VITE_API_URL}/api/allroles`);
         const roles = await roleRes.json();
+
 
         const merged = employees.map(emp => {
           const role = roles.find(r => r.employeeId?._id === emp._id) || {};

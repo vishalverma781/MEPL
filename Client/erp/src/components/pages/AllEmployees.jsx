@@ -13,7 +13,7 @@ const getImageSrc = (pic) => {
       if (pic.startsWith("http")) return pic;
       if (pic.startsWith("uploads/")) {
         // ✅ backend ke uploads se serve hoga
-        return `http://localhost:5000/${pic.replace(/\\/g, "/")}`;
+          return `http://localhost:5000/${pic.replace(/\\/g, "/")}`;
       }
     }
     return null;
@@ -29,11 +29,12 @@ const AllEmployees = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const employeesPerPage = 5;
 
-  // Fetch employees from backend
+  // ✅ Fetch employees from backend
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await fetch("${import.meta.env.VITE_API_URL}/api/employees");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/employees`);
+        if (!res.ok) throw new Error("Failed to fetch employees");
         const data = await res.json();
         setEmployees(data);
       } catch (error) {

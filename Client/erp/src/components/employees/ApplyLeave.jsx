@@ -67,7 +67,7 @@ const ApplyLeave = ({ refreshLeaves }) => {
         username: user.username,
         fullName: user.fullName,
       };
-      await axios.post("${import.meta.env.VITE_API_URL}/api/leaves/apply", payload, {
+         await axios.post(`${import.meta.env.VITE_API_URL}/api/leaves/apply`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

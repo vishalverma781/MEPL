@@ -13,7 +13,7 @@ const AddPlaza = () => {
   const fetchProjects = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("${import.meta.env.VITE_API_URL}/api/projects", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/projects`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -42,9 +42,9 @@ const AddPlaza = () => {
       employees: [],
     };
 
-    try {
+   try {
       const token = localStorage.getItem("token");
-      const res = await fetch("${import.meta.env.VITE_API_URL}/api/plazas", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/plazas`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const AddPlaza = () => {
         },
         body: JSON.stringify(payload),
       });
-
+      
       if (!res.ok) throw new Error("Failed to add plaza");
       const data = await res.json();
       alert(`Plaza "${data.plazaName}" added successfully`);

@@ -8,17 +8,16 @@ const AllRoles = () => {
   const rolesPerPage = 4;
   const token = localStorage.getItem("token");
 
-  // Fetch all roles from backend
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const res = await fetch("${import.meta.env.VITE_API_URL}/api/roles", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/roles`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
         setRoles(data);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching roles:", err);
       }
     };
     fetchRoles();

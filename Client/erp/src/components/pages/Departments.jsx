@@ -21,7 +21,7 @@ const Departments = () => {
 
   const fetchDepartments = async () => {
     try {
-      const res = await axios.get("ht${import.meta.env.VITE_API_URL}0/api/departments");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/departments`);
       setDepartments(res.data);
     } catch (err) {
       console.error("Error fetching departments:", err);
@@ -30,7 +30,7 @@ const Departments = () => {
 
   const fetchEmployees = async () => {
     try {
-      const res = await axios.get("ht${import.meta.env.VITE_API_URL}0/api/employees");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/employees`);
       setEmployees(res.data);
     } catch (err) {
       console.error("Error fetching employees:", err);
@@ -41,7 +41,7 @@ const Departments = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this department?")) return;
     try {
-      await axios.delete(`ht${import.meta.env.VITE_API_URL}0/api/departments/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/departments/${id}`);
       setDepartments(departments.filter((d) => d._id !== id));
     } catch (err) {
       console.error("Error deleting department:", err);
@@ -66,7 +66,7 @@ const Departments = () => {
     try {
       if (editDept) {
         const res = await axios.put(
-          `ht${import.meta.env.VITE_API_URL}0/api/departments/${editDept._id}`,
+          `${import.meta.env.VITE_API_URL}/api/departments/${editDept._id}`,
           formData
         );
         setDepartments(
@@ -74,7 +74,7 @@ const Departments = () => {
         );
       } else {
         const res = await axios.post(
-          "ht${import.meta.env.VITE_API_URL}0/api/departments",
+          `${import.meta.env.VITE_API_URL}/api/departments`,
           formData
         );
         setDepartments([...departments, res.data]);

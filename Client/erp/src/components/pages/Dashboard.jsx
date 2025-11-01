@@ -20,7 +20,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("${import.meta.env.VITE_API_URL}/api/dashboard/counts");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/dashboard/counts`);
 
         const count = res.data.employees; // employees ka count
         setStats({

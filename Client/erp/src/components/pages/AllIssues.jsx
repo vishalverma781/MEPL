@@ -23,9 +23,9 @@ const AllIssues = () => {
 
   // Fetch all issues
   const fetchIssues = async () => {
-    try {
+       try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("${import.meta.env.VITE_API_URL}/api/issues", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/issues`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setIssues(res.data);

@@ -31,16 +31,16 @@ const ReportScheduler = () => {
   // 📦 Fetch reports + email lists from backend
   const fetchReports = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch("${import.meta.env.VITE_API_URL}/api/projects", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const projectsData = await res.json();
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/projects`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const projectsData = await res.json();
 
-      const plazaRes = await fetch("${import.meta.env.VITE_API_URL}/api/plazas", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const plazasData = await plazaRes.json();
+    const plazaRes = await fetch(`${import.meta.env.VITE_API_URL}/api/plazas`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const plazasData = await plazaRes.json();
 
       // 🧩 Fetch stored emails for each project
       const withEmails = await Promise.all(
@@ -94,16 +94,17 @@ const ReportScheduler = () => {
         didOpen: () => Swal.showLoading(),
       });
 
-      // 1️⃣ Save emails in EmailModel
-      await axios.post("${import.meta.env.VITE_API_URL}/api/emails/save", {
-        projectId: addEmailReport._id,
-        emails: newEmails,
-      });
+   // 1️⃣ Save emails in EmailModel
+    await axios.post(`${import.meta.env.VITE_API_URL}/api/emails/save`, {
+      projectId: addEmailReport._id,
+      emails: newEmails,
+    });
 
       // 2️⃣ Send report
-      await axios.post("${import.meta.env.VITE_API_URL}/api/reports/send", {
-        emails: newEmails,
-      });
+  await axios.post(`${import.meta.env.VITE_API_URL}/api/reports/send`, {
+      emails: newEmails,
+    });
+
 
       Swal.fire("Success", "Emails saved & report sent successfully!", "success");
 
@@ -124,11 +125,11 @@ const ReportScheduler = () => {
 
   // 🧩 Remove email (also remove from DB)
   const handleRemoveEmail = async (email, report) => {
-    try {
-      await axios.post("${import.meta.env.VITE_API_URL}/api/emails/remove", {
-        projectId: report._id,
-        email,
-      });
+      try {
+    await axios.post(`${import.meta.env.VITE_API_URL}/api/emails/remove`, {
+      projectId: report._id,
+      email,
+    });
 
       const updated = reports.map((r) =>
         r._id === report._id

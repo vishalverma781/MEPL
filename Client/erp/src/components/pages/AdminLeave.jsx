@@ -25,13 +25,18 @@ const AdminLeave = () => {
   const leavesPerPage = 5;
 
   // ✅ Fetch all leaves for admin
+ // ✅ Fetch all leaves for admin
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("${import.meta.env.VITE_API_URL}/api/leaves/all", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/leaves/all`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
 
         // Latest first
         const sortedLeaves = res.data.sort(

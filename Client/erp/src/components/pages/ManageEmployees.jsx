@@ -42,7 +42,7 @@ const ManageEmployees = () => {
   // ✅ Fetch all employees from backend
   useEffect(() => {
     axios
-      .get("${import.meta.env.VITE_API_URL}/api/employees")
+      .get(`${import.meta.env.VITE_API_URL}/api/employees`)
       .then((res) => setEmployees(res.data))
       .catch((err) => console.error("Error fetching employees:", err));
   }, []);

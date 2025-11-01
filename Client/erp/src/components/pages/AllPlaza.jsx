@@ -12,14 +12,16 @@ const AllPlaza = () => {
     try {
       const token = localStorage.getItem("token");
 
-      // Fetch plazas
-      const plazaRes = await fetch("${import.meta.env.VITE_API_URL}/api/plazas", {
+
+      // ✅ Fetch plazas
+      const plazaRes = await fetch(`${import.meta.env.VITE_API_URL}/api/plazas`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const plazasData = await plazaRes.json();
 
-      // Fetch all roles (to get employee assignments)
-      const roleRes = await fetch("${import.meta.env.VITE_API_URL}/api/roles", {
+
+    // ✅ Fetch all roles (to get employee assignments)
+      const roleRes = await fetch(`${import.meta.env.VITE_API_URL}/api/roles`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const rolesData = await roleRes.json();

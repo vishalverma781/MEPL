@@ -37,18 +37,21 @@ const AddEmployeeForm = ({ employees, setEmployees }) => {
   const [formData, setFormData] = useState(defaultFormData);
 const [departments, setDepartments] = useState([]);
 
-useEffect(() => {
-  const fetchDepartments = async () => {
-    try {
-      const res = await axios.get("${import.meta.env.VITE_API_URL}/api/departments"); 
-      setDepartments(res.data.map(d => d.name)); // sirf names
-    } catch (err) {
-      console.error("Error fetching departments:", err);
-    }
-  };
-  fetchDepartments();
-}, []);
-
+ // ✅ Fetch departments
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/departments`);
+        const departmentNames = Array.isArray(res.data)
+          ? res.data.map((d) => d.name)
+          : [];
+        setDepartments(departmentNames);
+      } catch (err) {
+        console.error("Error fetching departments:", err);
+      }
+    };
+    fetchDepartments();
+  }, []);
 
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -81,7 +84,7 @@ useEffect(() => {
         }
       });
 
-      const res = await fetch("${import.meta.env.VITE_API_URL}/api/employees", {
+ const res = await fetch(`${import.meta.env.VITE_API_URL}/api/employees`, {
         method: "POST",
         body: data,
       });

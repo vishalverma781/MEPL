@@ -38,9 +38,9 @@ const MarkAttendance = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await axios.post(
-        "${import.meta.env.VITE_API_URL}/api/attendance",
-        { markedBy: username }, // ✅ yaha actual username bhej rahe hain
+       const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/attendance`, // ✅ Fixed backticks
+        { markedBy: username },
         { headers: token ? { Authorization: `Bearer ${token}` } : {} }
       );
 

@@ -17,12 +17,12 @@ const ExportAttendance = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 4;
 
-  // 🔹 Fetch employees
+  // ✅ Fetch employees
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("${import.meta.env.VITE_API_URL}/api/employees", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/employees`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
         const data = await res.json();
@@ -33,7 +33,7 @@ const ExportAttendance = () => {
     };
     fetchEmployees();
   }, []);
-
+  
   // 🔹 Generate filtered report
   const handleGenerateReport = async () => {
     if (!user || !startDate || !endDate) {

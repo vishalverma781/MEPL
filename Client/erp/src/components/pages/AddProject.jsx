@@ -39,10 +39,15 @@ const AddProject = ({ projects, setProjects }) => {
     }
 
     try {
-      const res = await axios.post("${import.meta.env.VITE_API_URL}/api/projects", {
-        ...formData,
-        startDate: formData.startDate ? formData.startDate.toISOString() : null,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/projects`, // ✅ fixed here
+        {
+          ...formData,
+          startDate: formData.startDate
+            ? formData.startDate.toISOString()
+            : null,
+        }
+      );
 
       if (res.status === 201) {
         // Update local state

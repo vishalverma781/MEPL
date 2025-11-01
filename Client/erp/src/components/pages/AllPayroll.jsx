@@ -11,10 +11,10 @@ const AllPayroll = () => {
   const recordsPerPage = 4;
 
   // -------------------- Fetch all payroll records --------------------
-  useEffect(() => {
+useEffect(() => {
     const fetchPayrolls = async () => {
       try {
-        const res = await axios.get("${import.meta.env.VITE_API_URL}/api/payrolls");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/payrolls`);
         setAllRecords(res.data);
       } catch (err) {
         console.error(err);

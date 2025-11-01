@@ -23,17 +23,21 @@ const ManageProjects = () => {
   const projectsPerPage = 4;
 
   // Fetch projects from API
+// ✅ Fetch projects from backend API
   const fetchProjects = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("${import.meta.env.VITE_API_URL}/api/projects", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/projects`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
+      if (!res.ok) throw new Error("Failed to fetch");
+
       const data = await res.json();
-      setProjects(data);
+      setProjects(Array.isArray(data) ? data : []);
     } catch (err) {
-      console.error(err);
-      alert("Failed to fetch projects");
+      console.error("Error fetching projects:", err);
+      alert("❌ Failed to fetch projects");
     }
   };
 

@@ -19,9 +19,9 @@ const ManageAdmins = () => {
   const adminsPerPage = 4;
 
   const fetchAdmins = async () => {
-    try {
+   try {
       const token = localStorage.getItem("token");
-      const res = await fetch("${import.meta.env.VITE_API_URL}/api/admins", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admins`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.status === 403) {

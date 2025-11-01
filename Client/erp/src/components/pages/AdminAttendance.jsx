@@ -19,16 +19,18 @@ const AdminAttendance = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await axios.get("${import.meta.env.VITE_API_URL}/api/employees");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/employees`);
         setEmployees(res.data);
       } catch (err) {
         console.error("Error fetching employees:", err);
+        Swal.fire("Error", "Failed to load employees", "error");
       }
     };
     fetchEmployees();
   }, []);
 
-  // ✅ Fetch attendance (based on selected date)
+
+ // ✅ Fetch attendance (based on selected date)
   const fetchAttendance = async (selectedDate = markDate) => {
     try {
       const res = await axios.get(
@@ -74,7 +76,7 @@ const AdminAttendance = () => {
 
     try {
       const res = await axios.post(
-        "${import.meta.env.VITE_API_URL}/api/attendance",
+        `${import.meta.env.VITE_API_URL}/api/attendance`,
         newRecord,
         {
           headers: {
@@ -83,7 +85,7 @@ const AdminAttendance = () => {
           },
         }
       );
-
+      
       Swal.fire("Success", `${user} attendance marked as ${status}`, "success");
       setUser("");
       setStatus("Present");

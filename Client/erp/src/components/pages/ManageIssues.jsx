@@ -13,12 +13,16 @@ const ManageIssues = () => {
   const issuesPerPage = 5;
 
   // Fetch issues
+// ✅ Fetch issues
   const fetchIssues = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("${import.meta.env.VITE_API_URL}/api/issues", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/issues`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setIssues(res.data);
     } catch (err) {
       console.error(err);

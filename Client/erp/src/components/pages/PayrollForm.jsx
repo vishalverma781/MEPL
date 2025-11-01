@@ -24,10 +24,12 @@ const PayrollForm = () => {
   const recordsPerPage = 3;
 
   // -------------------- FETCH EMPLOYEES --------------------
-  useEffect(() => {
+ useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await axios.get("${import.meta.env.VITE_API_URL}/api/employees");
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/employees`
+        );
         setEmployees(res.data);
       } catch (err) {
         console.error(err);
@@ -36,12 +38,13 @@ const PayrollForm = () => {
     };
     fetchEmployees();
   }, []);
-
   // -------------------- FETCH PAYROLL RECORDS --------------------
   useEffect(() => {
     const fetchPayrolls = async () => {
       try {
-        const res = await axios.get("${import.meta.env.VITE_API_URL}/api/payrolls");
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/payrolls`
+        );
         setRecords(res.data);
       } catch (err) {
         console.error(err);
@@ -124,7 +127,10 @@ const PayrollForm = () => {
   };
 
   try {
-    await axios.post("${import.meta.env.VITE_API_URL}/api/payrolls", newRecord);
+   await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/payrolls`,
+        newRecord
+      );
 
     // Reset everything so form & preview disappear
     setEmployee(null);

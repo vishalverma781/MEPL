@@ -13,9 +13,13 @@ const TrackIssues = () => {
   const fetchIssues = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("${import.meta.env.VITE_API_URL}/api/issues", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/issues`, // ✅ fixed
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      
       setIssues(res.data);
     } catch (err) {
       console.error(err);

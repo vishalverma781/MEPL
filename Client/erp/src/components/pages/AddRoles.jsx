@@ -35,44 +35,51 @@ const AddRoles = ({ setRoles }) => {
 
   const currentAdmin = JSON.parse(localStorage.getItem("currentUser")) || {};
 
-  // Fetch employees
+
+ // ✅ Fetch Employees
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const res = await fetch("${import.meta.env.VITE_API_URL}/api/employees", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/employees`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
         setEmployeesList(data);
-      } catch (err) { console.error(err); }
+      } catch (err) {
+        console.error("Error fetching employees:", err);
+      }
     };
     fetchEmployees();
   }, [token]);
 
-  // Fetch projects
+  // ✅ Fetch Projects
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch("${import.meta.env.VITE_API_URL}/api/projects", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/projects`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
         setProjectsList(data);
-      } catch (err) { console.error(err); }
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      }
     };
     fetchProjects();
   }, [token]);
 
-  // Fetch plazas
+  // ✅ Fetch Plazas
   useEffect(() => {
     const fetchPlazas = async () => {
       try {
-        const res = await fetch("${import.meta.env.VITE_API_URL}/api/plazas", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/plazas`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
         setPlazasList(data);
-      } catch (err) { console.error(err); }
+      } catch (err) {
+        console.error("Error fetching plazas:", err);
+      }
     };
     fetchPlazas();
   }, [token]);
