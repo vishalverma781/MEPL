@@ -43,7 +43,7 @@ const ManageEmployees = () => {
   // ✅ Fetch all employees from backend
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/api/employees`)
+      .get(`${import.meta.env.VITE_API_URL}/employees`)
       .then((res) => setEmployees(res.data))
       .catch((err) => console.error("Error fetching employees:", err));
   }, []);
@@ -79,7 +79,7 @@ const handleSaveEdit = async () => {
     }
 
     await axios.put(
-      `${import.meta.env.VITE_API_URL}/api/employees/${editEmployee._id}`,
+      `${import.meta.env.VITE_API_URL}/employees/${editEmployee._id}`,
       formData,
       {
         headers: {
@@ -106,7 +106,7 @@ const handleSaveEdit = async () => {
   const handleConfirmDelete = async () => {
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/api/employees/${deleteEmployee._id}`
+        `${import.meta.env.VITE_API_URL}/employees/${deleteEmployee._id}`
       );
       setEmployees((prev) =>
         prev.filter((emp) => emp._id !== deleteEmployee._id)
