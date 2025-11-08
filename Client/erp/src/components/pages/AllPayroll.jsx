@@ -62,33 +62,21 @@ const AllPayroll = () => {
     }
   };
 
-  return (
-    <div className="w-full min-h-screen flex justify-center items-start p-5">
-      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-6 text-gray-900">
-          All Payrolls
-        </h2>
+    return (
+    <div className="w-full min-h-screen flex justify-center items-start p-15">
+      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-7xl">
+        <h2 className="text-4xl font-bold text-center mb-6 text-gray-900">All Payrolls</h2>
 
         <div className="overflow-x-auto">
           <table className="w-full border border-gray-300 rounded-xl overflow-hidden text-lg">
             <thead>
               <tr className="bg-gray-800 text-white">
                 <th className="py-5 px-6 text-left text-lg">Full Name</th>
-                <th className="py-5 px-6 text-left text-lg hidden md:table-cell">
-                  Username
-                </th>
-                <th className="py-5 px-6 text-left text-lg hidden md:table-cell">
-                  Phone
-                </th>
-                <th className="py-5 px-6 text-left text-lg hidden lg:table-cell">
-                  Department
-                </th>
-                <th className="py-5 px-6 text-left text-lg hidden lg:table-cell">
-                  Salary
-                </th>
-                <th className="py-5 px-6 text-left text-lg hidden lg:table-cell">
-                  Expense
-                </th>
+                 <th className="py-5 px-6 text-left text-lg">Username</th>
+                <th className="py-5 px-6 text-left text-lg">Phone</th>
+                <th className="py-5 px-6 text-left text-lg">Department</th>
+                <th className="py-5 px-6 text-left text-lg">Salary</th>
+                <th className="py-5 px-6 text-left text-lg">Expense</th>
                 <th className="py-3 px-2 text-center text-lg">View</th>
                 <th className="py-3 px-2 text-center text-lg">Edit</th>
                 <th className="py-3 px-2 text-center text-lg">Delete</th>
@@ -97,38 +85,19 @@ const AllPayroll = () => {
             <tbody>
               {currentRecords.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan="8"
-                    className="text-center py-8 text-gray-500 text-xl"
-                  >
+                  <td colSpan="8" className="text-center py-8 text-gray-500 text-xl">
                     No payroll records found
                   </td>
                 </tr>
               ) : (
                 currentRecords.map((rec) => (
-                  <tr
-                    key={rec._id}
-                    className="border-b border-gray-200 text-lg"
-                  >
-                    <td className="py-5 px-6 font-bold text-lg">
-                      {rec.fullName}
-                    </td>
-                    <td className="py-5 px-6 text-lg hidden md:table-cell">
-                      {rec.username || "-"}
-                    </td>
-                    <td className="py-5 px-6 text-lg hidden md:table-cell">
-                      {rec.phone || "-"}
-                    </td>
-                    <td className="py-5 px-6 text-lg hidden lg:table-cell">
-                      {rec.department}
-                    </td>
-                    <td className="py-5 px-6 font-bold text-lg hidden lg:table-cell">
-                      ₹ {rec.salary}
-                    </td>
-                    <td className="py-5 px-6 text-lg hidden lg:table-cell">
-                      ₹ {rec.expense}
-                    </td>
-
+                  <tr key={rec._id} className="border-b border-gray-200 hover:bg-gray-100 transition text-lg">
+                    <td className="py-5 px-6 font-bold text-lg">{rec.fullName}</td>
+                    <td className="py-5 px-6 text-lg">{rec.username || "-"}</td> 
+                    <td className="py-5 px-6 text-lg">{rec.phone || "-"}</td>
+                    <td className="py-5 px-6 text-lg">{rec.department}</td>
+                    <td className="py-5 px-6 font-bold text-lg">₹ {rec.salary}</td>
+                    <td className="py-5 px-6 text-lg">₹ {rec.expense}</td>
                     <td className="py-5 px-6 text-center">
                       <button
                         onClick={() => setSelectedRecord(rec)}
@@ -160,15 +129,14 @@ const AllPayroll = () => {
           </table>
         </div>
 
+        {/* Pagination */}
         {allRecords.length > recordsPerPage && (
           <div className="flex justify-center items-center mt-8 space-x-6">
             <button
               onClick={handlePrev}
               disabled={currentPage === 1}
               className={`px-4 py-2 rounded-lg text-white font-semibold text-lg ${
-                currentPage === 1
-                  ? "bg-blue-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
+                currentPage === 1 ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
               }`}
             >
               Previous
@@ -180,9 +148,7 @@ const AllPayroll = () => {
               onClick={handleNext}
               disabled={currentPage === totalPages}
               className={`px-4 py-2 rounded-lg text-white font-semibold text-lg ${
-                currentPage === totalPages
-                  ? "bg-blue-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
+                currentPage === totalPages ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
               }`}
             >
               Next
@@ -190,6 +156,7 @@ const AllPayroll = () => {
           </div>
         )}
 
+        {/* View Modal */}
         {selectedRecord && (
           <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
             <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg">
@@ -197,54 +164,18 @@ const AllPayroll = () => {
                 Payroll Details
               </h3>
               <div className="space-y-3 text-gray-800 text-lg font-medium">
-                <p>
-                  <span className="font-bold">Full Name:</span>{" "}
-                  {selectedRecord.fullName}
-                </p>
-                <p>
-                  <span className="font-bold">Username:</span>{" "}
-                  {selectedRecord.username || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Phone:</span>{" "}
-                  {selectedRecord.phone || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Bank Name:</span>{" "}
-                  {selectedRecord.bankName || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Account Number:</span>{" "}
-                  {selectedRecord.accountNumber || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">IFSC:</span>{" "}
-                  {selectedRecord.ifsc || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Department:</span>{" "}
-                  {selectedRecord.department || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Leaves:</span>{" "}
-                  {selectedRecord.leaves || "0"}
-                </p>
-                <p>
-                  <span className="font-bold">Salary:</span>{" "}
-                  {selectedRecord.salary}
-                </p>
-                <p>
-                  <span className="font-bold">Expense:</span>{" "}
-                  {selectedRecord.expense}
-                </p>
-                <p>
-                  <span className="font-bold">Month:</span>{" "}
-                  {selectedRecord.month || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Date:</span>{" "}
-                  {selectedRecord.date || "N/A"}
-                </p>
+                <p><span className="font-bold">Full Name:</span> {selectedRecord.fullName}</p>
+                 <p><span className="font-bold">Username:</span> {selectedRecord.username || "N/A"}</p>
+                <p><span className="font-bold">Phone:</span> {selectedRecord.phone || "N/A"}</p>
+                <p><span className="font-bold">Bank Name:</span> {selectedRecord.bankName || "N/A"}</p>
+                <p><span className="font-bold">Account Number:</span> {selectedRecord.accountNumber || "N/A"}</p>
+                <p><span className="font-bold">IFSC:</span> {selectedRecord.ifsc || "N/A"}</p>
+                <p><span className="font-bold">Department:</span> {selectedRecord.department || "N/A"}</p>
+                <p><span className="font-bold">Leaves:</span> {selectedRecord.leaves || "0"}</p>
+                <p><span className="font-bold">Salary:</span> {selectedRecord.salary}</p>
+                <p><span className="font-bold">Expense:</span> {selectedRecord.expense}</p>
+                <p><span className="font-bold">Month:</span> {selectedRecord.month || "N/A"}</p>
+                <p><span className="font-bold">Date:</span> {selectedRecord.date || "N/A"}</p>
               </div>
               <div className="mt-12 flex justify-center">
                 <button
@@ -258,6 +189,7 @@ const AllPayroll = () => {
           </div>
         )}
 
+        {/* Edit Modal */}
         {editRecord && (
           <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
             <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg">
