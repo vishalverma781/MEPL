@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState} from "react";
 import logo from "./assets/logo.png";
 import "./index.css";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
@@ -19,16 +19,7 @@ function App() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
-      // ✅ intro video state
-  const [showIntro, setShowIntro] = useState(true);
-  const videoRef = useRef(null);
 
-    useEffect(() => {
-    if (showIntro && videoRef.current) {
-      videoRef.current.play();
-      videoRef.current.addEventListener("ended", () => setShowIntro(false));
-    }
-  }, [showIntro]);
 
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -119,21 +110,6 @@ const handleLogin = async (e) => {
   }
 
 
-  // ✅ If intro video still showing
-if (showIntro) {
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black z-50 p-2 sm:p-0">
-      <video
-        ref={videoRef}
-        src="/src/assets/intro.mp4"
-        className="w-full max-w-full h-auto sm:h-full object-contain sm:object-cover rounded-lg"
-        muted
-        autoPlay
-        playsInline
-      />
-    </div>
-  );
-}
 
 
  return (
