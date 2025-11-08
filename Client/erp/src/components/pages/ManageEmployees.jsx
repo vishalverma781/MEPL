@@ -38,7 +38,7 @@ const ManageEmployees = () => {
   const [editEmployee, setEditEmployee] = useState(null);
   const [deleteEmployee, setDeleteEmployee] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const employeesPerPage = 5;
+  const employeesPerPage = 4;
 
   // ✅ Fetch all employees from backend
   useEffect(() => {
