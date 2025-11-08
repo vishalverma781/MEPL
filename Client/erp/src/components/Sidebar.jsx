@@ -91,7 +91,7 @@ const Sidebar = () => {
 
   const renderContent = () => {
     return (
-      <main className="flex-1 h-screen overflow-y-auto transition-all duration-300 md:ml-64">
+      <main className="flex-1 h-screen overflow-y-auto transition-all duration-300 md:ml-20">
         {/* Dashboard */}
 
 
