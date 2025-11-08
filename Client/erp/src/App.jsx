@@ -115,7 +115,7 @@ const handleLogin = async (e) => {
  return (
   <div
     className="flex justify-center items-center min-h-screen bg-cover bg-center px-4 sm:px-6 lg:px-8"
-    style={{ backgroundImage: "url('/src/assets/bg.png')" }}
+      style={{ backgroundImage: "url('/bg.png')" }}
   >
     <div className="w-full max-w-md sm:max-w-lg md:max-w-2xl lg:w-[700px] bg-white/10 backdrop-blur-xl p-6 sm:p-8 md:p-10 lg:p-12 rounded-3xl shadow-2xl text-white text-center">
       
