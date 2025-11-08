@@ -13,7 +13,7 @@ const TrackIssues = () => {
   const fetchIssues = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/issues", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/issues`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setIssues(res.data);
@@ -40,7 +40,7 @@ const TrackIssues = () => {
       const updatedDate = newStatus === "Resolved" ? new Date().toISOString() : null;
 
       const res = await axios.put(
-        `http://localhost:5000/api/issues/${id}/resolve`,
+        `${import.meta.env.VITE_API_URL}/issues/${id}/resolve`,
         {
           remarks: remarksText,
           status: newStatus,
