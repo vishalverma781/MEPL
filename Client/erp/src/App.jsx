@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState, useEffect, useRef } from "react";
 import logo from "./assets/logo.png";
 import "./index.css";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
