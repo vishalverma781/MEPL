@@ -126,7 +126,7 @@ const handleSaveEdit = async () => {
 
   return (
     <div className="w-full min-h-screen flex justify-center items-start p-3">
-      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-7xl">
+      <div className="bg-white shadow-2xl rounded-2xl p-4 w-full max-w-7xl">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
           ⚙️ Manage Employees
         </h2>
@@ -218,7 +218,7 @@ const handleSaveEdit = async () => {
         )}
 
         {employees.length > employeesPerPage && (
-          <div className="flex justify-center items-center mt-6 space-x-4">
+          <div className="flex justify-center items-center mt-4 space-x-4">
             <button
               onClick={handlePrev}
               disabled={currentPage === 1}

@@ -79,7 +79,7 @@ const AllAdmins = () => {
   };
 
     return (
-    <div className="flex-1 min-h-screen overflow-x-auto overflow-y-auto transition-all duration-300 md:ml-20">
+    <div className="flex-1 min-h-screen overflow-x-auto overflow-y-auto transition-all duration-300">
       {message && (
         <div
           className={`fixed top-5 left-1/2 -translate-x-1/2 px-6 py-3 rounded-xl shadow-lg text-white font-semibold ${
@@ -90,7 +90,7 @@ const AllAdmins = () => {
         </div>
       )}
 
-      <div className="bg-white shadow-2xl rounded-2xl p-16 w-full max-w-7xl mx-auto">
+      <div className="bg-white shadow-2xl rounded-2xl p-4 w-full max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">All Admins</h2>
 
         {admins.length === 0 ? (

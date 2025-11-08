@@ -119,14 +119,14 @@ const ManageAdmins = () => {
   };
 
  return (
-    <div className="flex-1 min-h-screen overflow-x-auto overflow-y-auto transition-all duration-300 md:ml-20">
+    <div className="flex-1 min-h-screen overflow-x-auto overflow-y-auto transition-all duration-300 ">
       {message && (
         <div className={`fixed top-5 left-1/2 -translate-x-1/2 px-6 py-3 rounded-xl shadow-lg text-white font-semibold ${message.type === "error" ? "bg-red-500" : "bg-green-500"}`}>
           {message.text}
         </div>
       )}
 
-      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-7xl mx-auto">
+      <div className="bg-white shadow-2xl rounded-2xl p-4 w-full max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">Manage Admins</h2>
 
         {admins.length === 0 ? (
@@ -169,7 +169,7 @@ const ManageAdmins = () => {
         )}
 
         {admins.length > adminsPerPage && (
-          <div className="flex justify-center items-center mt-6 space-x-4">
+          <div className="flex justify-center items-center mt-4 space-x-4">
             <button onClick={handlePrev} disabled={currentPage === 1} className={`px-5 py-2 rounded-lg text-white font-medium ${currentPage === 1 ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}>Previous</button>
             <span className="text-gray-700 font-medium">Page {currentPage} of {totalPages}</span>
             <button onClick={handleNext} disabled={currentPage === totalPages} className={`px-5 py-2 rounded-lg text-white font-medium ${currentPage === totalPages ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}>Next</button>
