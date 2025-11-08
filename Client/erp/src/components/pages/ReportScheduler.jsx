@@ -12,7 +12,7 @@ const ReportScheduler = () => {
   const [emailList, setEmailList] = useState([""]);
   const [permission, setPermission] = useState("Yes");
 
-  const reportsPerPage = 5;
+  const reportsPerPage = 4;
 
   // ---------------------------------------------
   // 🧩 Helper functions for email fields
