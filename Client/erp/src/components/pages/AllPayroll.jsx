@@ -10,11 +10,10 @@ const AllPayroll = () => {
   const [editRecord, setEditRecord] = useState(null);
   const recordsPerPage = 4;
 
-  // -------------------- Fetch all payroll records --------------------
-useEffect(() => {
+  useEffect(() => {
     const fetchPayrolls = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/payrolls`);
+        const res = await axios.get("http://localhost:5000/api/payrolls");
         setAllRecords(res.data);
       } catch (err) {
         console.error(err);
@@ -24,7 +23,6 @@ useEffect(() => {
     fetchPayrolls();
   }, []);
 
-  // -------------------- Pagination --------------------
   const indexOfLast = currentPage * recordsPerPage;
   const indexOfFirst = indexOfLast - recordsPerPage;
   const currentRecords = allRecords.slice(indexOfFirst, indexOfLast);
@@ -35,11 +33,10 @@ useEffect(() => {
   const handlePrev = () =>
     currentPage > 1 && setCurrentPage(currentPage - 1);
 
-  // -------------------- Save Edited Record --------------------
   const handleSaveEdit = async () => {
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_API_URL}/payrolls/${editRecord._id}`,
+        `http://localhost:5000/api/payrolls/${editRecord._id}`,
         editRecord
       );
       setAllRecords((prev) =>
@@ -53,11 +50,10 @@ useEffect(() => {
     }
   };
 
-  // -------------------- Delete Record --------------------
   const handleDelete = async (_id) => {
     if (!window.confirm("Are you sure you want to delete this record?")) return;
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/payrolls/${_id}`);
+      await axios.delete(`http://localhost:5000/api/payrolls/${_id}`);
       setAllRecords((prev) => prev.filter((r) => r._id !== _id));
       Swal.fire("Deleted", "Payroll record deleted", "success");
     } catch (err) {
