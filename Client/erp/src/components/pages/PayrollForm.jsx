@@ -14,7 +14,7 @@ const PayrollForm = () => {
   const [ifsc, setIfsc] = useState("");
   const [department, setDepartment] = useState("");
   const [previewRecord, setPreviewRecord] = useState(null);
-
+const [selectedRecord, setSelectedRecord] = useState(null);
   const [leaves, setLeaves] = useState("");
   const [salary, setSalary] = useState("");
   const [expense, setExpense] = useState("");
