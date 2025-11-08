@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaCalendarAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaEye } from "react-icons/fa";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -14,7 +14,8 @@ const PayrollForm = () => {
   const [ifsc, setIfsc] = useState("");
   const [department, setDepartment] = useState("");
   const [previewRecord, setPreviewRecord] = useState(null);
-const [selectedRecord, setSelectedRecord] = useState(null);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+
   const [leaves, setLeaves] = useState("");
   const [salary, setSalary] = useState("");
   const [expense, setExpense] = useState("");
@@ -23,8 +24,8 @@ const [selectedRecord, setSelectedRecord] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 3;
 
-  // -------------------- FETCH EMPLOYEES --------------------
- useEffect(() => {
+  // Fetch employees
+  useEffect(() => {
     const fetchEmployees = async () => {
       try {
         const res = await axios.get(
@@ -38,7 +39,8 @@ const [selectedRecord, setSelectedRecord] = useState(null);
     };
     fetchEmployees();
   }, []);
-  // -------------------- FETCH PAYROLL RECORDS --------------------
+
+  // Fetch payrolls
   useEffect(() => {
     const fetchPayrolls = async () => {
       try {
@@ -54,7 +56,7 @@ const [selectedRecord, setSelectedRecord] = useState(null);
     fetchPayrolls();
   }, []);
 
-  // -------------------- Pagination --------------------
+  // Pagination
   const indexOfLast = currentPage * recordsPerPage;
   const indexOfFirst = indexOfLast - recordsPerPage;
   const currentRecords = records.slice(indexOfFirst, indexOfLast);
@@ -65,7 +67,7 @@ const [selectedRecord, setSelectedRecord] = useState(null);
   const handlePrev = () =>
     currentPage > 1 && setCurrentPage(currentPage - 1);
 
-  // -------------------- Employee select --------------------
+  // Employee select
   const handleEmployeeSelect = (id) => {
     const emp = employees.find((e) => e._id === id);
     setEmployee(emp);
@@ -78,7 +80,7 @@ const [selectedRecord, setSelectedRecord] = useState(null);
 
       setPreviewRecord({
         fullName: emp.fullName,
-         username: emp.username || "-", 
+        username: emp.username || "-",
         phone: emp.phone || "-",
         bankName: emp.bankName,
         accountNumber: emp.accountNumber,
@@ -106,59 +108,54 @@ const [selectedRecord, setSelectedRecord] = useState(null);
     ifsc &&
     department;
 
-  // -------------------- Submit --------------------
+  // Submit
   const handleSubmit = async () => {
-  if (!isFormValid) return;
+    if (!isFormValid) return;
 
-  const newRecord = {
-    fullName: employee.fullName,
-    username: employee.username || "-",
-    phone: employee.phone || "-",
-    bankName,
-    accountNumber,
-    ifsc,
-    department,
-    month,
-    date: markDate,
-    leaves,
-    salary,
-    expense,
-    markedBy: "Admin",
+    const newRecord = {
+      fullName: employee.fullName,
+      username: employee.username || "-",
+      phone: employee.phone || "-",
+      bankName,
+      accountNumber,
+      ifsc,
+      department,
+      month,
+      date: markDate,
+      leaves,
+      salary,
+      expense,
+      markedBy: "Admin",
+    };
+
+    try {
+      await axios.post("http://localhost:5000/api/payrolls", newRecord);
+
+      setEmployee(null);
+      setPreviewRecord(null);
+      setBankName("");
+      setAccountNumber("");
+      setIfsc("");
+      setDepartment("");
+      setMonth("");
+      setLeaves("");
+      setSalary("");
+      setExpense("");
+
+      Swal.fire({
+        icon: "success",
+        title: "Salary sent successfully!",
+        text: `${newRecord.fullName}'s payroll has been submitted.`,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (err) {
+      console.error(err);
+      Swal.fire("Error", "Failed to submit payroll", "error");
+    }
   };
 
-  try {
-   await axios.post(
-        `${import.meta.env.VITE_API_URL}/payrolls`,
-        newRecord
-      );
-
-    // Reset everything so form & preview disappear
-    setEmployee(null);
-    setPreviewRecord(null);
-    setBankName("");
-    setAccountNumber("");
-    setIfsc("");
-    setDepartment("");
-    setMonth("");
-    setLeaves("");
-    setSalary("");
-    setExpense("");
-
-    Swal.fire({
-      icon: "success",
-      title: "Salary sent successfully!",
-      text: `${newRecord.fullName}'s payroll has been submitted.`,
-      timer: 2000,
-      showConfirmButton: false,
-    });
-  } catch (err) {
-    console.error(err);
-    Swal.fire("Error", "Failed to submit payroll", "error");
-  }
-};
-
-
-   return (
+  return (
    <div className="p-4 md:p-8 min-h-screen ">
       <div className="bg-white rounded-3xl shadow-2xl p-4 md:p-8 border border-gray-200 max-w-7xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-8 sm:mb-10 text-center">
