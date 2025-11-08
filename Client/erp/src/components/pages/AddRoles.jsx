@@ -152,9 +152,9 @@ const AddRoles = ({ setRoles }) => {
   };
 
   return (
-    <div className="ml-64 px-4 sm:px-6 lg:px-8 pt-8 pb-16 min-h-screen">
-      <div className="bg-white shadow-xl rounded-2xl w-full max-w-screen-lg mx-auto p-8 sm:p-12 border border-gray-200">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
+    <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-60 px-5 sm:px-8 lg:px-10 py-10">
+      <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl mx-auto ml-5 p-6 sm:p-10 border border-gray-200">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Change Roles
           <span className="block w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
         </h2>

@@ -72,7 +72,8 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen w-full px-6 py-10 overflow-auto font-sans ">
+    <div className="min-h-screen w-full px-6 py-10 overflow-y-auto overflow-x-hidden font-sans">
+
       <div className="w-full bg-white p-6 mb-6 shadow-lg rounded-xl border-l-8 border-blue-500 flex flex-col sm:flex-row justify-between items-center">
         <div>
           <h1 className="text-4xl font-bold text-gray-800 tracking-wide">MahakalInfra Esolution Pvt Ltd.</h1>

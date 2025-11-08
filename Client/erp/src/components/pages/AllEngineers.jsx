@@ -49,58 +49,62 @@ const AllEngineers = () => {
   const handlePrev = () => currentPage > 1 && setCurrentPage(currentPage - 1);
 
   return (
-    <div className="w-full min-h-screen flex justify-center items-start p-10 ">
+    <div className="w-full min-h-screen flex justify-center items-start sm:p-10">
       <div className="bg-white shadow-2xl rounded-2xl p-6 w-full max-w-8xl">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">👷 All Engineers</h2>
 
         {engineers.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">No engineers found.</p>
         ) : (
-          <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
-            <thead>
-              <tr className="bg-gray-800 text-white text-xl">
-                <th className="p-4">Full Name</th>
-                <th className="p-4">Username</th>
-                <th className="p-4">Designation</th>
-                <th className="p-4">Department</th>
-                <th className="p-4">Role</th>
-                <th className="p-4">Project</th>
-                <th className="p-4">Plaza</th>
-                <th className="p-4">Office</th> {/* Office column */}
-                <th className="p-4">Assigned By</th>
-                <th className="p-4">From Date</th>
-                <th className="p-4 text-center">View</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentEngineers.map((eng) => (
-                <tr
-                  key={eng._id}
-                  className="border-b border-gray-200 hover:bg-gray-100 transition cursor-pointer"
-                >
-                  <td className="p-4 font-medium">{eng.fullName}</td>
-                  <td className="p-4">{eng.username}</td>
-                  <td className="p-4">{eng.designation}</td>
-                  <td className="p-4">{eng.department}</td>
-                  <td className="p-4">{eng.assignRole}</td>
-                  <td className="p-4">{eng.project}</td>
-                  <td className="p-4">{eng.plaza}</td>
-                  <td className="p-4">{eng.office}</td> {/* Office data */}
-                  <td className="p-4">{eng.assignedBy}</td>
-                  <td className="p-4">{eng.fromDate ? new Date(eng.fromDate).toLocaleDateString() : "Not Assigned"}</td>
-                  <td className="p-4 text-center">
-                    <button
-                      onClick={() => setSelectedEngineer(eng)}
-                      className="text-green-600 hover:text-green-800"
-                      title="View"
-                    >
-                      <FaEye size={20} />
-                    </button>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
+              <thead>
+                <tr className="bg-gray-800 text-white text-base sm:text-lg">
+                  <th className="p-4">Full Name</th>
+                  <th className="p-4 hidden sm:table-cell">Username</th>
+                  <th className="p-4">Designation</th>
+                  <th className="p-4">Department</th>
+                  <th className="p-4 hidden sm:table-cell">Role</th>
+                  <th className="p-4 hidden sm:table-cell">Project</th>
+                  <th className="p-4 hidden sm:table-cell">Plaza</th>
+                  <th className="p-4 hidden sm:table-cell">Office</th>
+                  <th className="p-4 hidden sm:table-cell">Assigned By</th>
+                  <th className="p-4 hidden sm:table-cell">From Date</th>
+                  <th className="p-4 text-center">View</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {currentEngineers.map((eng) => (
+                  <tr
+                    key={eng._id}
+                    className="border-b border-gray-200 hover:bg-gray-100 transition cursor-pointer"
+                  >
+                    <td className="p-4 font-medium">{eng.fullName}</td>
+                    <td className="p-4 hidden sm:table-cell">{eng.username}</td>
+                    <td className="p-4">{eng.designation}</td>
+                    <td className="p-4">{eng.department}</td>
+                    <td className="p-4 hidden sm:table-cell">{eng.assignRole}</td>
+                    <td className="p-4 hidden sm:table-cell">{eng.project}</td>
+                    <td className="p-4 hidden sm:table-cell">{eng.plaza}</td>
+                    <td className="p-4 hidden sm:table-cell">{eng.office}</td>
+                    <td className="p-4 hidden sm:table-cell">{eng.assignedBy}</td>
+                    <td className="p-4 hidden sm:table-cell">
+                      {eng.fromDate ? new Date(eng.fromDate).toLocaleDateString() : "Not Assigned"}
+                    </td>
+                    <td className="p-4 text-center">
+                      <button
+                        onClick={() => setSelectedEngineer(eng)}
+                        className="text-green-600 hover:text-green-800"
+                        title="View"
+                      >
+                        <FaEye size={20} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
 
         {/* Pagination */}
@@ -140,7 +144,6 @@ const AllEngineers = () => {
                   {selectedEngineer.designation || "N/A"} - {selectedEngineer.department || "N/A"}
                 </p>
               </div>
-
               <button
                 onClick={() => setSelectedEngineer(null)}
                 className="ml-auto px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold"
@@ -160,7 +163,7 @@ const AllEngineers = () => {
                 <GridRow label="Assign Role" value={selectedEngineer.assignRole} />
                 <GridRow label="Project" value={selectedEngineer.project} />
                 <GridRow label="Plaza" value={selectedEngineer.plaza} />
-                <GridRow label="Office" value={selectedEngineer.office} /> {/* Only Office */}
+                <GridRow label="Office" value={selectedEngineer.office} />
                 <GridRow label="Assigned By" value={selectedEngineer.assignedBy} />
                 <GridRow
                   label="From Date"

@@ -155,10 +155,10 @@ const ReportScheduler = () => {
     setReports(updated);
   };
 
-  // 🧱 UI Section Below (unchanged UI)
+ // 🧱 UI Section Below (unchanged UI)
   return (
-    <div className="w-full min-h-screen flex justify-center items-start p-10">
-      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-7xl">
+      <div className="w-full min-h-screen flex justify-center items-start ">
+      <div className="bg-white shadow-2xl rounded-2xl p-6 w-full max-w-7xl">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
           REPORT SCHEDULER
         </h2>
@@ -167,72 +167,75 @@ const ReportScheduler = () => {
           <p className="text-center text-gray-500 text-lg">No reports added yet.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
-              <thead>
-                <tr className="bg-gray-800 text-white text-xl">
-                  <th className="p-5 text-left">S. No.</th>
-                  <th className="p-5 text-left">Project Name</th>
-                  <th className="p-5 text-left">Plaza Names</th>
-                  <th className="p-5 text-left">Client Emails</th>
-                  <th className="p-5 text-left">Permission</th>
-                  <th className="p-5 text-center">View</th>
-                  <th className="p-5 text-center">Add</th>
-                  <th className="p-5 text-center">Remove</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentReports.map((report, index) => (
-                  <tr
-                    key={report._id}
-                    className="border-b border-gray-200 hover:bg-gray-100 transition text-lg"
-                  >
-                    <td className="py-6 px-4">{indexOfFirst + index + 1}</td>
-                    <td className="py-6 px-4">{report.projectName}</td>
-                    <td className="py-6 px-4 font-bold">
-                      {report.plazaNames?.length > 0 ? report.plazaNames.join(", ") : "—"}
-                    </td>
-                    <td className="py-6 px-4 font-bold">
-                      {report.emails.length > 0 ? report.emails.join(", ") : "—"}
-                    </td>
-                    <td className="py-6 px-4 font-bold">
-                      {report.permission === "Yes" ? (
-                        <span className="text-green-600 font-semibold">Yes</span>
-                      ) : (
-                        <span className="text-red-600 font-semibold">No</span>
-                      )}
-                    </td>
-                    <td className="py-6 px-4 text-center">
-                      <button
-                        onClick={() => {
-                          setSelectedReport(report);
-                          setPermission(report.permission || "Yes");
-                        }}
-                        className="text-green-600 hover:text-green-800"
-                      >
-                        <FaEye size={22} />
-                      </button>
-                    </td>
-                    <td className="py-6 px-4 text-center">
-                      <button
-                        onClick={() => setAddEmailReport(report)}
-                        className="text-blue-600 hover:text-blue-800"
-                      >
-                        <FaPlus size={22} />
-                      </button>
-                    </td>
-                    <td className="py-6 px-4 text-center">
-                      <button
-                        onClick={() => setRemoveEmailReport(report)}
-                        className="text-red-600 hover:text-red-800"
-                      >
-                        <FaMinus size={22} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+  <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
+    <thead>
+      <tr className="bg-gray-800 text-white text-xl">
+        <th className="p-5 text-left hidden sm:table-cell">S. No.</th>
+        <th className="p-5 text-left">Project Name</th>
+        <th className="p-5 text-left hidden sm:table-cell">Plaza Names</th>
+        <th className="p-5 text-left hidden sm:table-cell">Client Emails</th>
+        <th className="p-5 text-left hidden sm:table-cell">Permission</th>
+        <th className="p-5 text-center">View</th>
+        <th className="p-5 text-center">Add</th>
+        <th className="p-5 text-center">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      {currentReports.map((report, index) => (
+        <tr
+          key={report._id}
+          className="border-b border-gray-200 hover:bg-gray-100 transition text-lg"
+        >
+          <td className="py-6 px-4 hidden sm:table-cell">{indexOfFirst + index + 1}</td>
+          <td className="py-6 px-4">{report.projectName}</td>
+          <td className="py-6 px-4 font-bold hidden sm:table-cell">
+            {report.plazaNames?.length > 0 ? report.plazaNames.join(", ") : "—"}
+          </td>
+          <td className="py-6 px-4 font-bold hidden sm:table-cell">
+            {report.emails.length > 0 ? report.emails.join(", ") : "—"}
+          </td>
+          <td className="py-6 px-4 font-bold hidden sm:table-cell">
+            {report.permission === "Yes" ? (
+              <span className="text-green-600 font-semibold">Yes</span>
+            ) : (
+              <span className="text-red-600 font-semibold">No</span>
+            )}
+          </td>
+
+          {/* Buttons: View/Add/Remove - Always visible */}
+          <td className="py-6 px-4 text-center">
+            <button
+              onClick={() => {
+                setSelectedReport(report);
+                setPermission(report.permission || "Yes");
+              }}
+              className="text-green-600 hover:text-green-800"
+            >
+              <FaEye size={22} />
+            </button>
+          </td>
+          <td className="py-6 px-4 text-center">
+            <button
+              onClick={() => setAddEmailReport(report)}
+              className="text-blue-600 hover:text-blue-800"
+            >
+              <FaPlus size={22} />
+            </button>
+          </td>
+          <td className="py-6 px-4 text-center">
+            <button
+              onClick={() => setRemoveEmailReport(report)}
+              className="text-red-600 hover:text-red-800"
+            >
+              <FaMinus size={22} />
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
         )}
 
         {/* Pagination */}

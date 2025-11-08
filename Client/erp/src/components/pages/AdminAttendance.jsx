@@ -134,26 +134,26 @@ const AdminAttendance = () => {
   };
 
   return (
-    <div className="ml-16 p-4 md:p-8 min-h-screen">
-      <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-6 border border-gray-200 max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-900 mb-10 text-center">
+    <div className="p-4 md:p-8 min-h-screen ">
+      <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-8 border border-gray-200 max-w-7xl mx-auto">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-8 sm:mb-10 text-center">
           Attendance Management
         </h1>
 
-        {/* ✅ Mark Attendance Section */}
-        <div className="border border-gray-300 rounded-3xl p-6 md:p-8 mb-8 bg-gray-50 shadow-md">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
+        {/* Mark Attendance Section */}
+        <div className="border border-gray-300 rounded-3xl p-4 md:p-8 mb-8 bg-gray-50 shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">
             Mark Attendance for Employee
           </h2>
 
-          <div className="flex flex-wrap gap-6 items-center justify-center">
+          <div className="flex flex-col md:flex-row flex-wrap gap-4 md:gap-6 items-center justify-center">
             {/* Select User */}
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full md:w-auto">
               <label className="text-gray-700 text-lg mb-1">Select User</label>
               <select
                 value={user}
                 onChange={(e) => setUser(e.target.value)}
-                className="border border-gray-300 rounded-xl px-4 py-2 bg-white outline-none w-72 text-gray-900 text-lg font-medium"
+                className="border border-gray-300 rounded-xl px-4 py-2 bg-white outline-none w-full md:w-72 text-gray-900 text-lg font-medium"
               >
                 <option value="">Select User</option>
                 {employees.map((emp) => (
@@ -165,12 +165,12 @@ const AdminAttendance = () => {
             </div>
 
             {/* Status */}
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full md:w-auto">
               <label className="text-gray-700 text-lg mb-1">Status</label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="border border-gray-300 rounded-xl px-4 py-2 bg-white outline-none w-40 text-gray-900 text-lg font-medium"
+                className="border border-gray-300 rounded-xl px-4 py-2 bg-white outline-none w-full md:w-40 text-gray-900 text-lg font-medium"
               >
                 <option>Present</option>
                 <option>Absent</option>
@@ -180,41 +180,41 @@ const AdminAttendance = () => {
             </div>
 
             {/* Date Picker */}
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full md:w-auto">
               <label className="text-gray-700 text-lg mb-1">Date</label>
-              <div className="flex items-center border border-gray-300 rounded-xl px-4 py-2 bg-white">
+              <div className="flex items-center border border-gray-300 rounded-xl px-4 py-2 bg-white w-full md:w-40">
                 <FaCalendarAlt className="text-gray-500 mr-2" />
                 <input
                   type="date"
                   value={markDate}
                   onChange={(e) => {
                     setMarkDate(e.target.value);
-                    fetchAttendance(e.target.value); // ✅ filter by selected date
+                    fetchAttendance(e.target.value);
                   }}
-                  className="outline-none w-40 text-gray-900 text-lg font-medium"
+                  className="outline-none w-full text-gray-900 text-lg font-medium"
                 />
               </div>
             </div>
 
             <button
               onClick={handleMarkAttendance}
-              className="bg-gray-800 hover:bg-black text-white font-semibold px-6 py-3 rounded-xl shadow-md mt-4 transition"
+              className="bg-gray-800 hover:bg-black text-white font-semibold px-6 py-3 rounded-xl shadow-md mt-4 md:mt-0 transition"
             >
               Mark Attendance
             </button>
           </div>
         </div>
 
-        {/* ✅ Attendance Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full border border-gray-300 rounded-xl overflow-hidden text-base">
+        {/* Attendance Table */}
+        <div className="overflow-x-auto rounded-xl">
+          <table className="min-w-full border border-gray-300 text-base sm:text-lg">
             <thead>
-              <tr className="bg-gray-800 text-white text-lg">
-                <th className="py-4 px-4 text-left">Date</th>
-                <th className="py-4 px-4 text-left">FullName</th>
-                <th className="py-4 px-4 text-left">Status</th>
-                <th className="py-4 px-4 text-left">Marked By</th>
-                <th className="py-4 px-4 text-center">View/Edit</th>
+              <tr className="bg-gray-800 text-white">
+                <th className="py-3 px-2 sm:px-4 text-left">Date</th>
+                <th className="py-3 px-2 sm:px-4 text-left">Full Name</th>
+                <th className="py-3 px-2 sm:px-4 text-left">Status</th>
+                <th className="py-3 px-2 sm:px-4 text-left">Marked By</th>
+                <th className="py-3 px-2 sm:px-4 text-center">View/Edit</th>
               </tr>
             </thead>
             <tbody>
@@ -222,7 +222,7 @@ const AdminAttendance = () => {
                 <tr>
                   <td
                     colSpan="5"
-                    className="text-center text-gray-500 py-6 italic text-lg"
+                    className="text-center text-gray-500 py-6 italic"
                   >
                     No attendance records found
                   </td>
@@ -230,12 +230,12 @@ const AdminAttendance = () => {
               ) : (
                 currentRecords.map((rec) => (
                   <tr key={rec._id} className="hover:bg-gray-100 transition">
-                    <td className="py-4 px-4">
+                    <td className="py-3 px-2 sm:px-4">
                       {format(new Date(rec.date), "dd-MM-yyyy")}
                     </td>
-                    <td className="py-4 px-4">{rec.fullName}</td>
+                    <td className="py-3 px-2 sm:px-4">{rec.fullName}</td>
                     <td
-                      className={`py-4 px-4 text-center font-semibold ${
+                      className={`py-3 px-2 sm:px-4 text-center font-semibold ${
                         rec.status === "Present"
                           ? "text-green-600"
                           : rec.status === "Absent"
@@ -249,11 +249,11 @@ const AdminAttendance = () => {
                     >
                       {rec.status}
                     </td>
-                    <td className="py-4 px-4">{rec.markedBy}</td>
-                    <td className="py-4 px-4 text-center">
+                    <td className="py-3 px-2 sm:px-4">{rec.markedBy}</td>
+                    <td className="py-3 px-2 sm:px-4 text-center">
                       <button
                         onClick={() => setSelectedRecord(rec)}
-                        className="text-gray-700 hover:text-black transition text-2xl"
+                        className="text-gray-700 hover:text-black transition text-xl sm:text-2xl"
                       >
                         <FaEye />
                       </button>
@@ -267,7 +267,7 @@ const AdminAttendance = () => {
 
         {/* Pagination */}
         {records.length > recordsPerPage && (
-          <div className="flex justify-center items-center mt-6 space-x-4">
+          <div className="flex flex-col sm:flex-row justify-center items-center mt-6 space-y-2 sm:space-y-0 sm:space-x-4">
             <button
               onClick={handlePrev}
               disabled={currentPage === 1}
@@ -297,22 +297,22 @@ const AdminAttendance = () => {
         )}
       </div>
 
-      {/* ✅ View/Edit Modal */}
+      {/* View/Edit Modal */}
       {selectedRecord && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
-          <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg relative">
-            <h3 className="text-2xl font-extrabold mb-6 text-center">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-lg relative">
+            <h3 className="text-2xl sm:text-3xl font-extrabold mb-4 sm:mb-6 text-center">
               Attendance Details
             </h3>
 
             <button
               onClick={() => setSelectedRecord(null)}
-              className="absolute top-3 right-4 text-gray-600 hover:text-black text-2xl font-bold"
+              className="absolute top-3 right-4 text-gray-600 hover:text-black text-xl sm:text-2xl font-bold"
             >
               ✕
             </button>
 
-            <div className="space-y-4 text-gray-800 text-lg font-medium">
+            <div className="space-y-4 text-gray-800 text-base sm:text-lg font-medium">
               <p>
                 <span className="font-bold">Full Name:</span>{" "}
                 {selectedRecord.fullName}
@@ -336,7 +336,7 @@ const AdminAttendance = () => {
                       status: e.target.value,
                     }))
                   }
-                  className="border border-gray-300 rounded-lg p-2 w-full text-lg bg-white"
+                  className="border border-gray-300 rounded-lg p-2 w-full text-base sm:text-lg bg-white"
                 >
                   <option>Present</option>
                   <option>Absent</option>
@@ -354,7 +354,7 @@ const AdminAttendance = () => {
               </p>
             </div>
 
-            <div className="mt-6 flex justify-end gap-3">
+            <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
               <button
                 onClick={() =>
                   handleUpdateStatus(selectedRecord._id, selectedRecord.status)

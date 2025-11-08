@@ -30,76 +30,85 @@ const Header = ({ onLogout, isSidebarOpen, lightMode }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full flex items-center justify-between px-6 h-27.5 transition-all duration-300 shadow-md
-        ${lightMode 
-          ? "bg-white text-gray-800 border-b border-gray-300" 
-          : "bg-gradient-to-b from-gray-900 to-gray-800 text-white border-b border-white"}
-        ${isSidebarOpen ? "pl-64" : "pl-20"}`}
+      className={`fixed top-0 left-0 w-full flex items-center justify-between px-6 h-[70px] transition-all duration-300 shadow-lg backdrop-blur-md
+        ${
+          lightMode
+            ? "bg-white/90 text-gray-800 border-b border-gray-300"
+            : "bg-gray-900/70 text-white border-b border-slate-700"
+        }
+        ${isSidebarOpen ? "md:pl-64" : "md:pl-20"}
+      `}
     >
-      <div className="text-xl font-bold"></div>
+      {/* Left Section (App Name / Logo) */}
+      <div className="flex items-center gap-3">
+        <h1
+          className={`text-xl font-semibold tracking-wide ${
+            lightMode ? "text-gray-700" : "text-slate-200"
+          }`}
+        >
+        
+        </h1>
+      </div>
 
-      {/* Desktop Actions */}
-      <div className="hidden md:flex items-center gap-4">
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-800/40 hover:bg-gray-700/70 backdrop-blur-sm shadow-md transition duration-300">
-          <FaBell className="text-yellow-400" />
-          <span className="hidden sm:inline font-medium">Notifications</span>
-        </button>
+      {/* Right Section (Profile Menu Only) */}
+      <div className="relative flex items-center gap-3">
+        {/* Hamburger for mobile */}
+        {/* <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden p-3 rounded-md bg-gray-800/60 hover:bg-gray-700/70 transition duration-300"
+        >
+          <FaBars className="text-2xl text-white" />
+        </button> */}
 
-        <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-gray-800/40 hover:bg-gray-700/70 backdrop-blur-sm shadow-md transition duration-300">
-          <FaUserCircle className="text-blue-400 text-2xl" />
-          <div className="flex flex-col">
-            <span className="hidden sm:inline font-semibold">{user.username}</span>
-            {/* <span className="hidden sm:inline text-sm text-gray-300">{user.position}</span> */}
-          </div>
-        </div>
-
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-800/40 hover:bg-gray-700/70 backdrop-blur-sm shadow-md transition duration-300">
-          <FaCog className="text-green-400" />
-          <span className="hidden sm:inline font-medium">Settings</span>
-        </button>
-
+        {/* Profile Icon */}
         <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 shadow-lg transition duration-300"
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="flex items-center gap-2 px-3 py-2 rounded-full bg-gray-900 hover:bg-gray-700 backdrop-blur-md transition-all duration-300 shadow-md"
         >
-          <FaSignOutAlt />
-          <span className="hidden sm:inline font-medium">Logout</span>
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <div className="md:hidden">
-        <button onClick={() => setMenuOpen(!menuOpen)} className="p-2 rounded-lg hover:bg-gray-700/50 transition duration-300">
-          <FaBars size={24} />
-        </button>
-      </div>
-
-      {/* Mobile Dropdown */}
-      {menuOpen && (
-        <div
-          className={`absolute top-20 right-4 w-56 rounded-xl shadow-lg p-4 flex flex-col gap-3 z-50
-            ${lightMode ? "bg-white text-gray-800" : "bg-gray-900 text-white"}`}
-        >
-          <div className="flex flex-col gap-2 px-3 py-2 rounded-lg hover:bg-gray-700/50">
-            <div className="flex items-center gap-2">
-              <FaUserCircle className="text-blue-400 text-xl" /> {user.username}
-            </div>
-            <span className="text-sm text-gray-300">{user.position}</span>
+          <FaUserCircle className="text-blue-400 text-3xl" />
+          <div className="hidden md:flex flex-col text-left">
+            <span className="font-semibold text-base">{user.username}</span>
+            {/* <span className="text-xs text-gray-400">{user.position}</span> */}
           </div>
-          <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-700/50">
-            <FaBell className="text-yellow-400" /> Notifications
-          </button>
-          <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-700/50">
-            <FaCog className="text-green-400" /> Settings
-          </button>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600"
+        </button>
+
+        {/* Dropdown Menu */}
+        {menuOpen && (
+          <div
+            className={`absolute top-[75px] right-0 w-60 rounded-xl shadow-2xl p-4 flex flex-col gap-3 z-50 backdrop-blur-md
+              ${
+                lightMode
+                  ? "bg-white/90 text-gray-800 border border-gray-300"
+                  : "bg-gray-900/80 text-white border border-gray-700"
+              }`}
           >
-            <FaSignOutAlt /> Logout
-          </button>
-        </div>
-      )}
+            <div className="flex flex-col gap-1 border-b border-gray-600 pb-2">
+              <div className="flex items-center gap-2">
+                <FaUserCircle className="text-blue-400 text-2xl" />
+                <div className="flex flex-col">
+                  <span className="font-semibold">{user.username}</span>
+                  <span className="text-xs text-gray-400">{user.position}</span>
+                </div>
+              </div>
+            </div>
+
+            <button className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-700/50 transition">
+              <FaBell className="text-yellow-400" /> Notifications
+            </button>
+
+            <button className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-700/50 transition">
+              <FaCog className="text-green-400" /> Settings
+            </button>
+
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-3 py-2 rounded-lg bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 transition"
+            >
+              <FaSignOutAlt /> Logout
+            </button>
+          </div>
+        )}
+      </div>
     </header>
   );
 };

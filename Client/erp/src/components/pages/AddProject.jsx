@@ -69,10 +69,10 @@ const AddProject = ({ projects, setProjects }) => {
     }
   };
 
-  return (
-    <div className="ml-64 px-4 sm:px-6 lg:px-8 pt-12 pb-16 min-h-screen">
-      <div className="bg-white shadow-xl rounded-2xl w-full max-w-screen-lg mx-auto p-8 sm:p-12 border border-gray-200">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
+ return (
+    <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-60 px-5 sm:px-8 lg:px-10 py-10">
+      <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl mx-auto ml-5 p-6 sm:p-10 border border-gray-200">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Add Project
           <span className="block w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
         </h2>
@@ -106,7 +106,7 @@ const AddProject = ({ projects, setProjects }) => {
             value={formData.clientName}
             onChange={handleChange}
             icon={<FaUsers className="text-gray-400 mr-3" />}
-            required 
+            required
           />
           <InputField
             label="Location"
@@ -119,16 +119,14 @@ const AddProject = ({ projects, setProjects }) => {
           />
 
           {/* Assigned To dropdown */}
-          <div>
-            <SelectField
-              label="Assigned To"
-              name="assignedTo"
-              value={formData.assignedTo}
-              onChange={handleChange}
-              icon={<FaTasks className="text-gray-400 mr-2" />}
-              options={["N/A", "Admin", "Manager", "Supervisor"]}
-            />
-          </div>
+          <SelectField
+            label="Assigned To"
+            name="assignedTo"
+            value={formData.assignedTo}
+            onChange={handleChange}
+            icon={<FaTasks className="text-gray-400 mr-2" />}
+            options={["N/A", "Admin", "Manager", "Supervisor"]}
+          />
 
           {/* Start Date */}
           <div>
@@ -150,7 +148,7 @@ const AddProject = ({ projects, setProjects }) => {
             </div>
           </div>
 
-          <div className="sm:col-span-2 mt-6 text-center">
+          <div className="sm:col-span-2 mt-4 text-center">
             <button
               type="submit"
               className="w-full sm:w-1/2 py-4 text-lg font-semibold text-white rounded-xl shadow-md 
@@ -165,7 +163,7 @@ const AddProject = ({ projects, setProjects }) => {
   );
 };
 
-// Reusable Input Field
+// ✅ Reusable Input Field
 const InputField = ({ label, name, placeholder, type = "text", value, onChange, icon, ...rest }) => (
   <div>
     <label className="block text-gray-700 font-medium mb-2 text-lg">{label}</label>
@@ -186,7 +184,7 @@ const InputField = ({ label, name, placeholder, type = "text", value, onChange, 
   </div>
 );
 
-// Reusable Select Field
+// ✅ Reusable Select Field
 const SelectField = ({ label, name, value, onChange, icon, options }) => {
   const [open, setOpen] = useState(false);
 

@@ -65,25 +65,28 @@ const MarkAttendance = () => {
   };
 
   return (
-    <div className="ml-64 px-4 sm:px-6 lg:px-8 min-h-screen bg-gradient-to-br flex items-start justify-center pt-24 pb-16">
-      <div className="bg-white shadow-2xl rounded-3xl w-full max-w-lg p-16 border border-gray-200 flex flex-col items-center space-y-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800">Mark Attendance</h1>
-        <p className="text-center text-gray-700 text-lg md:text-xl font-semibold">Hello, {currentUser}</p>
-        <p className="text-center text-gray-600 text-lg md:text-xl">{format(currentDate, "EEEE, MMMM do yyyy, h:mm:ss a")}</p>
-        <button
-          onClick={handleMark}
-          disabled={todayMarked || loading}
-          className={`w-full py-5 md:py-6 rounded-3xl text-white font-bold text-lg md:text-xl transition-all duration-300 transform ${
-            todayMarked || loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black shadow-xl hover:scale-105 hover:shadow-2xl"
-          }`}
-        >
-          {loading ? "Marking..." : todayMarked ? "Already Marked" : "Mark Attendance"}
-        </button>
-      </div>
+  <div className="w-full min-h-screen bg-gradient-to-br flex items-start justify-center pt-24 pb-16 px-18 sm:px-6 lg:px-8">
+    <div className="bg-white shadow-2xl rounded-3xl w-full max-w-md sm:max-w-lg p-8 sm:p-16 border border-gray-200 flex flex-col items-center space-y-6 sm:space-y-8">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-800">Mark Attendance</h1>
+      <p className="text-center text-gray-700 text-base sm:text-lg md:text-xl font-semibold">Hello, {currentUser}</p>
+      <p className="text-center text-gray-600 text-sm sm:text-base md:text-lg">
+        {format(currentDate, "EEEE, MMMM do yyyy, h:mm:ss a")}
+      </p>
+      <button
+        onClick={handleMark}
+        disabled={todayMarked || loading}
+        className={`w-full py-4 sm:py-5 md:py-6 rounded-3xl text-white font-bold text-base sm:text-lg md:text-xl transition-all duration-300 transform ${
+          todayMarked || loading
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black shadow-xl hover:scale-105 hover:shadow-2xl"
+        }`}
+      >
+        {loading ? "Marking..." : todayMarked ? "Already Marked" : "Mark Attendance"}
+      </button>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default MarkAttendance;

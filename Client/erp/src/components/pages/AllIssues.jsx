@@ -101,8 +101,8 @@ const AllIssues = () => {
   const currentIssues = issues.slice(indexOfFirst, indexOfLast);
 
   return (
-    <div className="w-full min-h-screen flex justify-center items-start p-10">
-      <div className="bg-white shadow-2xl rounded-2xl mb-10 p-10 w-full max-w-7xl">
+    <div className="w-full min-h-screen flex justify-center items-start p-5 sm:p-10">
+      <div className="bg-white shadow-2xl rounded-2xl mb-10 p-4 sm:p-10 w-full max-w-7xl">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
           All Issues
         </h2>
@@ -112,48 +112,38 @@ const AllIssues = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
-              <thead>
-                <tr className="bg-gray-800 text-white text-xl">
-                  <th className="p-3">Sr. No</th>
-                  <th className="p-3">Issue ID</th>
-                  <th className="p-3">Plaza Name</th>
-                  <th className="p-3">Status</th>
-                  <th className="p-3">Remarks</th>
-                  <th className="p-3">Reported By</th>
-                  <th className="p-3">Rectified Date</th>
-                  <th className="p-3 text-center">View</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentIssues.map((issue, index) => (
-                  <tr
-                    key={issue._id}
-                    className="border-b border-gray-200 hover:bg-gray-100 transition text-lg"
-                  >
-                    <td className="py-4 px-4">{indexOfFirst + index + 1}</td>
-                    <td className="py-4 px-4">
-                      {issue.issueId || 101 + indexOfFirst + index}
-                    </td>
-                    <td className="py-4 px-4">{issue.plazaName || "N/A"}</td>
-                    <td className="py-4 px-4">{issue.status}</td>
-                    <td className="py-4 px-4">{issue.remarks || "-"}</td>
-                    <td className="py-4 px-4 font-medium">
-                      {issue.reporterFullName || issue.reporterUsername}
-                    </td>
-                    <td className="py-4 px-4">
-                      {formatDateTime(issue.rectifiedDate)}
-                    </td>
-                    <td className="py-4 px-4 text-center">
-                      <button
-                        onClick={() => setSelectedIssue(issue)}
-                        className="text-blue-600 hover:text-blue-800"
-                      >
-                        <FaEye size={20} className="text-green-600 hover:text-green-800"/>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+             <thead>
+  <tr className="bg-gray-800 text-white text-xl">
+    <th className="p-3">Sr. No</th>
+    <th className="p-3">Issue ID</th>
+    <th className="p-3">Plaza Name</th>
+    <th className="p-3 hidden sm:table-cell">Status</th>
+    <th className="p-3 hidden sm:table-cell">Remarks</th>
+    <th className="p-3 hidden sm:table-cell">Reported By</th>
+    <th className="p-3 hidden sm:table-cell">Rectified Date</th>
+    <th className="p-3 text-center">View</th>
+  </tr>
+</thead>
+
+<tbody>
+  {currentIssues.map((issue, index) => (
+    <tr key={issue._id} className="border-b border-gray-200 hover:bg-gray-100 transition text-lg">
+      <td className="py-4 px-4">{indexOfFirst + index + 1}</td>
+      <td className="py-4 px-4">{issue.issueId || 101 + indexOfFirst + index}</td>
+      <td className="py-4 px-4">{issue.plazaName || "N/A"}</td>
+      <td className="py-4 px-4 hidden sm:table-cell">{issue.status}</td>
+      <td className="py-4 px-4 hidden sm:table-cell">{issue.remarks || "-"}</td>
+      <td className="py-4 px-4 hidden sm:table-cell">{issue.reporterFullName || issue.reporterUsername}</td>
+      <td className="py-4 px-4 hidden sm:table-cell">{formatDateTime(issue.rectifiedDate)}</td>
+      <td className="py-4 px-4 text-center">
+        <button onClick={() => setSelectedIssue(issue)} className="text-green-600 hover:text-green-800">
+          <FaEye size={20} />
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
             </table>
           </div>
         )}
@@ -200,7 +190,6 @@ const AllIssues = () => {
   );
 };
 
-// ✅ View/Edit Modal with Pending confirmation
 const IssueModal = ({ issue, onClose, onResolve }) => {
   const [status, setStatus] = useState(issue.status || "Pending");
   const [remarks, setRemarks] = useState(issue.remarks || "");
@@ -222,7 +211,6 @@ const IssueModal = ({ issue, onClose, onResolve }) => {
     const updatedDate = status === "Resolved" ? new Date().toISOString() : null;
     setRectifiedDate(updatedDate);
 
-    // ✅ Confirmation when marking as Pending
     if (status === "Pending") {
       Swal.fire({
         icon: "warning",
@@ -243,13 +231,13 @@ const IssueModal = ({ issue, onClose, onResolve }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
-      <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg">
-        <h3 className="text-2xl font-extrabold mb-6 text-center text-gray-900">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-2 sm:p-4 overflow-y-auto">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md sm:max-w-lg p-4 sm:p-8 overflow-y-auto">
+        <h3 className="text-xl sm:text-2xl font-extrabold mb-4 sm:mb-6 text-center text-gray-900">
           Issue Details
         </h3>
 
-        <div className="space-y-3 text-gray-800 text-lg font-medium">
+        <div className="space-y-2 sm:space-y-3 text-gray-800 text-sm sm:text-base font-medium">
           <p><span className="font-bold">Issue ID:</span> {issue.issueId}</p>
           <p><span className="font-bold">Plaza Name:</span> {issue.plazaName || "N/A"}</p>
           <p><span className="font-bold">Issue Type:</span> {issue.issueType}</p>
@@ -257,28 +245,28 @@ const IssueModal = ({ issue, onClose, onResolve }) => {
           <p><span className="font-bold">Date:</span> {issue.date ? new Date(issue.date).toLocaleDateString() : "Not Provided"}</p>
           <p><span className="font-bold">Time:</span> {issue.time || "Not Provided"}</p>
 
-          <p>
-            <span className="font-bold">Status:</span>
+          <div>
+            <label className="font-bold block mb-1">Status:</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="border rounded-lg p-2 w-full text-lg bg-white"
+              className="border rounded-lg p-2 w-full text-sm sm:text-base bg-white"
             >
               <option value="Pending">Pending</option>
               <option value="Resolved">Resolved</option>
             </select>
-          </p>
+          </div>
 
-          <p>
-            <span className="font-bold">Remarks:</span>
+          <div>
+            <label className="font-bold block mb-1">Remarks:</label>
             <input
               type="text"
               value={remarks}
               onChange={(e) => setRemarks(e.target.value)}
               placeholder="Add remarks (optional)"
-              className="border rounded-lg p-2 w-full text-lg"
+              className="border rounded-lg p-2 w-full text-sm sm:text-base"
             />
-          </p>
+          </div>
 
           {status === "Resolved" && (
             <p>
@@ -291,16 +279,16 @@ const IssueModal = ({ issue, onClose, onResolve }) => {
           <p><span className="font-bold">Office:</span> {issue.reporterOffice || "Not Assigned"}</p>
         </div>
 
-        <div className="mt-6 flex justify-end gap-3">
+        <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
           <button
             onClick={handleSubmit}
-            className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 font-semibold"
+            className="px-4 sm:px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 font-semibold w-full sm:w-auto"
           >
             Submit
           </button>
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold"
+            className="px-4 sm:px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold w-full sm:w-auto"
           >
             Close
           </button>
@@ -309,5 +297,6 @@ const IssueModal = ({ issue, onClose, onResolve }) => {
     </div>
   );
 };
+
 
 export default AllIssues;

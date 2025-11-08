@@ -75,6 +75,7 @@ const Sidebar = () => {
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const [lightMode, setLightMode] = useState(false);
   const [activePage, setActivePage] = useState("Dashboard"); // Track selected page
+  const [isMobileOpen, setIsMobileOpen] = useState(false); 
 
   // Dual login: userType from localStorage
   const [userType, setUserType] = useState("employee"); // default employee
@@ -90,8 +91,7 @@ const Sidebar = () => {
 
   const renderContent = () => {
     return (
-      <main className="ml-64 mt-16 bg-white h-[calc(100vh-64px)] flex items-center justify-center overflow-hidden">
-        {/* Dashboard always visible */}
+      <main className="flex-1 h-screen overflow-y-auto transition-all duration-300 md:ml-64">
         {/* Dashboard */}
 
 
@@ -206,7 +206,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex relative">
       {/* Header */}
       <Header
         onLogout={() => {
@@ -216,42 +216,56 @@ const Sidebar = () => {
         isSidebarOpen={!collapsed}
         lightMode={lightMode}
       />
+       {/* ✅ Mobile Hamburger Button */}
+   <button
+  onClick={() => setIsMobileOpen(!isMobileOpen)}
+  className="md:hidden fixed top-3 left-4 z-50 p-2 rounded-md text-white"
+>
+  <FaBars className="text-3xl sm:text-4xl" />
+</button>
 
-      {/* Sidebar */}
+
+       {/* ✅ Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full transition-all duration-300 shadow-lg flex flex-col justify-between
-        ${lightMode
-          ? "bg-white text-gray-800 border-r border-gray-300"
-          : "bg-gradient-to-b from-gray-900 to-gray-800 text-white border-r border-slate-500"
+        className={`fixed top-0 left-0 h-full z-50 transition-all duration-300 shadow-lg flex flex-col justify-between
+        ${
+          lightMode
+            ? "bg-white text-gray-800 border-r border-gray-300"
+            : "bg-gradient-to-b from-gray-900 to-gray-800 text-white border-r border-slate-500"
         }
-        ${collapsed ? "w-28" : "w-85"}`}
+        ${collapsed ? "w-24 md:w-28" : "w-72 md:w-85"}
+        ${isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+      `}
       >
         {/* Logo */}
-        <div className="flex items-center justify-center py-6 border-b border-slate-500">
+        <div className="flex items-center justify-center py-3 border-b border-slate-500">
           <img
             src="/logo.png"
             alt="Company Logo"
-            className="w-15 h-15 rounded-full bg-white p-2 shadow-lg"
+            className="w-12 h-12 rounded-full bg-white p-2 shadow-lg"
           />
         </div>
 
         {/* Scrollable Menu */}
-        <div className="flex-1 px-3">
+        <div className="flex-1 px-3 overflow-y-auto">
           <ul className="space-y-1 p-2 text-xl font-semibold">
-
-            {/* Employee menus only */}
-{userType === "employee" && (
-  <>
-  {/* Dashboard */}
-            <li>
-              <button
-                onClick={() => setActivePage("Dashboard")}
-                className="flex items-center p-3 rounded-lg hover:bg-slate-700 hover:text-white w-full"
-              >
-                <FaTachometerAlt className="text-3xl" />
-                {!collapsed && <span className="ml-4 text-lg font-semibold">Dashboard</span>}
-              </button>
-            </li>
+            {/* ✅ Employee Menus */}
+            {userType === "employee" && (
+              <>
+                {/* Dashboard */}
+                <li>
+                  <button
+                    onClick={() => setActivePage("Dashboard")}
+                    className="flex items-center p-3 rounded-lg hover:bg-slate-700 hover:text-white w-full"
+                  >
+                    <FaTachometerAlt className="text-3xl" />
+                    {!collapsed && (
+                      <span className="ml-4 text-lg font-semibold">
+                        Dashboard
+                      </span>
+                    )}
+                  </button>
+                </li>
     {/* 🐞 Issue Section */}
     <li>
       <button
@@ -750,7 +764,7 @@ const Sidebar = () => {
           </button>
         </div> */}
 
-        {/* Footer */}
+       {/* Footer */}
         <div className="border-t border-slate-700 p-5 text-center relative z-10">
           {!collapsed && (
             <>
@@ -763,17 +777,33 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Hamburger Button */}
+      {/* ✅ Mobile Overlay */}
+      {isMobileOpen && (
+        <div
+          onClick={() => setIsMobileOpen(false)}
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+        ></div>
+      )}
+
+      {/* ✅ Desktop Collapse Button */}
       <button
         onClick={toggleSidebar}
-        className={`fixed top-8 left-68 z-50 p-3 rounded-full text-4xl transition-all
-          ${lightMode ? "text-gray-800 hover:text-black hover:shadow-lg hover:scale-110" : "text-gray-400 hover:text-gray-200 hover:shadow-lg hover:scale-110"}`}
+        className={`hidden md:block fixed top-6 left-68 z-50 p-1 rounded-full text-4xl transition-all
+          ${
+            lightMode
+              ? "text-gray-800 hover:text-black hover:shadow-lg hover:scale-110"
+              : "text-gray-400 hover:text-gray-200 hover:shadow-lg hover:scale-110"
+          }`}
       >
         <FaBars />
       </button>
 
-      {/* Content */}
-      <div className={`flex-1 transition-all duration-300 ${collapsed ? "ml-20" : "ml-64"} p-5`}>
+      {/* ✅ Main Content */}
+      <div
+        className={`flex-1 transition-all duration-300 ${
+          collapsed ? "md:ml-20" : "md:ml-64"
+        } `}
+      >
         {renderContent()}
       </div>
     </div>
@@ -781,3 +811,5 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+

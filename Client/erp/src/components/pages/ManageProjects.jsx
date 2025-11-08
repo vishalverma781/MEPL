@@ -109,24 +109,28 @@ const ManageProjects = () => {
     }
   };
 
-  return (
-    <div className="w-full min-h-screen flex justify-center items-start p-10">
+   return (
+    <div className="flex-1 min-h-screen overflow-x-auto overflow-y-auto transition-all duration-300 md:ml-64 sm:p-8 ">
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-7xl">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">Manage Projects</h2>
+        <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
+          Manage Projects
+        </h2>
 
         {projects.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg">No projects added yet.</p>
+          <p className="text-center text-gray-500 text-lg">
+            No projects added yet.
+          </p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
               <thead>
-                <tr className="bg-gray-800 text-white text-xl">
+                <tr className="bg-gray-800 text-white text-lg sm:text-xl">
                   <th className="p-5 text-left">Project Name</th>
-                  <th className="p-5 text-left">PIU</th>
-                  <th className="p-5 text-left">Client</th>
-                  <th className="p-5 text-left">Location</th>
-                  <th className="p-5 text-left">Start Date</th>
-                  <th className="p-5 text-left">Assigned</th>
+                  <th className="p-5 text-left hidden sm:table-cell">PIU</th>
+                  <th className="p-5 text-left hidden md:table-cell">Client</th>
+                  <th className="p-5 text-left hidden lg:table-cell">Location</th>
+                  <th className="p-5 text-left hidden xl:table-cell">Start Date</th>
+                  <th className="p-5 text-left hidden md:table-cell">Assigned</th>
                   <th className="p-5 text-center">View</th>
                   <th className="p-5 text-center">Edit</th>
                   <th className="p-5 text-center">Delete</th>
@@ -134,21 +138,41 @@ const ManageProjects = () => {
               </thead>
               <tbody>
                 {currentProjects.map((project) => (
-                  <tr key={project._id} className="border-b border-gray-200 hover:bg-gray-100 transition text-lg">
+                  <tr
+                    key={project._id}
+                    className="border-b border-gray-200 hover:bg-gray-100 transition text-base sm:text-lg"
+                  >
                     <td className="py-6 px-4">{project.projectName}</td>
-                    <td className="py-6 px-4">{project.piuName}</td>
-                    <td className="py-6 px-4">{project.clientName}</td>
-                    <td className="py-6 px-4">{project.location}</td>
-                    <td className="py-6 px-4">{formatDate(project.startDate)}</td>
-                    <td className="py-6 px-4">{project.assignedTo}</td>
+                    <td className="py-6 px-4 hidden sm:table-cell">{project.piuName}</td>
+                    <td className="py-6 px-4 hidden md:table-cell">{project.clientName}</td>
+                    <td className="py-6 px-4 hidden lg:table-cell">{project.location}</td>
+                    <td className="py-6 px-4 hidden xl:table-cell">
+                      {formatDate(project.startDate)}
+                    </td>
+                    <td className="py-6 px-4 hidden md:table-cell">{project.assignedTo}</td>
                     <td className="py-6 px-4 text-center">
-                      <button onClick={() => setSelectedProject(project)} className="text-green-600 hover:text-green-800"><FaEye size={22} /></button>
+                      <button
+                        onClick={() => setSelectedProject(project)}
+                        className="text-green-600 hover:text-green-800"
+                      >
+                        <FaEye size={22} />
+                      </button>
                     </td>
                     <td className="py-6 px-4 text-center">
-                      <button onClick={() => handleEdit(project)} className="text-blue-600 hover:text-blue-800"><FaEdit size={22} /></button>
+                      <button
+                        onClick={() => handleEdit(project)}
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        <FaEdit size={22} />
+                      </button>
                     </td>
                     <td className="py-6 px-4 text-center">
-                      <button onClick={() => handleDelete(project._id)} className="text-red-600 hover:text-red-800"><FaTrash size={22} /></button>
+                      <button
+                        onClick={() => handleDelete(project._id)}
+                        className="text-red-600 hover:text-red-800"
+                      >
+                        <FaTrash size={22} />
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -157,22 +181,45 @@ const ManageProjects = () => {
           </div>
         )}
 
-        {/* Pagination */}
         {projects.length > projectsPerPage && (
           <div className="flex justify-center items-center mt-6 space-x-4">
-            <button onClick={handlePrev} disabled={currentPage === 1} className={`px-5 py-2 rounded-lg text-white font-medium ${currentPage===1?"bg-gray-400 cursor-not-allowed":"bg-blue-600 hover:bg-blue-700"}`}>Previous</button>
-            <span className="text-gray-700 font-medium">Page {currentPage} of {totalPages}</span>
-            <button onClick={handleNext} disabled={currentPage === totalPages} className={`px-5 py-2 rounded-lg text-white font-medium ${currentPage===totalPages?"bg-gray-400 cursor-not-allowed":"bg-blue-600 hover:bg-blue-700"}`}>Next</button>
+            <button
+              onClick={handlePrev}
+              disabled={currentPage === 1}
+              className={`px-5 py-2 rounded-lg text-white font-medium ${
+                currentPage === 1
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              }`}
+            >
+              Previous
+            </button>
+            <span className="text-gray-700 font-medium">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={handleNext}
+              disabled={currentPage === totalPages}
+              className={`px-5 py-2 rounded-lg text-white font-medium ${
+                currentPage === totalPages
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              }`}
+            >
+              Next
+            </button>
           </div>
         )}
       </div>
 
-      {/* 🔹 View Modal */}
+      {/* View Modal */}
       {selectedProject && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
           <div className="bg-white p-10 rounded-2xl shadow-2xl w-[90%] max-w-lg">
-            <h3 className="text-3xl font-extrabold mb-8 text-center text-gray-900">Project Details</h3>
-            <div className="space-y-5 text-gray-800 text-xl font-medium">
+            <h3 className="text-3xl font-extrabold mb-8 text-center text-gray-900">
+              Project Details
+            </h3>
+            <div className="space-y-5 text-gray-800 text-lg font-medium">
               <p><span className="font-bold">Project Name:</span> {selectedProject.projectName}</p>
               <p><span className="font-bold">PIU:</span> {selectedProject.piuName}</p>
               <p><span className="font-bold">Client:</span> {selectedProject.clientName}</p>
@@ -181,51 +228,67 @@ const ManageProjects = () => {
               <p><span className="font-bold">Assigned To:</span> {selectedProject.assignedTo}</p>
             </div>
             <div className="mt-10 flex justify-center">
-              <button onClick={() => setSelectedProject(null)} className="px-8 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-xl font-semibold">Close</button>
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="px-8 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-lg font-semibold"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* 🔹 Edit Modal */}
+      {/* Edit Modal */}
       {editProject && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
           <div className="bg-white p-10 rounded-2xl shadow-2xl w-[90%] max-w-lg">
-            <h3 className="text-3xl font-extrabold mb-8 text-center text-gray-900">Edit Project</h3>
+            <h3 className="text-3xl font-extrabold mb-8 text-center text-gray-900">
+              Edit Project
+            </h3>
             <div className="space-y-5 text-gray-800 text-lg font-medium">
-              <div>
-                <label className="block mb-2 font-semibold">Project Name</label>
-                <input type="text" name="projectName" value={formData.projectName} onChange={handleChange} className="w-full p-2 border rounded" />
-              </div>
-              <div>
-                <label className="block mb-2 font-semibold">PIU Name</label>
-                <input type="text" name="piuName" value={formData.piuName} onChange={handleChange} className="w-full p-2 border rounded" />
-              </div>
-              <div>
-                <label className="block mb-2 font-semibold">Client Name</label>
-                <input type="text" name="clientName" value={formData.clientName} onChange={handleChange} className="w-full p-2 border rounded" />
-              </div>
-              <div>
-                <label className="block mb-2 font-semibold">Location</label>
-                <input type="text" name="location" value={formData.location} onChange={handleChange} className="w-full p-2 border rounded" />
-              </div>
+              {["projectName", "piuName", "clientName", "location", "assignedTo"].map((field) => (
+                <div key={field}>
+                  <label className="block mb-2 font-semibold capitalize">
+                    {field.replace(/([A-Z])/g, " $1")}
+                  </label>
+                  <input
+                    type="text"
+                    name={field}
+                    value={formData[field]}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded"
+                  />
+                </div>
+              ))}
               <div>
                 <label className="block mb-2 font-semibold">Start Date</label>
-                <input type="date" name="startDate" value={formData.startDate} onChange={handleChange} className="w-full p-2 border rounded" />
-              </div>
-              <div>
-                <label className="block mb-2 font-semibold">Assigned To</label>
-                <input type="text" name="assignedTo" value={formData.assignedTo} onChange={handleChange} className="w-full p-2 border rounded" />
+                <input
+                  type="date"
+                  name="startDate"
+                  value={formData.startDate}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                />
               </div>
             </div>
             <div className="mt-10 flex justify-center space-x-5">
-              <button onClick={handleSave} className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-xl font-semibold">Save</button>
-              <button onClick={() => setEditProject(null)} className="px-8 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-xl font-semibold">Cancel</button>
+              <button
+                onClick={handleSave}
+                className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-lg font-semibold"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setEditProject(null)}
+                className="px-8 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-lg font-semibold"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
       )}
-
     </div>
   );
 };

@@ -80,22 +80,22 @@ const ApplyLeave = ({ refreshLeaves }) => {
     }
   };
 
-  return (
-    <div className="min-h-screen pt-8 pb-16 px-3 sm:px-6 lg:px-8 md:ml-64 transition-all duration-300">
-      <div className="bg-white shadow-2xl rounded-2xl mb-10 p-5 sm:p-8 md:p-10 border border-gray-200 w-full max-w-2xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">
+   return (
+    <div className="min-h-screen pt-8 pb-16 px-10 sm:px-6 lg:px-8 transition-all duration-300">
+      <div className="bg-white shadow-2xl rounded-2xl mb-10 p-5 sm:p-8 md:p-10 border border-gray-200 w-full max-w-md sm:max-w-2xl mx-auto">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6 sm:mb-8">
           Apply Leave
           <span className="block w-16 sm:w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
         </h2>
 
-        <form className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8" onSubmit={handleSubmit}>
+        <form className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6" onSubmit={handleSubmit}>
           <InputField
             label="Start Date"
             name="startDate"
             type="date"
             value={formData.startDate}
             onChange={handleChange}
-            icon={<FaCalendarAlt className="text-gray-400 mr-3" />}
+            icon={<FaCalendarAlt className="text-gray-400 mr-2 sm:mr-3" />}
             required
           />
           <InputField
@@ -104,7 +104,7 @@ const ApplyLeave = ({ refreshLeaves }) => {
             type="date"
             value={formData.endDate}
             onChange={handleChange}
-            icon={<FaCalendarAlt className="text-gray-400 mr-3" />}
+            icon={<FaCalendarAlt className="text-gray-400 mr-2 sm:mr-3" />}
             required
           />
           <InputField
@@ -113,23 +113,23 @@ const ApplyLeave = ({ refreshLeaves }) => {
             type="number"
             value={formData.numberOfDays}
             onChange={handleChange}
-            icon={<FaRegClock className="text-gray-400 mr-3" />}
+            icon={<FaRegClock className="text-gray-400 mr-2 sm:mr-3" />}
             placeholder="Auto-calculated"
             readOnly
           />
 
           <div className="sm:col-span-2">
-            <label className="block text-gray-700 font-bold mb-2">Reason for Leave</label>
-            <div className="flex items-start border border-gray-300 rounded-xl px-4 py-2 shadow-sm
+            <label className="block text-gray-700 font-bold mb-1 sm:mb-2 text-sm sm:text-base">Reason for Leave</label>
+            <div className="flex items-start border border-gray-300 rounded-xl px-3 sm:px-4 py-2 shadow-sm
                             focus-within:border-gray-800 focus-within:ring-2 focus-within:ring-gray-800/20
                             transition-all duration-300 bg-white">
-              <FaPen className="text-gray-400 mt-3 mr-3" />
+              <FaPen className="text-gray-400 mt-2 mr-2 sm:mr-3" />
               <textarea
                 name="reason"
                 placeholder="Briefly describe the reason for your leave"
                 value={formData.reason}
                 onChange={handleChange}
-                className="w-full p-2 text-sm sm:text-base text-gray-800 bg-transparent outline-none resize-none h-28 rounded-md"
+                className="w-full p-2 sm:p-3 text-sm sm:text-base text-gray-800 bg-transparent outline-none resize-none h-24 sm:h-28 rounded-md"
                 required
               />
             </div>
@@ -138,7 +138,7 @@ const ApplyLeave = ({ refreshLeaves }) => {
           <div className="sm:col-span-2 text-center mt-4">
             <button
               type="submit"
-              className="w-full sm:w-3/4 md:w-1/2 py-3 text-base sm:text-lg font-bold text-white rounded-xl shadow-md
+              className="w-full sm:w-3/4 md:w-1/2 py-3 text-sm sm:text-base md:text-lg font-bold text-white rounded-xl shadow-md
                          bg-gray-800 hover:bg-gray-900 transition-all duration-300 transform hover:scale-105"
             >
               Apply Leave
@@ -152,8 +152,8 @@ const ApplyLeave = ({ refreshLeaves }) => {
 
 const InputField = ({ label, name, type, value, onChange, icon, placeholder, readOnly, required }) => (
   <div>
-    <label className="block text-gray-700 font-bold mb-2">{label}</label>
-    <div className="flex items-center border border-gray-300 rounded-xl px-4 shadow-sm
+    <label className="block text-gray-700 font-bold mb-1 sm:mb-2 text-sm sm:text-base">{label}</label>
+    <div className="flex items-center border border-gray-300 rounded-xl px-2 sm:px-4 py-2 shadow-sm
                     focus-within:border-gray-800 focus-within:ring-2 focus-within:ring-gray-800/20
                     transition-all duration-300 bg-white">
       {icon}
@@ -165,7 +165,7 @@ const InputField = ({ label, name, type, value, onChange, icon, placeholder, rea
         placeholder={placeholder}
         readOnly={readOnly}
         required={required}
-        className="w-full p-3 text-sm sm:text-base text-gray-800 bg-transparent outline-none font-bold"
+        className="w-full p-2 sm:p-3 text-sm sm:text-base text-gray-800 bg-transparent outline-none font-bold"
       />
     </div>
   </div>

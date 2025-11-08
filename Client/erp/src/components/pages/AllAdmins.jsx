@@ -78,8 +78,8 @@ const AllAdmins = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  return (
-    <div className="w-full min-h-screen flex justify-center items-start p-10">
+    return (
+    <div className="flex-1 min-h-screen overflow-x-auto overflow-y-auto transition-all duration-300 md:ml-64 sm:p-8">
       {message && (
         <div
           className={`fixed top-5 left-1/2 -translate-x-1/2 px-6 py-3 rounded-xl shadow-lg text-white font-semibold ${
@@ -89,7 +89,8 @@ const AllAdmins = () => {
           {message.text}
         </div>
       )}
-      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-7xl">
+
+      <div className="bg-white shadow-2xl rounded-2xl p-16 w-full max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">All Admins</h2>
 
         {admins.length === 0 ? (
@@ -98,41 +99,40 @@ const AllAdmins = () => {
           <div className="overflow-x-auto">
             <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
               <thead>
-                <tr className="bg-gray-800 text-white text-xl">
+                <tr className="bg-gray-800 text-white text-lg sm:text-xl">
                   <th className="p-5 text-left">First Name</th>
                   <th className="p-5 text-left">Last Name</th>
-                  <th className="p-5 text-left">Username</th>
-                  <th className="p-5 text-left">Email</th>
-                  <th className="p-5 text-left">Position</th>
-                  <th className="p-5 text-left">City</th>
-                  <th className="p-5 text-left">State</th>
-                  <th className="p-5 text-left">Home Address</th>
-                  <th className="p-5 text-center">View Admin</th>
+                  <th className="p-5 text-left hidden sm:table-cell">Username</th>
+                  <th className="p-5 text-left hidden md:table-cell">Email</th>
+                  <th className="p-5 text-left hidden lg:table-cell">Position</th>
+                  <th className="p-5 text-left hidden xl:table-cell">City</th>
+                  <th className="p-5 text-left hidden xl:table-cell">State</th>
+                  <th className="p-5 text-left hidden xl:table-cell">Home Address</th>
+                  <th className="p-5 text-center">View</th>
                 </tr>
               </thead>
               <tbody>
                 {currentAdmins.map((admin) => (
                   <tr
                     key={admin._id}
-                    className="border-b border-gray-200 hover:bg-gray-100 transition text-lg"
+                    className="border-b border-gray-200 hover:bg-gray-100 transition text-base sm:text-lg"
                   >
-                    <td className="p-5">{admin.firstName}</td>
-                    <td className="p-5">{admin.lastName}</td>
-                    <td className="p-5 font-semibold text-blue-600 cursor-pointer hover:underline">
+                    <td className="py-6 px-4">{admin.firstName}</td>
+                    <td className="py-6 px-4">{admin.lastName}</td>
+                    <td className="py-6 px-4 hidden sm:table-cell text-blue-600 font-semibold cursor-pointer hover:underline">
                       {admin.username}
                     </td>
-                    <td className="p-5">{admin.email}</td>
-                    <td className="p-5">{admin.position || "N/A"}</td>
-                    <td className="p-5">{admin.address?.city || "N/A"}</td>
-                    <td className="p-5">{admin.address?.state || "N/A"}</td>
-                    <td className="p-5">{admin.address?.homeAddress || "N/A"}</td>
-                    <td className="p-5 text-center">
+                    <td className="py-6 px-4 hidden md:table-cell">{admin.email}</td>
+                    <td className="py-6 px-4 hidden lg:table-cell">{admin.position || "N/A"}</td>
+                    <td className="py-6 px-4 hidden xl:table-cell">{admin.address?.city || "N/A"}</td>
+                    <td className="py-6 px-4 hidden xl:table-cell">{admin.address?.state || "N/A"}</td>
+                    <td className="py-6 px-4 hidden xl:table-cell">{admin.address?.homeAddress || "N/A"}</td>
+                    <td className="py-6 px-4 text-center">
                       <button
                         onClick={() => setSelectedAdmin(admin)}
                         className="text-green-600 hover:text-green-800"
-                        title="View"
                       >
-                        <FaEye size={28} />
+                        <FaEye size={22} />
                       </button>
                     </td>
                   </tr>
@@ -155,7 +155,7 @@ const AllAdmins = () => {
             >
               Previous
             </button>
-            <span className="text-gray-700 font-medium text-lg">
+            <span className="text-gray-700 font-medium">
               Page {currentPage} of {totalPages}
             </span>
             <button
@@ -180,36 +180,20 @@ const AllAdmins = () => {
             <h3 className="text-3xl font-extrabold mb-8 text-center text-gray-900">
               Admin Details
             </h3>
-            <div className="space-y-5 text-gray-800 text-xl font-medium">
-              <p>
-                <span className="font-bold">First Name:</span> {selectedAdmin.firstName}
-              </p>
-              <p>
-                <span className="font-bold">Last Name:</span> {selectedAdmin.lastName}
-              </p>
-              <p>
-                <span className="font-bold">Username:</span> {selectedAdmin.username}
-              </p>
-              <p>
-                <span className="font-bold">Email:</span> {selectedAdmin.email}
-              </p>
-              <p>
-                <span className="font-bold">Position:</span> {selectedAdmin.position || "N/A"}
-              </p>
-              <p>
-                <span className="font-bold">City:</span> {selectedAdmin.address?.city || "N/A"}
-              </p>
-              <p>
-                <span className="font-bold">State:</span> {selectedAdmin.address?.state || "N/A"}
-              </p>
-              <p>
-                <span className="font-bold">Home Address:</span> {selectedAdmin.address?.homeAddress || "N/A"}
-              </p>
+            <div className="space-y-5 text-gray-800 text-lg font-medium">
+              <p><span className="font-bold">First Name:</span> {selectedAdmin.firstName}</p>
+              <p><span className="font-bold">Last Name:</span> {selectedAdmin.lastName}</p>
+              <p><span className="font-bold">Username:</span> {selectedAdmin.username}</p>
+              <p><span className="font-bold">Email:</span> {selectedAdmin.email}</p>
+              <p><span className="font-bold">Position:</span> {selectedAdmin.position || "N/A"}</p>
+              <p><span className="font-bold">City:</span> {selectedAdmin.address?.city || "N/A"}</p>
+              <p><span className="font-bold">State:</span> {selectedAdmin.address?.state || "N/A"}</p>
+              <p><span className="font-bold">Home Address:</span> {selectedAdmin.address?.homeAddress || "N/A"}</p>
             </div>
             <div className="mt-10 flex justify-center">
               <button
                 onClick={() => setSelectedAdmin(null)}
-                className="px-8 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-xl font-semibold"
+                className="px-8 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-lg font-semibold"
               >
                 Close
               </button>

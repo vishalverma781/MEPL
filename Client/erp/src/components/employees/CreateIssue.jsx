@@ -53,80 +53,80 @@ const CreateIssue = ({ createdIssues, setCreatedIssues }) => {
     }
   };
 
-  return (
-    <div className="ml-64 px-4 sm:px-6 lg:px-8 pt-8 pb-16 min-h-screen">
-      <div className="bg-white shadow-xl rounded-2xl w-full max-w-screen-lg mx-auto p-10 sm:p-15 border border-gray-200">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
-          Generate Your Issues
+ return (
+  <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-60 px-5 sm:px-8 lg:px-10 py-10">
+      <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl mx-auto ml-5 p-6 sm:p-10 border border-gray-200">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+           Generate Your Issues
           <span className="block w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
         </h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-          <SelectField
-            label="Select Issue Type"
-            name="issueType"
-            value={formData.issueType}
-            onChange={handleChange}
-            icon={<FaBug className="text-gray-400" />}
-            options={issueOptions.map(o => ({ label: o, value: o }))}
-            openDropdown={openDropdown}
-            setOpenDropdown={setOpenDropdown}
-          />
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-6">
+        <SelectField
+          label="Select Issue Type"
+          name="issueType"
+          value={formData.issueType}
+          onChange={handleChange}
+          icon={<FaBug className="text-gray-400" />}
+          options={issueOptions.map(o => ({ label: o, value: o }))}
+          openDropdown={openDropdown}
+          setOpenDropdown={setOpenDropdown}
+        />
 
-          <div>
-            <label className="block text-gray-700 font-medium mb-2 text-lg">Issue Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Describe your issue in detail..."
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 shadow-sm bg-white text-lg outline-none"
+        <div>
+          <label className="block text-gray-700 font-medium mb-2 text-base sm:text-lg">Issue Description</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Describe your issue in detail..."
+            className="w-full border border-gray-300 rounded-xl px-3 sm:px-4 py-2 sm:py-3 shadow-sm bg-white text-base sm:text-lg outline-none"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700 font-medium mb-2 text-base sm:text-lg">Select Date</label>
+          <div className="flex items-center border border-gray-300 rounded-xl px-3 sm:px-4 shadow-sm bg-white">
+            <FaCalendarAlt className="text-gray-400 mr-2 sm:mr-3" />
+            <DatePicker
+              selected={formData.date}
+              onChange={date => setFormData(prev => ({ ...prev, date }))}
+              placeholderText="DD/MM/YYYY"
+              dateFormat="dd/MM/yyyy"
+              className="w-full p-2 sm:p-3 text-base sm:text-lg bg-transparent outline-none cursor-pointer"
               required
             />
           </div>
+        </div>
 
+        {formData.time && (
           <div>
-            <label className="block text-gray-700 font-medium mb-2 text-lg">Select Date</label>
-            <div className="flex items-center border border-gray-300 rounded-xl px-4 shadow-sm bg-white">
-              <FaCalendarAlt className="text-gray-400 mr-3" />
-              <DatePicker
-                selected={formData.date}
-                onChange={date => setFormData(prev => ({ ...prev, date }))}
-                placeholderText="DD/MM/YYYY"
-                dateFormat="dd/MM/yyyy"
-                className="w-full p-3 text-lg bg-transparent outline-none cursor-pointer"
-                required
+            <label className="block text-gray-700 font-medium mb-2 text-base sm:text-lg">Time</label>
+            <div className="flex items-center border border-gray-300 rounded-xl px-3 sm:px-4 shadow-sm bg-white">
+              <FaClock className="text-gray-400 mr-2 sm:mr-3" />
+              <input
+                type="text"
+                value={formData.time}
+                readOnly
+                className="w-full p-2 sm:p-3 text-base sm:text-lg bg-transparent outline-none cursor-not-allowed"
               />
             </div>
           </div>
+        )}
 
-          {formData.time && (
-            <div>
-              <label className="block text-gray-700 font-medium mb-2 text-lg">Time</label>
-              <div className="flex items-center border border-gray-300 rounded-xl px-4 shadow-sm bg-white">
-                <FaClock className="text-gray-400 mr-3" />
-                <input
-                  type="text"
-                  value={formData.time}
-                  readOnly
-                  className="w-full p-3 text-lg bg-transparent outline-none cursor-not-allowed"
-                />
-              </div>
-            </div>
-          )}
-
-          <div className="text-center">
-            <button
-              type="submit"
-              className="w-full sm:w-1/2 py-2 text-lg font-semibold text-white rounded-xl shadow-md bg-gray-800 hover:bg-gray-900 transition-all duration-300 transform hover:scale-105"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
+        <div className="text-center mt-4 sm:mt-6">
+          <button
+            type="submit"
+            className="w-full sm:w-1/2 py-2 sm:py-3 text-base sm:text-lg font-semibold text-white rounded-xl shadow-md bg-gray-800 hover:bg-gray-900 transition-all duration-300 transform hover:scale-105"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
-  );
+  </div>
+);
 };
 
 const SelectField = ({ label, name, value, onChange, icon, options, openDropdown, setOpenDropdown }) => {

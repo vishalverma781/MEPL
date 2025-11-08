@@ -63,49 +63,51 @@ const AddPlaza = () => {
     }
   };
 
-  return (
-    <div className="ml-64 px-6 pt-12 pb-20 min-h-screen">
-      <div className="bg-white shadow-2xl rounded-2xl w-full max-w-screen-lg mx-auto p-10 border border-gray-200">
-        <h2 className="text-4xl font-bold text-center mb-12">Add Plaza</h2>
+ return (
+  <div className="ml-0 md:ml-64 px-10 sm:px-6 pt-10 pb-20 min-h-screen">
+    <div className="bg-white shadow-2xl rounded-2xl w-full max-w-screen-lg mx-auto p-6 sm:p-10 border border-gray-200">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12">
+        Add Plaza
+      </h2>
 
-        <form
-          onSubmit={handleSubmit}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-10"
-        >
-          <InputField
-            label="Plaza Name"
-            name="plazaName"
-            value={formData.plazaName}
-            onChange={handleChange}
-            placeholder="Enter plaza name"
-            icon={<FaBuilding />}
-            required
-          />
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10"
+      >
+        <InputField
+          label="Plaza Name"
+          name="plazaName"
+          value={formData.plazaName}
+          onChange={handleChange}
+          placeholder="Enter plaza name"
+          icon={<FaBuilding />}
+          required
+        />
 
-          <SelectField
-            label="Project"
-            name="projectId"
-            value={formData.projectId}
-            onChange={handleChange}
-            icon={<FaTasks />}
-            options={projects.map((p) => ({
-              label: `${p.projectName} (${p.piuName}, ${p.location})`,
-              value: p._id,
-            }))}
-          />
+        <SelectField
+          label="Project"
+          name="projectId"
+          value={formData.projectId}
+          onChange={handleChange}
+          icon={<FaTasks />}
+          options={projects.map((p) => ({
+            label: `${p.projectName} (${p.piuName}, ${p.location})`,
+            value: p._id,
+          }))}
+        />
 
-          <div className="sm:col-span-2 text-center">
-            <button
-              type="submit"
-              className="py-5 px-10 bg-gray-800 text-white rounded-xl text-lg font-semibold"
-            >
-              ➕ Add Plaza
-            </button>
-          </div>
-        </form>
-      </div>
+        <div className="sm:col-span-2 text-center">
+          <button
+            type="submit"
+            className="w-full sm:w-auto py-4 sm:py-5 px-6 sm:px-10 bg-gray-800 text-white rounded-xl text-base sm:text-lg font-semibold"
+          >
+            ➕ Add Plaza
+          </button>
+        </div>
+      </form>
     </div>
-  );
+  </div>
+);
 };
 
 // Input Field

@@ -125,7 +125,7 @@ const handleSaveEdit = async () => {
   };
 
   return (
-    <div className="w-full min-h-screen flex justify-center items-start p-10">
+    <div className="w-full min-h-screen flex justify-center items-start p-3">
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-7xl">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
           ⚙️ Manage Employees
@@ -136,74 +136,85 @@ const handleSaveEdit = async () => {
             No employees added yet.
           </p>
         ) : (
-          <div className="">
-            <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
-              <thead>
-                <tr className="bg-gray-800 text-white text-xl">
-                  <th className="p-5 text-left">Profile</th>
-                  <th className="p-5 text-left">Full Name</th>
-                  <th className="p-5 text-left">Email</th>
-                  <th className="p-5 text-left">Phone</th>
-                  <th className="p-5 text-left">Department</th>
-                  <th className="p-5 text-left">Designation</th>
-                  <th className="p-5 text-center">View</th>
-                  <th className="p-5 text-center">Edit</th>
-                  <th className="p-5 text-center">Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentEmployees.map((emp, idx) => (
-                  <tr
-                    key={idx}
-                    className="border-b border-gray-200 hover:bg-gray-100 transition text-lg"
-                  >
-                    <td className="p-5">
-                      {emp.profilePic ? (
-                        <img
-                          src={getImageSrc(emp.profilePic)}
-                          alt={emp.fullName}
-                          className="w-12 h-12 rounded-full object-cover border"
-                        />
-                      ) : (
-                        <div className="w-12 h-12 rounded-full border flex items-center justify-center text-gray-500 text-xs">
-                          No Img
-                        </div>
-                      )}
-                    </td>
-                    <td className="p-5">{emp.fullName}</td>
-                    <td className="p-5">{emp.email}</td>
-                    <td className="p-5">{emp.phone}</td>
-                    <td className="p-5">{emp.department}</td>
-                    <td className="p-5">{emp.designation}</td>
-                    <td className="p-5 text-center">
-                      <button
-                        onClick={() => setSelectedEmployee(emp)}
-                        className="text-green-600 hover:text-green-800"
-                      >
-                        <FaEye size={20} />
-                      </button>
-                    </td>
-                    <td className="p-5 text-center">
-                      <button
-                        onClick={() => openEdit(emp)}
-                        className="text-blue-600 hover:text-blue-800"
-                      >
-                        <FaEdit size={20} />
-                      </button>
-                    </td>
-                    <td className="p-5 text-center">
-                      <button
-                        onClick={() => setDeleteEmployee(emp)}
-                        className="text-red-600 hover:text-red-800"
-                      >
-                        <FaTrash size={20} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+         <div className="overflow-x-auto">
+  <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
+    <thead>
+      <tr className="bg-gray-800 text-white text-xl">
+        {/* 👇 Profile hidden in mobile */}
+        <th className="p-5 text-left hidden md:table-cell">Profile</th>
+        <th className="p-5 text-left">Full Name</th>
+
+        {/* 👇 Hide these on small screens */}
+        <th className="p-5 text-left hidden md:table-cell">Email</th>
+        <th className="p-5 text-left hidden md:table-cell">Phone</th>
+        <th className="p-5 text-left hidden md:table-cell">Department</th>
+        <th className="p-5 text-left hidden md:table-cell">Designation</th>
+
+        <th className="p-5 text-center">View</th>
+        <th className="p-5 text-center">Edit</th>
+        <th className="p-5 text-center">Delete</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {currentEmployees.map((emp, idx) => (
+        <tr
+          key={idx}
+          className="border-b border-gray-200 hover:bg-gray-100 transition text-lg"
+        >
+          {/* ✅ Hidden on mobile */}
+          <td className="p-5 hidden md:table-cell">
+            {emp.profilePic ? (
+              <img
+                src={getImageSrc(emp.profilePic)}
+                alt={emp.fullName}
+                className="w-12 h-12 rounded-full object-cover border"
+              />
+            ) : (
+              <div className="w-12 h-12 rounded-full border flex items-center justify-center text-gray-500 text-xs">
+                No Img
+              </div>
+            )}
+          </td>
+
+          <td className="p-5">{emp.fullName}</td>
+
+          {/* ✅ Hidden on mobile */}
+          <td className="p-5 hidden md:table-cell">{emp.email}</td>
+          <td className="p-5 hidden md:table-cell">{emp.phone}</td>
+          <td className="p-5 hidden md:table-cell">{emp.department}</td>
+          <td className="p-5 hidden md:table-cell">{emp.designation}</td>
+
+          <td className="p-5 text-center">
+            <button
+              onClick={() => setSelectedEmployee(emp)}
+              className="text-green-600 hover:text-green-800"
+            >
+              <FaEye size={20} />
+            </button>
+          </td>
+          <td className="p-5 text-center">
+            <button
+              onClick={() => openEdit(emp)}
+              className="text-blue-600 hover:text-blue-800"
+            >
+              <FaEdit size={20} />
+            </button>
+          </td>
+          <td className="p-5 text-center">
+            <button
+              onClick={() => setDeleteEmployee(emp)}
+              className="text-red-600 hover:text-red-800"
+            >
+              <FaTrash size={20} />
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
         )}
 
         {employees.length > employeesPerPage && (
@@ -265,37 +276,42 @@ const handleSaveEdit = async () => {
 
 // ================= MODALS =================
 const EmployeeModal = ({ employee, onClose }) => (
-  <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-    <div className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-4xl p-6">
-      <div className="flex flex-col md:flex-row items-center space-x-4 mb-6">
+  <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+    <div className="bg-white rounded-2xl shadow-2xl w-[95%] max-w-4xl p-4 sm:p-6 overflow-y-auto max-h-[90vh]">
+      
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-4 mb-6">
         <div className="flex flex-col items-center">
           {employee.profilePic ? (
             <img
               src={getImageSrc(employee.profilePic)}
               alt={employee.fullName}
-              className="w-24 h-24 rounded-full border-2 border-gray-300 object-cover"
+              className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-gray-300 object-cover"
             />
           ) : (
-            <div className="w-24 h-24 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-500">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-500">
               No Image
             </div>
           )}
         </div>
-        <div className="mt-4 md:mt-0">
-          <h3 className="text-2xl font-bold">{employee.fullName}</h3>
-          <p className="text-gray-600">
+
+        <div className="mt-4 sm:mt-0 text-center sm:text-left w-full">
+          <h3 className="text-xl sm:text-2xl font-bold">{employee.fullName}</h3>
+          <p className="text-gray-600 text-sm sm:text-base">
             {employee.designation || "N/A"} - {employee.department || "N/A"}
           </p>
         </div>
+
         <button
           onClick={onClose}
-          className="ml-auto px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold"
+          className="mt-3 sm:mt-0 sm:ml-auto px-3 py-1 sm:px-4 sm:py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold text-sm sm:text-base"
         >
           Close
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+      {/* Details Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base">
         <Section title="👤 Personal Details">
           <GridRow label="Email" value={employee.email} />
           <GridRow label="Phone" value={employee.phone} />
@@ -314,7 +330,7 @@ const EmployeeModal = ({ employee, onClose }) => (
 
         <Section title="💼 Employment Details">
           <GridRow label="Employee ID" value={employee.employeeId} />
-          <GridRow label="Username" value={employee.username} /> {/* ✅ Added */}
+          <GridRow label="Username" value={employee.username} />
           <GridRow label="Designation" value={employee.designation} />
           <GridRow label="Department" value={employee.department} />
           <GridRow label="Joining Date" value={employee.joinDate} />
@@ -332,28 +348,31 @@ const EmployeeModal = ({ employee, onClose }) => (
 );
 
 const EditEmployeeModal = ({ employee, setEmployee, onSave, onClose }) => (
-  <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-    <div className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-4xl p-6">
-      {/* ✅ Form wrap */}
+  <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+    <div className="bg-white rounded-2xl shadow-2xl w-[95%] max-w-4xl p-4 sm:p-6 overflow-y-auto max-h-[90vh]">
+      
+      {/* ===== Header Section ===== */}
       <form
         onSubmit={(e) => {
-          e.preventDefault(); // page reload prevent karega
-          onSave(); // Save call karega
+          e.preventDefault();
+          onSave();
         }}
       >
-        <div className="flex flex-col md:flex-row items-center space-x-4 mb-6">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-4 mb-6">
+          {/* Profile Picture */}
           <div className="flex flex-col items-center">
             {employee.profilePic ? (
               <img
                 src={getImageSrc(employee.profilePic)}
                 alt={employee.fullName}
-                className="w-24 h-24 rounded-full border-2 border-gray-300 object-cover"
+                className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-gray-300 object-cover"
               />
             ) : (
-              <div className="w-24 h-24 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-500">
+              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-500">
                 No Image
               </div>
             )}
+
             <label className="mt-3 cursor-pointer bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 text-sm">
               Change Photo
               <input
@@ -368,180 +387,87 @@ const EditEmployeeModal = ({ employee, setEmployee, onSave, onClose }) => (
             </label>
           </div>
 
-          <div className="mt-4 md:mt-0 flex ml-auto gap-2">
+          {/* Buttons */}
+          <div className="mt-4 sm:mt-0 flex sm:ml-auto gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 font-semibold"
+              className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 font-semibold text-sm sm:text-base"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold text-sm sm:text-base"
             >
               Save
             </button>
           </div>
         </div>
 
-        {/* ✅ Form fields */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        {/* ===== Form Fields ===== */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base">
+
+          {/* 👤 Personal Details */}
           <Section title="👤 Personal Details">
-            <InputRow
-              label="Email"
-              value={employee.email}
-              onChange={(val) =>
-                setEmployee({ ...employee, email: val })
-              }
-            />
-            <InputRow
-              label="Phone"
-              value={employee.phone}
-              onChange={(val) =>
-                setEmployee({ ...employee, phone: val })
-              }
-            />
-            <InputRow
-              label="Gender"
-              value={employee.gender}
-              onChange={(val) =>
-                setEmployee({ ...employee, gender: val })
-              }
-            />
-            <InputRow
-              label="DOB"
-              type="date"
-              value={formatDate(employee.dob)}
-              onChange={(val) =>
-                setEmployee({ ...employee, dob: val })
-              }
-            />
-            <InputRow
-              label="City"
-              value={employee.city}
-              onChange={(val) =>
-                setEmployee({ ...employee, city: val })
-              }
-            />
-            <InputRow
-              label="State"
-              value={employee.state}
-              onChange={(val) =>
-                setEmployee({ ...employee, state: val })
-              }
-            />
-            <InputRow
-              label="Street"
-              value={employee.street}
-              onChange={(val) =>
-                setEmployee({ ...employee, street: val })
-              }
-            />
+            <InputRow label="Email" value={employee.email}
+              onChange={(val) => setEmployee({ ...employee, email: val })}  />
+            <InputRow label="Phone" value={employee.phone}
+              onChange={(val) => setEmployee({ ...employee, phone: val })}  />
+            <InputRow label="Gender" value={employee.gender}
+              onChange={(val) => setEmployee({ ...employee, gender: val })}  />
+            <InputRow label="DOB" type="date" value={formatDate(employee.dob)}
+              onChange={(val) => setEmployee({ ...employee, dob: val })}  />
+            <InputRow label="City" value={employee.city}
+              onChange={(val) => setEmployee({ ...employee, city: val })}  />
+            <InputRow label="State" value={employee.state}
+              onChange={(val) => setEmployee({ ...employee, state: val })}  />
+            <InputRow label="Street" value={employee.street}
+              onChange={(val) => setEmployee({ ...employee, street: val })}  />
           </Section>
 
+          {/* 🎓 Education Details */}
           <Section title="🎓 Education Details">
-            <InputRow
-              label="Qualification"
-              value={employee.qualification}
-              onChange={(val) =>
-                setEmployee({ ...employee, qualification: val })
-              }
-            />
-            <InputRow
-              label="University"
-              value={employee.university}
-              onChange={(val) =>
-                setEmployee({ ...employee, university: val })
-              }
-            />
-            <InputRow
-              label="Passing Year"
-              type="date"
-              value={formatDate(employee.passingYear)}
-              onChange={(val) =>
-                setEmployee({ ...employee, passingYear: val })
-              }
-            />
+            <InputRow label="Qualification" value={employee.qualification}
+              onChange={(val) => setEmployee({ ...employee, qualification: val })}  />
+            <InputRow label="University" value={employee.university}
+              onChange={(val) => setEmployee({ ...employee, university: val })}  />
+            <InputRow label="Passing Year" type="date" value={formatDate(employee.passingYear)}
+              onChange={(val) => setEmployee({ ...employee, passingYear: val })}  />
           </Section>
 
+          {/* 💼 Employment Details */}
           <Section title="💼 Employment Details">
-            <InputRow
-              label="Employee ID"
-              value={employee.employeeId}
-              onChange={(val) =>
-                setEmployee({ ...employee, employeeId: val })
-              }
-            />
-            <InputRow
-              label="Username"
-              value={employee.username}
-              onChange={(val) =>
-                setEmployee({ ...employee, username: val })
-              }
-            />{" "}
-            {/* ✅ Added */}
-            <InputRow
-              label="Designation"
-              value={employee.designation}
-              onChange={(val) =>
-                setEmployee({ ...employee, designation: val })
-              }
-            />
-            <InputRow
-              label="Department"
-              value={employee.department}
-              onChange={(val) =>
-                setEmployee({ ...employee, department: val })
-              }
-            />
-            <InputRow
-              label="Joining Date"
-              type="date"
-              value={formatDate(employee.joinDate)}
-              onChange={(val) =>
-                setEmployee({ ...employee, joinDate: val })
-              }
-            />
-            <InputRow
-              label="Password"
-              type="password"
-              autoComplete="new-password"
+            <InputRow label="Employee ID" value={employee.employeeId}
+              onChange={(val) => setEmployee({ ...employee, employeeId: val })}  />
+            <InputRow label="Username" value={employee.username}
+              onChange={(val) => setEmployee({ ...employee, username: val })}  />
+            <InputRow label="Designation" value={employee.designation}
+              onChange={(val) => setEmployee({ ...employee, designation: val })}  />
+            <InputRow label="Department" value={employee.department}
+              onChange={(val) => setEmployee({ ...employee, department: val })}  />
+            <InputRow label="Joining Date" type="date" value={formatDate(employee.joinDate)}
+              onChange={(val) => setEmployee({ ...employee, joinDate: val })}  />
+            <InputRow label="Password" type="password"
               value={employee.password || ""}
-              onChange={(val) =>
-                setEmployee({ ...employee, password: val })
-              }
-            />
+              onChange={(val) => setEmployee({ ...employee, password: val })}  />
           </Section>
 
+          {/* 🏦 Bank Details */}
           <Section title="🏦 Bank Details">
-            <InputRow
-              label="Bank Name"
-              value={employee.bankName}
-              onChange={(val) =>
-                setEmployee({ ...employee, bankName: val })
-              }
-            />
-            <InputRow
-              label="Account Number"
-              value={employee.accountNumber}
-              onChange={(val) =>
-                setEmployee({ ...employee, accountNumber: val })
-              }
-            />
-            <InputRow
-              label="IFSC"
-              value={employee.ifsc}
-              onChange={(val) =>
-                setEmployee({ ...employee, ifsc: val })
-              }
-            />
+            <InputRow label="Bank Name" value={employee.bankName}
+              onChange={(val) => setEmployee({ ...employee, bankName: val })}  />
+            <InputRow label="Account Number" value={employee.accountNumber}
+              onChange={(val) => setEmployee({ ...employee, accountNumber: val })}  />
+            <InputRow label="IFSC" value={employee.ifsc}
+              onChange={(val) => setEmployee({ ...employee, ifsc: val })}  />
           </Section>
         </div>
       </form>
     </div>
   </div>
 );
+
 
 const DeleteEmployeeModal = ({ employee, onConfirm, onClose }) => (
   <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
