@@ -6,7 +6,7 @@ const AllAdmins = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [message, setMessage] = useState(null);
   const [selectedAdmin, setSelectedAdmin] = useState(null);
-  const adminsPerPage = 4;
+  const adminsPerPage = 3;
 
   const fetchAdmins = async () => {
     try {

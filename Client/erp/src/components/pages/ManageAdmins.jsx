@@ -16,7 +16,7 @@ const ManageAdmins = () => {
     address: { city: "", state: "", homeAddress: "" },
   });
 
-  const adminsPerPage = 4;
+  const adminsPerPage = 3;
 
   const fetchAdmins = async () => {
    try {

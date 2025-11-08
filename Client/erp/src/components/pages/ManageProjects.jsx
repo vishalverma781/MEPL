@@ -20,7 +20,7 @@ const ManageProjects = () => {
     assignedTo: "",
   });
 
-  const projectsPerPage = 4;
+  const projectsPerPage = 3;
 
   // Fetch projects from API
 // ✅ Fetch projects from backend API

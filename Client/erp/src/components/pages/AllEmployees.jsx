@@ -28,7 +28,7 @@ const AllEmployees = () => {
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const employeesPerPage = 5;
+  const employeesPerPage = 4;
 
   // ✅ Fetch employees from backend
   useEffect(() => {
