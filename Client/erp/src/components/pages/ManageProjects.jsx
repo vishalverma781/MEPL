@@ -110,7 +110,7 @@ const ManageProjects = () => {
   };
 
    return (
-    <div className="flex-1 min-h-screen overflow-x-auto overflow-y-auto transition-all duration-300 md:ml-64 sm:p-8 ">
+    <div className="flex-1 min-h-screen overflow-x-auto overflow-y-auto transition-all duration-300 md:ml-20 ">
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-7xl">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
           Manage Projects

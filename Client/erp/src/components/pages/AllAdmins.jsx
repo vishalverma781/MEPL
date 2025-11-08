@@ -79,7 +79,7 @@ const AllAdmins = () => {
   };
 
     return (
-    <div className="flex-1 min-h-screen overflow-x-auto overflow-y-auto transition-all duration-300 md:ml-64 sm:p-8">
+    <div className="flex-1 min-h-screen overflow-x-auto overflow-y-auto transition-all duration-300 md:ml-20">
       {message && (
         <div
           className={`fixed top-5 left-1/2 -translate-x-1/2 px-6 py-3 rounded-xl shadow-lg text-white font-semibold ${
