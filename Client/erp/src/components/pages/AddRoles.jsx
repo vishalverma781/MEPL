@@ -159,7 +159,7 @@ const AddRoles = ({ setRoles }) => {
           <span className="block w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
         </h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6 pb-40">
           <SelectField
             label="Select Employee"
             name="employeeId"

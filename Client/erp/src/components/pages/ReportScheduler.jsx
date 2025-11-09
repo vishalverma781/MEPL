@@ -158,7 +158,7 @@ const ReportScheduler = () => {
  // 🧱 UI Section Below (unchanged UI)
   return (
       <div className="w-full min-h-screen flex justify-center items-start ">
-      <div className="bg-white shadow-2xl rounded-2xl p-6 w-full max-w-7xl">
+      <div className="bg-white pb-40 shadow-2xl rounded-2xl p-4 w-full max-w-7xl">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
           REPORT SCHEDULER
         </h2>

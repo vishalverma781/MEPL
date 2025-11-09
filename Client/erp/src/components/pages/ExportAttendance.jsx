@@ -130,7 +130,7 @@ const ExportAttendance = () => {
 
  return (
     <div className="ml-16 p-4 md:p-8 min-h-screen ">
-      <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-8 border border-gray-200 max-w-7xl mx-auto">
+      <div className="bg-white pb-40 rounded-3xl shadow-2xl p-4 md:p-8 border border-gray-200 max-w-7xl mx-auto">
         {/* Heading + Buttons */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4 sm:gap-0">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center sm:text-left">

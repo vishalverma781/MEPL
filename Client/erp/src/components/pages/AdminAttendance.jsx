@@ -135,7 +135,7 @@ const AdminAttendance = () => {
 
   return (
     <div className="p-4 md:p-8 min-h-screen ">
-      <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-8 border border-gray-200 max-w-7xl mx-auto">
+      <div className="bg-white pb-40 rounded-3xl shadow-2xl md:p-8 border border-gray-200 max-w-7xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-8 sm:mb-10 text-center">
           Attendance Management
         </h1>
