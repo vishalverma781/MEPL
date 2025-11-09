@@ -9,21 +9,14 @@ const getImageSrc = (pic) => {
     if (pic instanceof File || pic instanceof Blob) {
       return URL.createObjectURL(pic);
     }
-
     if (typeof pic === "string") {
       if (pic.startsWith("http")) return pic;
-
-      const baseURL = import.meta.env.VITE_API_URL?.replace(/\/api$/, "");
-
-      // ✅ agar DB me 'uploads/filename.jpg' stored hai
       if (pic.startsWith("uploads/")) {
-        return `${baseURL}/${pic.replace(/\\/g, "/")}`;
+        // ✅ backend ke uploads se serve hoga
+        return `${import.meta.env.VITE_API_URL.replace("/api", "")}/${pic.replace(/\\/g, "/")}`;
+
       }
-
-      // ✅ agar sirf filename stored hai (uploads missing)
-      return `${baseURL}/uploads/${pic.replace(/\\/g, "/")}`;
     }
-
     return null;
   } catch (error) {
     console.error("Invalid profilePic:", error);
