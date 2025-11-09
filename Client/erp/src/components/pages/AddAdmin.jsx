@@ -97,7 +97,7 @@ const AddAdmin = ({ admins, setAdmins }) => {
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pb-40"
         >
           <InputField
             label="First Name"

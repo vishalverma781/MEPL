@@ -117,7 +117,7 @@ const [departments, setDepartments] = useState([]);
           <span className="block w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
         </h1>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pb-40">
           {step === 1 && (
             <>
               <InputField label="Full Name" name="fullName" placeholder="Enter Full Name" value={formData.fullName} onChange={handleChange} icon={<FaUser />} required />
