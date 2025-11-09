@@ -70,16 +70,19 @@ const AddProject = ({ projects, setProjects }) => {
   };
 
  return (
-    <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-60 px-5 sm:px-8 lg:px-10 py-3">
-       <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl mx-auto p-6 sm:p-10 border border-gray-200 min-h-[80vh]">
+  <div className="flex-1 bg-gray-50 transition-all duration-300 md:ml-60 min-h-[100vh]">
+    {/* ✅ Scrollable area */}
+    <div className="w-full h-full overflow-y-auto px-4 sm:px-8 lg:px-10 py-8">
+      <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl mx-auto p-6 sm:p-10 border border-gray-200">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Add Project
           <span className="block w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
         </h2>
 
+        {/* ✅ Form with full scroll + visible bottom padding */}
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pb-40"
         >
           <InputField
             label="Project Name"
@@ -118,7 +121,6 @@ const AddProject = ({ projects, setProjects }) => {
             required
           />
 
-          {/* Assigned To dropdown */}
           <SelectField
             label="Assigned To"
             name="assignedTo"
@@ -128,14 +130,13 @@ const AddProject = ({ projects, setProjects }) => {
             options={["N/A", "Admin", "Manager", "Supervisor"]}
           />
 
-          {/* Start Date */}
           <div>
             <label className="block text-gray-700 font-medium mb-2 text-lg">
               Date of Creation
             </label>
             <div className="flex items-center border border-gray-300 rounded-xl px-4 shadow-sm 
-                         focus-within:border-gray-800 focus-within:ring-2 focus-within:ring-gray-800/20
-                         transition-all duration-300 bg-white">
+                       focus-within:border-gray-800 focus-within:ring-2 focus-within:ring-gray-800/20
+                       transition-all duration-300 bg-white">
               <FaCalendarAlt className="text-gray-400 mr-3" />
               <DatePicker
                 selected={formData.startDate}
@@ -148,10 +149,11 @@ const AddProject = ({ projects, setProjects }) => {
             </div>
           </div>
 
-          <div className="sm:col-span-2 mt-2 text-center">
+          {/* ✅ Button with safe bottom space */}
+          <div className="sm:col-span-2 mt-6 text-center">
             <button
               type="submit"
-              className="w-full sm:w-1/2 py-2 text-lg font-semibold text-white rounded-xl shadow-md 
+              className="w-full sm:w-1/2 py-4 text-lg font-semibold text-white rounded-xl shadow-md 
                 bg-gray-800 hover:bg-gray-900 transition-all duration-300 transform hover:scale-105"
             >
               Add Project
@@ -160,7 +162,9 @@ const AddProject = ({ projects, setProjects }) => {
         </form>
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 // ✅ Reusable Input Field
