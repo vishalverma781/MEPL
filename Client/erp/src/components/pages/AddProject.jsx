@@ -70,7 +70,7 @@ const AddProject = ({ projects, setProjects }) => {
   };
 
  return (
-    <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-60 px-5 sm:px-8 lg:px-10 py-10">
+    <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-60 px-5 sm:px-8 lg:px-10 py-3">
       <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl mx-auto ml-5 p-6 sm:p-10 border border-gray-200">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Add Project
@@ -148,10 +148,10 @@ const AddProject = ({ projects, setProjects }) => {
             </div>
           </div>
 
-          <div className="sm:col-span-2 mt-4 text-center">
+          <div className="sm:col-span-2 mt-2 text-center">
             <button
               type="submit"
-              className="w-full sm:w-1/2 py-4 text-lg font-semibold text-white rounded-xl shadow-md 
+              className="w-full sm:w-1/2 py-2 text-lg font-semibold text-white rounded-xl shadow-md 
                 bg-gray-800 hover:bg-gray-900 transition-all duration-300 transform hover:scale-105"
             >
               Add Project
