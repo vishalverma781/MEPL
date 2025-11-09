@@ -71,7 +71,7 @@ const AddProject = ({ projects, setProjects }) => {
 
  return (
     <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-60 px-5 sm:px-8 lg:px-10 py-3">
-       <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl mx-auto p-6 sm:p-10 border border-gray-200 min-h-[20vh]">
+       <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl mx-auto p-6 sm:p-10 border border-gray-200 min-h-[80vh]">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Add Project
           <span className="block w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
