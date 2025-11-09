@@ -20,10 +20,10 @@ const getImageSrc = (pic) => {
     if (typeof pic === "string") {
       if (pic.startsWith("http")) return pic;
       if (pic.startsWith("uploads/")) {
-        // ✅ backend ke uploads se serve hoga
-        return `${import.meta.env.VITE_API_URL.replace("/api", "")}/${pic.replace(/\\/g, "/")}`;
+  const baseURL = import.meta.env.VITE_API_URL?.replace(/\/api$/, ""); // ✅ remove only last /api
+  return `${baseURL}/${pic.replace(/\\/g, "/")}`;
+}
 
-      }
     }
     return null;
   } catch (error) {
