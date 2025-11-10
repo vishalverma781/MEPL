@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaEye } from "react-icons/fa";
 
+// ✅ Utility function for profile image (robust)
 const getImageSrc = (pic) => {
   if (!pic) return null;
 
@@ -10,29 +11,20 @@ const getImageSrc = (pic) => {
     }
 
     if (typeof pic === "string") {
-      // ✅ Case 1: Already full URL
       if (pic.startsWith("http")) return pic;
 
-      // ✅ Case 2: Stored path like "uploads/xxxx.png"
-      if (pic.startsWith("uploads/")) {
-        const base = import.meta.env.VITE_API_URL?.replace(/\/api$/, "");
-        const finalUrl = `${base}/${pic.replace(/\\/g, "/")}`;
-        // console.log("🧠 Final Image URL:", finalUrl);
-        return finalUrl;
-      }
-
-      // ✅ Case 3: If backend accidentally stores with leading slash
-      if (pic.startsWith("/uploads/")) {
-        const base = import.meta.env.VITE_API_URL?.replace(/\/api$/, "");
-        const finalUrl = `${base}${pic.replace(/\\/g, "/")}`;
-        // console.log("🧠 Final Image URL (with slash):", finalUrl);
-        return finalUrl;
+      // ✅ Handle both 'uploads/' and '/uploads/'
+      if (pic.includes("uploads/")) {
+        const base = import.meta.env.VITE_API_URL.replace("/api", "");
+        // remove any leading slashes
+        const cleanPath = pic.replace(/^\/+/, "").replace(/\\/g, "/");
+        return `${base}/${cleanPath}`;
       }
     }
 
     return null;
-  } catch (err) {
-    console.error("❌ Invalid profilePic:", err);
+  } catch (error) {
+    console.error("Invalid profilePic:", error);
     return null;
   }
 };
