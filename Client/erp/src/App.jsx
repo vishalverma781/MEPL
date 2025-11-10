@@ -123,7 +123,7 @@ const handleLogin = async (e) => {
 
 
 // ✅ If intro video still showing
- if (showIntro) {
+if (showIntro) {
     return (
       <motion.div
         className="fixed inset-0 flex items-center justify-center bg-black z-50 p-2 sm:p-0"
@@ -133,7 +133,7 @@ const handleLogin = async (e) => {
       >
         <video
           ref={videoRef}
-          src="/src/assets/intro.mp4"
+          src="/intro.mp4"
           className="w-full max-w-full h-auto sm:h-full object-contain sm:object-cover rounded-lg"
           muted
           autoPlay
@@ -141,7 +141,8 @@ const handleLogin = async (e) => {
         />
       </motion.div>
     );
-  };
+  }
+
 
   return (
     <div
