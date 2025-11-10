@@ -6,29 +6,23 @@ const getImageSrc = (pic) => {
   if (!pic) return null;
 
   try {
-    // agar file ya blob hai
     if (pic instanceof File || pic instanceof Blob) {
       return URL.createObjectURL(pic);
     }
-
-    // agar string URL hai
     if (typeof pic === "string") {
       if (pic.startsWith("http")) return pic;
+      if (pic.startsWith("uploads/")) {
+        // ✅ backend ke uploads se serve hoga
+        return `${import.meta.env.VITE_API_URL.replace("/api", "")}/${pic.replace(/\\/g, "/")}`;
 
-      // ✅ remove leading slash & backslashes
-      const cleanPic = pic.replace(/^\/+/, "").replace(/\\/g, "/");
-
-      // ✅ backend URL safe
-      return `${import.meta.env.VITE_API_URL.replace(/\/api$/, "")}/${cleanPic}`;
+      }
     }
-
     return null;
   } catch (error) {
     console.error("Invalid profilePic:", error);
     return null;
   }
 };
-
 
 const AllEmployees = () => {
   const [employees, setEmployees] = useState([]);
