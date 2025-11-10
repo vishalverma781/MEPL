@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaUserCircle, FaSignOutAlt, FaCog, FaBell, FaBars } from "react-icons/fa";
+import { FaUserCircle, FaSignOutAlt, FaCog, FaBell, FaBars, FaSun, FaMoon } from "react-icons/fa";
 
 const Header = ({ onLogout, isSidebarOpen, lightMode, toggleMode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
