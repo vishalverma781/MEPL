@@ -9,15 +9,14 @@ const TrackIssues = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const issuesPerPage = 5;
 
-  // ✅ Fetch only non-resolved issues
+  // Fetch issues from backend
   const fetchIssues = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/issues", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/issues`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      // ✅ Hide resolved issues
+         // ✅ Hide resolved issues
       const activeIssues = res.data.filter(
         (issue) => issue.status !== "Resolved"
       );
@@ -37,17 +36,16 @@ const TrackIssues = () => {
     fetchIssues();
   }, []);
 
-  // ✅ Resolve handler (remove immediately from list)
+  // ✅ Resolve or update issue handler
   const handleResolveIssue = async (id, remarksText, newStatus = "Resolved") => {
     if (!remarksText.trim()) return;
 
     try {
       const token = localStorage.getItem("token");
-      const updatedDate =
-        newStatus === "Resolved" ? new Date().toISOString() : null;
+      const updatedDate = newStatus === "Resolved" ? new Date().toISOString() : null;
 
       const res = await axios.put(
-        `http://localhost:5000/api/issues/${id}/resolve`,
+        `${import.meta.env.VITE_API_URL}/issues/${id}/resolve`,
         {
           remarks: remarksText,
           status: newStatus,
@@ -56,8 +54,8 @@ const TrackIssues = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // ✅ Remove from UI instantly
-      setIssues((prev) => prev.filter((issue) => issue._id !== id));
+      // ✅ Remove resolved issue from local state
+       setIssues((prev) => prev.filter((issue) => issue._id !== id));
 
       Swal.fire({
         icon: "success",
