@@ -215,6 +215,7 @@ const Sidebar = () => {
         }}
         isSidebarOpen={!collapsed}
         lightMode={lightMode}
+        toggleMode={toggleMode} 
       />
        {/* ✅ Mobile Hamburger Button */}
    <button

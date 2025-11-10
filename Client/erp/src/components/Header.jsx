@@ -28,7 +28,7 @@ const Header = ({ onLogout, isSidebarOpen, lightMode }) => {
     onLogout();
   };
 
-  return (
+return (
     <header
       className={`fixed top-0 left-0 w-full flex items-center justify-between px-6 h-[70px] transition-all duration-300 shadow-lg backdrop-blur-md
         ${
@@ -46,19 +46,24 @@ const Header = ({ onLogout, isSidebarOpen, lightMode }) => {
             lightMode ? "text-gray-700" : "text-slate-200"
           }`}
         >
-        
+          {/* App Name / Logo */}
         </h1>
       </div>
 
-      {/* Right Section (Profile Menu Only) */}
-      <div className="relative flex items-center gap-3">
-        {/* Hamburger for mobile */}
-        {/* <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden p-3 rounded-md bg-gray-800/60 hover:bg-gray-700/70 transition duration-300"
-        >
-          <FaBars className="text-2xl text-white" />
-        </button> */}
+     {/* Right Section (Profile + Toggle) */}
+<div className="relative flex items-center gap-4">
+  {/* Telegram-style Light/Dark Toggle */}
+  <button
+    onClick={toggleMode}
+    className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 shadow-md
+      ${lightMode ? "bg-gray-800 hover:bg-gray-700" : "bg-white-400 hover:bg-white-300"}`}
+  >
+    {lightMode ? (
+      <FaMoon className="text-white text-lg transition-transform duration-300" />
+    ) : (
+      <FaSun className="text-white text-lg transition-transform duration-300" />
+    )}
+  </button>
 
         {/* Profile Icon */}
         <button
