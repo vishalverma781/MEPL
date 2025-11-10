@@ -6,20 +6,20 @@ const getImageSrc = (pic) => {
   if (!pic) return null;
 
   try {
+    // agar file ya blob hai
     if (pic instanceof File || pic instanceof Blob) {
       return URL.createObjectURL(pic);
     }
 
+    // agar string URL hai
     if (typeof pic === "string") {
       if (pic.startsWith("http")) return pic;
 
-      // ✅ Handle both 'uploads/' and '/uploads/'
-      if (pic.includes("uploads/")) {
-        const base = import.meta.env.VITE_API_URL.replace("/api", "");
-        // remove any leading slashes
-        const cleanPath = pic.replace(/^\/+/, "").replace(/\\/g, "/");
-        return `${base}/${cleanPath}`;
-      }
+      // ✅ remove leading slash & backslashes
+      const cleanPic = pic.replace(/^\/+/, "").replace(/\\/g, "/");
+
+      // ✅ backend URL safe
+      return `${import.meta.env.VITE_API_URL.replace(/\/api$/, "")}/${cleanPic}`;
     }
 
     return null;
