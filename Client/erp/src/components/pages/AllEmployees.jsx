@@ -1,28 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { FaEye } from "react-icons/fa";
 
-// ✅ Utility function for profile image (robust)
+// ✅ Utility function for profile image (final fix)
 const getImageSrc = (pic) => {
   if (!pic) return null;
 
   try {
     if (pic instanceof File || pic instanceof Blob) {
+      // Agar naya upload hua file hai
       return URL.createObjectURL(pic);
     }
-    if (typeof pic === "string") {
-      if (pic.startsWith("http")) return pic;
-      if (pic.startsWith("uploads/")) {
-        // ✅ backend ke uploads se serve hoga
-        return `${import.meta.env.VITE_API_URL.replace("/api", "")}/${pic.replace(/\\/g, "/")}`;
 
+    if (typeof pic === "string") {
+      if (pic.startsWith("http")) return pic; // Full URL mila toh direct use kar
+      if (pic.startsWith("uploads/")) {
+        // ✅ Backend ke uploads se serve hoga
+        const baseURL = import.meta.env.VITE_API_URL?.replace(/\/api\/?$/, ""); // sirf last "/api" hatayega
+        const finalURL = `${baseURL}/${pic.replace(/\\/g, "/")}`;
+        console.log("🧠 Final Image URL:", finalURL);
+        return finalURL;
       }
     }
+
     return null;
   } catch (error) {
-    console.error("Invalid profilePic:", error);
+    console.error("❌ Invalid profilePic:", error);
     return null;
   }
 };
+
 
 const AllEmployees = () => {
   const [employees, setEmployees] = useState([]);
