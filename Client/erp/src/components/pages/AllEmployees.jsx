@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { FaEye } from "react-icons/fa";
 
-// ✅ Utility function for profile image (final fix)
 const getImageSrc = (pic) => {
   if (!pic) return null;
 
   try {
     if (pic instanceof File || pic instanceof Blob) {
-      // Agar naya upload hua file hai
       return URL.createObjectURL(pic);
     }
 
     if (typeof pic === "string") {
-      if (pic.startsWith("http")) return pic; // Full URL mila toh direct use kar
+      // ✅ Case 1: Already full URL
+      if (pic.startsWith("http")) return pic;
+
+      // ✅ Case 2: Stored path like "uploads/xxxx.png"
       if (pic.startsWith("uploads/")) {
-        // ✅ Backend ke uploads se serve hoga
-        const baseURL = import.meta.env.VITE_API_URL?.replace(/\/api\/?$/, ""); // sirf last "/api" hatayega
-        const finalURL = `${baseURL}/${pic.replace(/\\/g, "/")}`;
-        console.log("🧠 Final Image URL:", finalURL);
-        return finalURL;
+        const base = import.meta.env.VITE_API_URL?.replace(/\/api$/, "");
+        const finalUrl = `${base}/${pic.replace(/\\/g, "/")}`;
+        // console.log("🧠 Final Image URL:", finalUrl);
+        return finalUrl;
+      }
+
+      // ✅ Case 3: If backend accidentally stores with leading slash
+      if (pic.startsWith("/uploads/")) {
+        const base = import.meta.env.VITE_API_URL?.replace(/\/api$/, "");
+        const finalUrl = `${base}${pic.replace(/\\/g, "/")}`;
+        // console.log("🧠 Final Image URL (with slash):", finalUrl);
+        return finalUrl;
       }
     }
 
     return null;
-  } catch (error) {
-    console.error("❌ Invalid profilePic:", error);
+  } catch (err) {
+    console.error("❌ Invalid profilePic:", err);
     return null;
   }
 };
