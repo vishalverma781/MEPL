@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import { motion } from "framer-motion";
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(true);
@@ -122,99 +123,127 @@ const handleLogin = async (e) => {
 
 
 // ✅ If intro video still showing
-if (showIntro) {
+ if (showIntro) {
+    return (
+      <motion.div
+        className="fixed inset-0 flex items-center justify-center bg-black z-50 p-2 sm:p-0"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <video
+          ref={videoRef}
+          src="/src/assets/intro.mp4"
+          className="w-full max-w-full h-auto sm:h-full object-contain sm:object-cover rounded-lg"
+          muted
+          autoPlay
+          playsInline
+        />
+      </motion.div>
+    );
+  };
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black z-50 p-2 sm:p-0">
-      <video
-        ref={videoRef}
-        src="/intro.mp4" // ✅ public folder ka correct path
-        className="w-full max-w-full h-auto sm:h-full object-contain sm:object-cover rounded-lg"
-        muted
-        autoPlay
-        playsInline
-      />
-    </div>
-  );
-};
-
- return (
-  <div
-    className="flex justify-center items-center min-h-screen bg-cover bg-center px-4 sm:px-6 lg:px-8"
+    <div
+      className="flex justify-center items-center min-h-screen bg-cover bg-center px-4 sm:px-6 lg:px-8"
       style={{ backgroundImage: "url('/bg.png')" }}
-  >
-    <div className="w-full max-w-md sm:max-w-lg md:max-w-2xl lg:w-[700px] bg-white/10 backdrop-blur-xl p-6 sm:p-8 md:p-10 lg:p-12 rounded-3xl shadow-2xl text-white text-center">
-      
-      <div className="flex justify-center items-center mb-6">
-        <img
-          src={logo}
-          alt="Logo"
-          className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain shadow-lg rounded-full bg-white p-2 sm:p-3"
-        />
-      </div>
-
-      {/* Admin / Employee Toggle */}
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 rounded-xl overflow-hidden text-base sm:text-lg">
-        <button
-          type="button"
-          onClick={() => setIsAdmin(true)}
-          className={`flex-1 py-3 sm:py-4 font-semibold transition-all ${
-            isAdmin ? "bg-white text-gray-800" : "bg-white/20 text-white"
-          }`}
+    >
+      <motion.div
+        className="w-full max-w-md sm:max-w-lg md:max-w-2xl lg:w-[700px] bg-white/10 backdrop-blur-xl p-6 sm:p-8 md:p-10 lg:p-12 rounded-3xl shadow-2xl text-white text-center"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <motion.div
+          className="flex justify-center items-center mb-6"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Admin Login
-        </button>
-        <button
-          type="button"
-          onClick={() => setIsAdmin(false)}
-          className={`flex-1 py-3 sm:py-4 font-semibold transition-all ${
-            !isAdmin ? "bg-white text-gray-800" : "bg-white/20 text-white"
-          }`}
-        >
-          Employee Login
-        </button>
-      </div>
-
-      {/* Login Form */}
-      <form onSubmit={handleLogin}>
-        <input
-          type="text"
-          placeholder="Username or Email"
-          value={identifier}
-          onChange={(e) => setIdentifier(e.target.value)}
-          className="w-full p-4 sm:p-5 mb-4 rounded-lg bg-white/85 text-gray-700 text-base sm:text-lg focus:outline-none"
-        />
-
-        <div className="relative mb-4">
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-4 sm:p-5 pr-12 rounded-lg bg-white/85 text-gray-700 text-base sm:text-lg focus:outline-none"
+          <img
+            src={logo}
+            alt="Logo"
+            className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain shadow-lg rounded-full bg-white p-2 sm:p-3"
           />
+        </motion.div>
+
+        {/* Admin / Employee Toggle */}
+        <motion.div
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 rounded-xl overflow-hidden text-base sm:text-lg"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
           <button
             type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-gray-600"
+            onClick={() => setIsAdmin(true)}
+            className={`flex-1 py-3 sm:py-4 font-semibold transition-all ${
+              isAdmin ? "bg-white text-gray-800" : "bg-white/20 text-white"
+            }`}
           >
-            {showPassword ? (
-              <EyeSlashIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-            ) : (
-              <EyeIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-            )}
+            Admin Login
           </button>
-        </div>
+          <button
+            type="button"
+            onClick={() => setIsAdmin(false)}
+            className={`flex-1 py-3 sm:py-4 font-semibold transition-all ${
+              !isAdmin ? "bg-white text-gray-800" : "bg-white/20 text-white"
+            }`}
+          >
+            Employee Login
+          </button>
+        </motion.div>
 
-        <button
-          type="submit"
-          className="w-full py-4 sm:py-5 bg-white text-gray-800 text-base sm:text-lg font-bold rounded-lg hover:bg-gray-200 transition transform hover:scale-105"
+        {/* Login Form */}
+        <motion.form
+          onSubmit={handleLogin}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
         >
-          {isAdmin ? "Login as Admin" : "Login as Employee"}
-        </button>
-      </form>
+          <motion.input
+            type="text"
+            placeholder="Username or Email"
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
+            className="w-full p-4 sm:p-5 mb-4 rounded-lg bg-white/85 text-gray-700 text-base sm:text-lg focus:outline-none"
+            whileFocus={{ scale: 1.02 }}
+          />
+
+          <div className="relative mb-4">
+            <motion.input
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-4 sm:p-5 pr-12 rounded-lg bg-white/85 text-gray-700 text-base sm:text-lg focus:outline-none"
+              whileFocus={{ scale: 1.02 }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-gray-600"
+            >
+              {showPassword ? (
+                <EyeSlashIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+              ) : (
+                <EyeIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+              )}
+            </button>
+          </div>
+
+          <motion.button
+            type="submit"
+            className="w-full py-4 sm:py-5 bg-white text-gray-800 text-base sm:text-lg font-bold rounded-lg hover:bg-gray-200 transition transform hover:scale-105"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {isAdmin ? "Login as Admin" : "Login as Employee"}
+          </motion.button>
+        </motion.form>
+      </motion.div>
     </div>
-  </div>
-);
+  );
 }
 
 export default App;
