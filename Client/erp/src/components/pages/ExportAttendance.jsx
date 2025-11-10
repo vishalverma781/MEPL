@@ -128,6 +128,11 @@ const ExportAttendance = () => {
   const currentRecords = records.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(records.length / recordsPerPage);
 
+   const handleNext = () =>
+    currentPage < totalPages && setCurrentPage(currentPage + 1);
+  const handlePrev = () =>
+    currentPage > 1 && setCurrentPage(currentPage - 1);
+
  return (
     <div className="ml-16 p-4 md:p-8 min-h-screen ">
       <div className="bg-white pb-40 rounded-3xl shadow-2xl p-4 md:p-8 border border-gray-200 max-w-7xl mx-auto">
