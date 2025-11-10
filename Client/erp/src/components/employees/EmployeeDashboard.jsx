@@ -13,6 +13,7 @@ import {
   Legend,
 } from "recharts";
 import { FaCalendarAlt, FaBug, FaMoneyCheckAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const EmployeeDashboardFull = () => {
   const [stats, setStats] = useState({
@@ -90,8 +91,33 @@ const EmployeeDashboardFull = () => {
     },
   ];
 
+ const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { type: "spring", stiffness: 120, damping: 15 },
+    },
+  };
+
+  const chartVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { type: "spring", stiffness: 100, damping: 20 },
+    },
+  };
+
   return (
-    <div className="min-h-screen w-full px-6 py-10 overflow-auto font-sans ">
+    <div className="min-h-screen w-full px-6 py-10 overflow-auto font-sans">
+      {/* Header */}
       <div className="w-full bg-white p-6 mb-6 shadow-lg rounded-xl border-l-8 border-blue-500 flex flex-col sm:flex-row justify-between items-center">
         <div>
           <h1 className="text-4xl font-bold text-gray-800 tracking-wide">
@@ -106,28 +132,47 @@ const EmployeeDashboardFull = () => {
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 justify-items-center mb-16">
+      <motion.div
+        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 justify-items-center mb-16"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {cards.map((card, idx) => (
-          <div
+          <motion.div
             key={idx}
             className="flex flex-col items-center bg-white p-6 rounded-2xl shadow-md w-48 transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50"
+            variants={cardVariants}
           >
-            {card.icon}
+            <motion.div
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 2, delay: idx * 0.3 }}
+            >
+              {card.icon}
+            </motion.div>
             <h3 className="mt-3 text-gray-700 text-lg font-semibold">
               {card.title}
             </h3>
             <p className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2">
               {card.value}
             </p>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Charts */}
-      <div className="flex flex-col lg:flex-row gap-12 w-full mb-16">
-        <div className="flex-1 bg-white p-6 shadow-lg rounded-xl hover:shadow-2xl transition">
+      <motion.div
+        className="flex flex-col lg:flex-row gap-12 w-full mb-16"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div
+          className="flex-1 bg-white p-6 shadow-lg rounded-xl hover:shadow-2xl transition"
+          variants={chartVariants}
+        >
           <h2 className="text-2xl font-semibold text-center mb-4 text-gray-700">
-            Overview (Bar Chart)
+            Workforce States
           </h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={barData}>
@@ -137,11 +182,14 @@ const EmployeeDashboardFull = () => {
               <Bar dataKey="count" fill="#4F46E5" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
-        </div>
+        </motion.div>
 
-        <div className="flex-1 bg-white p-6 shadow-lg rounded-xl hover:shadow-2xl transition">
+        <motion.div
+          className="flex-1 bg-white p-6 shadow-lg rounded-xl hover:shadow-2xl transition"
+          variants={chartVariants}
+        >
           <h2 className="text-2xl font-semibold text-center mb-4 text-gray-700">
-            Distribution (Pie Chart)
+            Team Composition
           </h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -153,18 +201,15 @@ const EmployeeDashboardFull = () => {
                 label
               >
                 {pieData.map((entry, index) => (
-                  <Cell
-                    key={index}
-                    fill={COLORS[index % COLORS.length]}
-                  />
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip />
               <Legend verticalAlign="bottom" />
             </PieChart>
           </ResponsiveContainer>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
