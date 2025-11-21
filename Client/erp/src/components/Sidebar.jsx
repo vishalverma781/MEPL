@@ -238,15 +238,15 @@ const Sidebar = () => {
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
       `}
       >
-        {/* Logo */}
-        <div className="flex items-center justify-center py-3 border-b border-slate-500">
+ {/* Logo */}
+        <div className="flex items-center justify-center py-2.5 border-b border-slate-500">
           <img
             src="/logo.png"
             alt="Company Logo"
             className="w-12 h-12 rounded-full bg-white p-2 shadow-lg"
           />
         </div>
-
+        
         {/* Scrollable Menu */}
         <div className="flex-1 px-3 overflow-y-auto">
           <ul className="space-y-1 p-2 text-xl font-semibold">
