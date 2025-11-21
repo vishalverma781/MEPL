@@ -129,7 +129,7 @@ const PayrollForm = () => {
     };
 
     try {
-      await axios.post("http://localhost:5000/api/payrolls", newRecord);
+      await axios.post(`http://localhost:5000/api/payrolls`, newRecord);
 
       setEmployee(null);
       setPreviewRecord(null);

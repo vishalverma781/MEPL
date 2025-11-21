@@ -130,7 +130,7 @@ const AddRoles = ({ setRoles }) => {
     };
 
     try {
-      const res = await fetch("${import.meta.env.VITE_API_URL}/roles", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/roles`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
