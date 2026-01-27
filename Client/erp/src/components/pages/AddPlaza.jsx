@@ -195,5 +195,4 @@ const SelectField = ({ label, name, value, onChange, icon, options }) => {
   );
 };
 
-
 export default AddPlaza;
