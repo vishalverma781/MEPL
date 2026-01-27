@@ -54,44 +54,47 @@ const MyPayroll = () => {
     );
   }
 
- return (
-  <div className="w-full min-h-screen flex justify-center items-start sm:p-10">
-    <div className="bg-white shadow-2xl rounded-2xl p-6 w-full max-w-7xl">
-      <h2 className="text-4xl font-bold text-center mb-6 text-gray-900">
+return (
+  <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-45 px-10 sm:px-6 lg:px-8 py-6">
+    
+    <div className="bg-white shadow-xl rounded-xl w-full max-w-4xl mx-auto p-10 sm:p-7 border border-gray-200">
+
+      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4 text-gray-900">
         My Payroll
       </h2>
 
       <div className="overflow-x-auto">
-        <table className="w-full border border-gray-300 rounded-xl overflow-hidden text-lg">
+        <table className="w-full border border-gray-300 rounded-lg overflow-hidden text-sm sm:text-base">
           <thead>
             <tr className="bg-gray-800 text-white">
-              <th className="py-5 px-6 text-left text-lg">Full Name</th>
-              <th className="py-5 px-6 text-left text-lg hidden sm:table-cell">Username</th>
-              <th className="py-5 px-6 text-left text-lg hidden sm:table-cell">Phone</th>
-              <th className="py-5 px-6 text-left text-lg hidden sm:table-cell">Department</th>
-              <th className="py-5 px-6 text-left text-lg">Salary</th>
-              <th className="py-5 px-6 text-left text-lg">Expense</th>
-              <th className="py-3 px-2 text-center text-lg">View</th>
+              <th className="py-3 px-4 whitespace-nowrap text-left">Full Name</th>
+              <th className="py-3 px-4 hidden sm:table-cell">Username</th>
+              <th className="py-3 px-4 hidden whitespace-nowrap sm:table-cell">Phone</th>
+              <th className="py-3 px-4 hidden sm:table-cell">Department</th>
+              <th className="py-3 px-4">Salary</th>
+              <th className="py-3 px-4">Expense</th>
+              <th className="py-3 px-2 text-center">View</th>
             </tr>
           </thead>
+
           <tbody>
             {myRecords.map((rec) => (
               <tr
                 key={rec._id}
-                className="border-b border-gray-200 hover:bg-gray-100 transition text-lg"
+                className="border-b border-gray-200 hover:bg-gray-50 transition"
               >
-                <td className="py-5 px-6 font-bold text-lg">{rec.fullName}</td>
-                <td className="py-5 px-6 text-lg hidden sm:table-cell">{rec.username || "-"}</td>
-                <td className="py-5 px-6 text-lg hidden sm:table-cell">{rec.phone || "-"}</td>
-                <td className="py-5 px-6 text-lg hidden sm:table-cell">{rec.department || "-"}</td>
-                <td className="py-5 px-6 font-bold text-lg">₹ {rec.salary}</td>
-                <td className="py-5 px-6 text-lg">₹ {rec.expense}</td>
-                <td className="py-5 px-6 text-center">
+                <td className="py-3 px-4 whitespace-nowrap font-semibold">{rec.fullName}</td>
+                <td className="py-3 px-4  hidden sm:table-cell">{rec.username || "-"}</td>
+                <td className="py-3 px-4 hidden whitespace-nowrap sm:table-cell">{rec.phone || "-"}</td>
+                <td className="py-3 px-4 whitespace-nowrap hidden sm:table-cell">{rec.department || "-"}</td>
+                <td className="py-3 px-4 whitespace-nowrap font-semibold">₹ {rec.salary}</td>
+                <td className="py-3 whitespace-nowrap px-4">₹ {rec.expense}</td>
+                <td className="py-3 px-2 text-center">
                   <button
                     onClick={() => setSelectedRecord(rec)}
-                    className="text-green-600 hover:text-green-800 transition"
+                    className="text-green-600 hover:text-green-800"
                   >
-                    <FaEye size={20} />
+                    <FaEye size={18} />
                   </button>
                 </td>
               </tr>
@@ -100,40 +103,46 @@ const MyPayroll = () => {
         </table>
       </div>
 
+      {/* ===== Modal ===== */}
       {selectedRecord && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
-          <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-lg sm:max-w-3xl">
-            <h3 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center text-gray-900">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-3">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-md sm:max-w-2xl p-4 sm:p-6">
+
+            <h3 className="text-lg sm:text-xl font-bold mb-3 text-center text-gray-900">
               Payroll Details
             </h3>
-            <div className="space-y-3 text-gray-800 text-lg font-medium">
-              <p><span className="font-bold">Full Name:</span> {selectedRecord.fullName}</p>
-              <p><span className="font-bold">Username:</span> {selectedRecord.username || "N/A"}</p>
-              <p><span className="font-bold">Phone:</span> {selectedRecord.phone || "N/A"}</p>
-              <p><span className="font-bold">Bank Name:</span> {selectedRecord.bankName || "N/A"}</p>
-              <p><span className="font-bold">Account Number:</span> {selectedRecord.accountNumber || "N/A"}</p>
-              <p><span className="font-bold">IFSC:</span> {selectedRecord.ifsc || "N/A"}</p>
-              <p><span className="font-bold">Department:</span> {selectedRecord.department || "N/A"}</p>
-              <p><span className="font-bold">Leaves:</span> {selectedRecord.leaves || "0"}</p>
-              <p><span className="font-bold">Salary:</span> ₹ {selectedRecord.salary}</p>
-              <p><span className="font-bold">Expense:</span> ₹ {selectedRecord.expense}</p>
-              <p><span className="font-bold">Month:</span> {selectedRecord.month || "N/A"}</p>
-              <p><span className="font-bold">Date:</span> {selectedRecord.date || "N/A"}</p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-800 text-xs sm:text-sm font-medium">
+              <p><b>Full Name:</b> {selectedRecord.fullName}</p>
+              <p><b>Username:</b> {selectedRecord.username || "N/A"}</p>
+              <p><b>Phone:</b> {selectedRecord.phone || "N/A"}</p>
+              <p><b>Department:</b> {selectedRecord.department || "N/A"}</p>
+              <p><b>Bank:</b> {selectedRecord.bankName || "N/A"}</p>
+              <p><b>Account:</b> {selectedRecord.accountNumber || "N/A"}</p>
+              <p><b>IFSC:</b> {selectedRecord.ifsc || "N/A"}</p>
+              <p><b>Leaves:</b> {selectedRecord.leaves || "0"}</p>
+              <p><b>Salary:</b> ₹ {selectedRecord.salary}</p>
+              <p><b>Expense:</b> ₹ {selectedRecord.expense}</p>
+              <p><b>Month:</b> {selectedRecord.month || "N/A"}</p>
+              <p><b>Date:</b> {selectedRecord.date || "N/A"}</p>
             </div>
-            <div className="mt-8 flex justify-center">
+
+            <div className="mt-4 flex justify-center">
               <button
                 onClick={() => setSelectedRecord(null)}
-                className="px-10 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-xl font-semibold"
+                className="px-5 py-1.5 bg-gray-800 text-white rounded-md hover:bg-gray-600 transition text-xs sm:text-sm font-semibold"
               >
                 Close
               </button>
             </div>
+
           </div>
         </div>
       )}
     </div>
   </div>
 );
+
 
 };
 

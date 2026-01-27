@@ -115,136 +115,154 @@ const ManageIssues = () => {
   const indexOfFirst = indexOfLast - issuesPerPage;
   const currentIssues = issues.slice(indexOfFirst, indexOfLast);
 
-   return (
-    <div className="w-full min-h-screen flex justify-center items-start p-5 sm:p-10">
-      <div className="bg-white shadow-2xl rounded-2xl mb-10 p-4 sm:p-10 w-full max-w-7xl">
-        <div className="flex justify-between items-center mb-6 sm:mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Manage Issues
-          </h2>
-          <button
-            onClick={handleExportPDF}
-            className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-2 bg-red-600 hover:bg-red-800 text-white rounded-lg font-semibold shadow-md"
-          >
-            <FaFilePdf /> Export PDF
-          </button>
-        </div>
+return (
+  <div className="w-full min-h-screen flex justify-center items-start p-10 md:ml-5 sm:p-8">
+    <div className="bg-white shadow-xl rounded-xl mb-6 p-5 sm:p-8 w-full max-w-6xl">
 
-        {issues.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg">No issues found!</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
-              <thead>
-                <tr className="bg-gray-800 text-white text-lg sm:text-xl">
-                  <th className="p-2 sm:p-3">Sr. No</th>
-                  <th className="p-2 sm:p-3">Issue ID</th>
-                  <th className="p-2 sm:p-3">Plaza Name</th>
-                  <th className="p-2 sm:p-3 hidden sm:table-cell">Issue Type</th>
-                  <th className="p-2 sm:p-3 hidden sm:table-cell">Description</th>
-                  <th className="p-2 sm:p-3 hidden sm:table-cell">Status</th>
-                  <th className="p-2 sm:p-3 hidden sm:table-cell">Reported By</th>
-                  <th className="p-2 sm:p-3 hidden sm:table-cell">Office</th>
-                  <th className="p-2 sm:p-3 text-center">View</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentIssues.map((issue, index) => (
-                  <tr
-                    key={issue._id}
-                    className="border-b border-gray-200 hover:bg-gray-100 transition text-lg sm:text-lg"
-                  >
-                    <td className="py-2 px-2 sm:py-4 sm:px-4">{indexOfFirst + index + 1}</td>
-                    <td className="py-2 px-2 sm:py-4 sm:px-4">{issue.issueId || "N/A"}</td>
-                    <td className="py-2 px-2 sm:py-4 sm:px-4">{issue.plazaName || "N/A"}</td>
-                    <td className="py-2 px-2 sm:py-4 sm:px-4 hidden sm:table-cell">{issue.issueType}</td>
-                    <td className="py-2 px-2 sm:py-4 sm:px-4 hidden sm:table-cell">{issue.description}</td>
-                    <td className="py-2 px-2 sm:py-4 sm:px-4 hidden sm:table-cell">{issue.status}</td>
-                    <td className="py-2 px-2 sm:py-4 sm:px-4 hidden sm:table-cell">{issue.reporterFullName || issue.reporterUsername}</td>
-                    <td className="py-2 px-2 sm:py-4 sm:px-4 hidden sm:table-cell">{issue.reporterOffice || "Not Assigned"}</td>
-                    <td className="py-2 px-2 sm:py-4 sm:px-4 text-center">
-                      <button
-                        onClick={() => setSelectedIssue(issue)}
-                        className="text-green-700 hover:text-green-900"
-                      >
-                        <FaEye size={20} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+      {/* Header */}
+      <div className="flex justify-between items-center mb-5">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+          Manage Issues
+        </h2>
 
-        {issues.length > issuesPerPage && (
-          <div className="flex justify-center items-center mt-6 space-x-4">
-            <button
-              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-              disabled={currentPage === 1}
-              className={`px-4 sm:px-5 py-2 rounded-lg text-white font-medium ${
-                currentPage === 1 ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              Previous
-            </button>
-            <span className="text-gray-700 font-medium text-lg">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className={`px-4 sm:px-5 py-2 rounded-lg text-white font-medium ${
-                currentPage === totalPages ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              Next
-            </button>
-          </div>
-        )}
+        <button
+          onClick={handleExportPDF}
+          className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-semibold"
+        >
+          <FaFilePdf size={16}/> Export
+        </button>
       </div>
 
-      {selectedIssue && (
-        <IssueModal
-          issue={selectedIssue}
-          index={issues.findIndex((i) => i._id === selectedIssue._id)}
-          onClose={() => setSelectedIssue(null)}
-        />
+      {issues.length === 0 ? (
+        <p className="text-center text-gray-500 text-base">
+          No issues found!
+        </p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
+            <thead>
+              <tr className="bg-gray-800 text-white text-sm sm:text-base">
+                <th className="p-3">#</th>
+                <th className="p-3">Issue ID</th>
+                <th className="p-3">Plaza</th>
+                <th className="p-3 hidden sm:table-cell">Type</th>
+                <th className="p-3 hidden sm:table-cell">Description</th>
+                <th className="p-3 hidden sm:table-cell">Status</th>
+                <th className="p-3 hidden sm:table-cell">Reported By</th>
+                <th className="p-3 hidden sm:table-cell">Office</th>
+                <th className="p-3 text-center">View</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {currentIssues.map((issue, index) => (
+                <tr
+                  key={issue._id}
+                  className="border-b border-gray-200 hover:bg-gray-50 text-sm sm:text-base"
+                >
+                  <td className="p-3">{indexOfFirst + index + 1}</td>
+                  <td className="p-3">{issue.issueId || "N/A"}</td>
+                  <td className="p-3">{issue.plazaName || "N/A"}</td>
+                  <td className="p-3 hidden sm:table-cell">{issue.issueType}</td>
+                  <td className="p-3 hidden sm:table-cell truncate max-w-[180px]">
+                    {issue.description}
+                  </td>
+                  <td className="p-3 hidden sm:table-cell">{issue.status}</td>
+                  <td className="p-3 hidden sm:table-cell">
+                    {issue.reporterFullName || issue.reporterUsername}
+                  </td>
+                  <td className="p-3 hidden sm:table-cell">
+                    {issue.reporterOffice || "N/A"}
+                  </td>
+                  <td className="p-3 text-center">
+                    <button
+                      onClick={() => setSelectedIssue(issue)}
+                      className="text-green-600 hover:text-green-800"
+                    >
+                      <FaEye size={16}/>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Pagination */}
+      {issues.length > issuesPerPage && (
+        <div className="flex justify-center items-center mt-4 gap-4">
+          <button
+            onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+            className={`px-4 py-1.5 rounded text-sm text-white ${
+              currentPage === 1 ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            Previous
+          </button>
+
+          <span className="text-sm text-gray-700">
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-1.5 rounded text-sm text-white ${
+              currentPage === totalPages ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            Next
+          </button>
+        </div>
       )}
     </div>
-  );
+
+    {selectedIssue && (
+      <IssueModal
+        issue={selectedIssue}
+        index={issues.findIndex(i => i._id === selectedIssue._id)}
+        onClose={() => setSelectedIssue(null)}
+      />
+    )}
+  </div>
+);
+
+
 };
 
 const IssueModal = ({ issue, index, onClose }) => {
   const formatDateTime = (date) => {
     if (!date) return "Not Yet Rectified";
     const d = new Date(date);
-    return `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+    return `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
-      <div className="bg-white p-8 sm:p-10 rounded-2xl shadow-2xl w-full max-w-lg">
-        <h3 className="text-2xl sm:text-3xl font-extrabold mb-6 sm:mb-8 text-center text-gray-900">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 text-sm sm:text-base">
+
+        <h3 className="text-lg sm:text-xl font-bold text-center mb-4">
           Issue Details
         </h3>
 
-        <div className="space-y-3 sm:space-y-4 text-gray-800 text-lg sm:text-xl font-medium">
+        <div className="space-y-2 text-gray-800">
           <p><b>Issue ID:</b> {issue.issueId || 101 + index}</p>
-          <p><b>Plaza Name:</b> {issue.plazaName || "N/A"}</p>
-          <p><b>Issue Type:</b> {issue.issueType}</p>
+          <p><b>Plaza:</b> {issue.plazaName || "N/A"}</p>
+          <p><b>Type:</b> {issue.issueType}</p>
           <p><b>Description:</b> {issue.description}</p>
           <p><b>Status:</b> {issue.status}</p>
           <p><b>Remarks:</b> {issue.remarks || "No remarks"}</p>
-          <p><b>Rectified Date:</b> {formatDateTime(issue.rectifiedDate)}</p>
+          <p><b>Rectified:</b> {formatDateTime(issue.rectifiedDate)}</p>
           <p><b>Reported By:</b> {issue.reporterFullName || issue.reporterUsername}</p>
-          <p><b>Office:</b> {issue.reporterOffice || "Not Assigned"}</p>
+          <p><b>Office:</b> {issue.reporterOffice || "N/A"}</p>
         </div>
 
-        <div className="mt-6 sm:mt-8 flex justify-end">
+        <div className="mt-5 text-center">
           <button
             onClick={onClose}
-            className="px-6 sm:px-8 py-2 sm:py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold"
+            className="px-5 py-2 bg-red-500 text-white rounded text-sm hover:bg-red-600"
           >
             Close
           </button>
@@ -253,5 +271,4 @@ const IssueModal = ({ issue, index, onClose }) => {
     </div>
   );
 };
-
 export default ManageIssues;

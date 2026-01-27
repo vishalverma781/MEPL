@@ -102,157 +102,158 @@ const Departments = () => {
     return employees.filter((emp) => emp.department === deptName).length;
   };
 
-   return (
-    <div className="md:ml-64 px-4 md:px-6 pt-6 md:pt-17 min-h-screen p-4 md:p-10">
-      <div className="bg-white pb-40 shadow-2xl rounded-2xl p-6 md:p-8 w-full max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-          <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-900">
-            Departments
-          </h1>
-          <button
-            onClick={() => handleOpenForm()}
-            className="bg-blue-700 hover:bg-blue-800 text-white px-5 md:px-6 py-2 md:py-3 rounded-lg font-semibold shadow text-lg md:text-xl w-full sm:w-auto"
-          >
-            + Add Department
-          </button>
-        </div>
+return (
+  <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-60 px-5 py-6">
+    
+    <div className="bg-white shadow-2xl rounded-2xl p-6 w-full max-w-7xl mx-auto">
 
-        {/* Table */}
-        <div className="overflow-x-auto rounded-lg border border-gray-300">
-          <table className="w-full border-collapse text-base md:text-xl">
-            <thead>
-              <tr className="bg-gray-800 text-white text-lg md:text-2xl">
-                <th className="px-4 md:px-8 py-4 md:py-6 text-left">Department</th>
-                <th className="px-4 md:px-8 py-4 md:py-6 text-left hidden sm:table-cell">
-                  Employees
-                </th>
-                <th className="px-4 md:px-8 py-4 md:py-6 text-center">Edit</th>
-                <th className="px-4 md:px-8 py-4 md:py-6 text-center">Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentDepartments.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan="4"
-                    className="text-center text-gray-600 py-12 text-2xl font-semibold"
-                  >
-                    🚫 No departments added yet
-                  </td>
-                </tr>
-              ) : (
-                currentDepartments.map((dept, i) => (
-                  <tr
-                    key={dept._id}
-                    className={`${
-                      i % 2 === 0 ? "bg-white" : "bg-gray-100"
-                    } hover:bg-gray-200 transition`}
-                  >
-                    <td className="px-4 md:px-8 py-4 md:py-6 font-bold text-gray-800 text-lg md:text-2xl">
-                      {dept.name}
-                    </td>
-                    <td className="px-4 md:px-8 py-4 md:py-6 text-gray-700 text-lg md:text-2xl hidden sm:table-cell">
-                      {getEmployeeCount(dept.name)}
-                    </td>
-                    <td className="px-4 md:px-8 py-4 md:py-6 text-center">
-                      <button
-                        onClick={() => handleOpenForm(dept)}
-                        className="text-blue-700 hover:text-blue-900 text-2xl md:text-3xl"
-                      >
-                        <FaEdit />
-                      </button>
-                    </td>
-                    <td className="px-4 md:px-8 py-4 md:py-6 text-center">
-                      <button
-                        onClick={() => handleDelete(dept._id)}
-                        className="text-red-600 hover:text-red-800 text-2xl md:text-3xl"
-                      >
-                        <FaTrash />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Pagination */}
-        {departments.length > departmentsPerPage && (
-          <div className="flex flex-col sm:flex-row justify-center items-center mt-6 gap-3 sm:space-x-4">
-            <button
-              onClick={handlePrev}
-              disabled={currentPage === 1}
-              className={`px-4 md:px-5 py-2 md:py-2 rounded-lg text-white font-medium text-lg ${
-                currentPage === 1
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              Previous
-            </button>
-            <span className="text-gray-700 font-medium text-lg">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={handleNext}
-              disabled={currentPage === totalPages}
-              className={`px-4 md:px-5 py-2 md:py-2 rounded-lg text-white font-medium text-lg ${
-                currentPage === totalPages
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              Next
-            </button>
-          </div>
-        )}
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+          Departments
+        </h1>
+        <button
+          onClick={() => handleOpenForm()}
+          className="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-lg font-semibold shadow text-base"
+        >
+          + Add Department
+        </button>
       </div>
 
-      {/* Modal */}
-      {showForm && (
-        <div className="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 w-full max-w-sm md:max-w-md">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900 text-center">
-              {editDept ? "Edit Department" : "Add Department"}
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2 text-lg">
-                  Department Name
-                </label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="w-full border border-gray-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-blue-500 text-lg md:text-xl"
-                  required
-                />
-              </div>
-              <div className="flex justify-end gap-3 md:gap-4">
-                <button
-                  type="button"
-                  onClick={() => setShowForm(false)}
-                  className="px-5 py-2 md:py-3 rounded-md bg-gray-300 text-gray-700 font-semibold hover:bg-gray-400 text-lg"
+      {/* Table */}
+      <div className="overflow-x-auto rounded-xl border border-gray-300">
+        <table className="w-full border-collapse text-base">
+          <thead>
+            <tr className="bg-gray-800 text-white text-base">
+              <th className="px-4 py-3 text-left">Department</th>
+              <th className="px-4 py-3 text-left hidden sm:table-cell">
+                Employees
+              </th>
+              <th className="px-4 py-3 text-center">Edit</th>
+              <th className="px-4 py-3 text-center">Delete</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {currentDepartments.length === 0 ? (
+              <tr>
+                <td colSpan="4" className="text-center text-gray-500 py-8 text-base">
+                  🚫 No departments added yet
+                </td>
+              </tr>
+            ) : (
+              currentDepartments.map((dept, i) => (
+                <tr
+                  key={dept._id}
+                  className={`${i % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100 transition`}
                 >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-6 py-2 md:py-3 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 text-lg"
-                >
-                  {editDept ? "Update" : "Add"}
-                </button>
-              </div>
-            </form>
-          </div>
+                  <td className="px-4 py-3 font-semibold text-gray-800">
+                    {dept.name}
+                  </td>
+                  <td className="px-4 py-3 hidden sm:table-cell">
+                    {getEmployeeCount(dept.name)}
+                  </td>
+                  <td className="px-4 py-3 text-center">
+                    <button
+                      onClick={() => handleOpenForm(dept)}
+                      className="text-blue-600 hover:text-blue-800 text-xl"
+                    >
+                      <FaEdit />
+                    </button>
+                  </td>
+                  <td className="px-4 py-3 text-center">
+                    <button
+                      onClick={() => handleDelete(dept._id)}
+                      className="text-red-600 hover:text-red-800 text-xl"
+                    >
+                      <FaTrash />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      {departments.length > departmentsPerPage && (
+        <div className="flex justify-center items-center mt-6 space-x-4">
+          <button
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+            className={`px-5 py-2 rounded-lg text-white font-medium ${
+              currentPage === 1
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            Previous
+          </button>
+          <span className="text-gray-700 font-medium">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-5 py-2 rounded-lg text-white font-medium ${
+              currentPage === totalPages
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            Next
+          </button>
         </div>
       )}
     </div>
-  );
+
+    {/* Modal */}
+    {showForm && (
+      <div className="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md">
+          <h2 className="text-xl font-bold mb-5 text-gray-900 text-center">
+            {editDept ? "Edit Department" : "Add Department"}
+          </h2>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Department Name
+              </label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+
+            <div className="flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setShowForm(false)}
+                className="px-5 py-2 rounded-md bg-gray-300 text-gray-700 font-semibold"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-5 py-2 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700"
+              >
+                {editDept ? "Update" : "Add"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    )}
+  </div>
+);
+
 };
 
 export default Departments;

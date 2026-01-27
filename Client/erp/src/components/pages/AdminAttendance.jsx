@@ -133,44 +133,196 @@ const AdminAttendance = () => {
     }
   };
 
-  return (
-    <div className="p-4 md:p-8 min-h-screen ">
-      <div className="bg-white pb-40 rounded-3xl shadow-2xl md:p-8 border border-gray-200 max-w-7xl mx-auto">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-8 sm:mb-10 text-center">
-          Attendance Management
-        </h1>
+return (
+<div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-30 pl-1 pr-2 py-6">
 
-        {/* Mark Attendance Section */}
-        <div className="border border-gray-300 rounded-3xl p-4 md:p-8 mb-8 bg-gray-50 shadow-md">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">
-            Mark Attendance for Employee
-          </h2>
 
-          <div className="flex flex-col md:flex-row flex-wrap gap-4 md:gap-6 items-center justify-center">
-            {/* Select User */}
-            <div className="flex flex-col w-full md:w-auto">
-              <label className="text-gray-700 text-lg mb-1">Select User</label>
-              <select
-                value={user}
-                onChange={(e) => setUser(e.target.value)}
-                className="border border-gray-300 rounded-xl px-4 py-2 bg-white outline-none w-full md:w-72 text-gray-900 text-lg font-medium"
-              >
-                <option value="">Select User</option>
-                {employees.map((emp) => (
-                  <option key={emp._id} value={emp.fullName}>
-                    {emp.fullName} ({emp.email})
-                  </option>
-                ))}
-              </select>
+    <div className="bg-white shadow-xl rounded-xl w-full max-w-4xl mx-auto p-10 sm:p-7 border border-gray-200">
+
+      {/* Heading */}
+      <h1 className="text-2xl font-bold text-gray-900 mb-5 text-center">
+        Attendance Management
+      </h1>
+
+      {/* Mark Attendance Section */}
+      <div className="border border-gray-300 rounded-xl p-3 sm:p-5 mb-6 bg-gray-50 shadow-sm">
+        <h2 className="text-xl font-bold text-gray-900 mb-4 text-center">
+          Mark Attendance for Employee
+        </h2>
+
+        <div className="flex flex-col md:flex-row flex-wrap gap-3 items-center justify-center">
+
+          {/* Select User */}
+          <div className="flex flex-col w-full md:w-auto">
+            <label className="text-gray-700 text-sm mb-1">Select User</label>
+            <select
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+              className="border border-gray-300 rounded-lg px-3 py-2 bg-white outline-none w-full md:w-64 text-gray-900 text-sm"
+            >
+              <option value="">Select User</option>
+              {employees.map((emp) => (
+                <option key={emp._id} value={emp.fullName}>
+                  {emp.fullName} ({emp.email})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Status */}
+          <div className="flex flex-col w-full md:w-auto">
+            <label className="text-gray-700 text-sm mb-1">Status</label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="border border-gray-300 rounded-lg px-3 py-2 bg-white outline-none w-full md:w-36 text-gray-900 text-sm"
+            >
+              <option>Present</option>
+              <option>Absent</option>
+              <option>On Leave</option>
+              <option>WFH</option>
+            </select>
+          </div>
+
+          {/* Date */}
+          <div className="flex flex-col w-full md:w-auto">
+            <label className="text-gray-700 text-sm mb-1">Date</label>
+            <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-white w-full md:w-36">
+              <FaCalendarAlt className="text-gray-500 mr-2 text-sm" />
+              <input
+                type="date"
+                value={markDate}
+                onChange={(e) => {
+                  setMarkDate(e.target.value);
+                  fetchAttendance(e.target.value);
+                }}
+                className="outline-none w-full text-gray-900 text-sm"
+              />
             </div>
+          </div>
 
-            {/* Status */}
-            <div className="flex flex-col w-full md:w-auto">
-              <label className="text-gray-700 text-lg mb-1">Status</label>
+          <button
+            onClick={handleMarkAttendance}
+            className="bg-gray-800 hover:bg-black text-white text-sm font-semibold px-5 py-2 rounded-lg shadow transition"
+          >
+            Mark Attendance
+          </button>
+        </div>
+      </div>
+
+      {/* Attendance Table */}
+      <div className="overflow-x-auto rounded-lg">
+        <table className="min-w-full border border-gray-300 text-sm">
+          <thead>
+            <tr className="bg-gray-800 text-white">
+              <th className="py-2 px-2 text-left">Date</th>
+              <th className="py-2 px-2 text-left">Full Name</th>
+              <th className="py-2 px-2 text-left">Status</th>
+              <th className="py-2 px-2 text-left">Marked By</th>
+              <th className="py-2 px-2 text-center">View/Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentRecords.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="text-center text-gray-500 py-4 italic">
+                  No attendance records found
+                </td>
+              </tr>
+            ) : (
+              currentRecords.map((rec) => (
+                <tr key={rec._id} className="hover:bg-gray-100 transition">
+                  <td className="py-2 px-2">
+                    {format(new Date(rec.date), "dd-MM-yyyy")}
+                  </td>
+                  <td className="py-2 px-2">{rec.fullName}</td>
+                  <td
+                    className={`py-2 px-2 text-center font-semibold ${
+                      rec.status === "Present"
+                        ? "text-green-600"
+                        : rec.status === "Absent"
+                        ? "text-red-600"
+                        : rec.status === "On Leave"
+                        ? "text-yellow-600"
+                        : rec.status === "WFH"
+                        ? "text-blue-600"
+                        : "text-gray-800"
+                    }`}
+                  >
+                    {rec.status}
+                  </td>
+                  <td className="py-2 px-2">{rec.markedBy}</td>
+                  <td className="py-2 px-2 text-center">
+                    <button
+                      onClick={() => setSelectedRecord(rec)}
+                      className="text-green-700 hover:text-green text-lg"
+                    >
+                      <FaEye />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      {records.length > recordsPerPage && (
+        <div className="flex justify-center items-center mt-4 space-x-3">
+          <button
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+            className={`px-4 py-1 rounded text-white text-sm ${
+              currentPage === 1 ? "bg-gray-400" : "bg-gray-900 hover:bg-black"
+            }`}
+          >
+            Previous
+          </button>
+          <span className="text-gray-700 text-sm">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-1 rounded text-white text-sm ${
+              currentPage === totalPages ? "bg-gray-400" : "bg-gray-900 hover:bg-black"
+            }`}
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </div>
+
+    {/* View/Edit Modal */}
+    {selectedRecord && (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50 p-3">
+        <div className="bg-white p-5 rounded-xl shadow-xl w-full max-w-md relative">
+          <h3 className="text-xl font-bold mb-4 text-center">
+            Attendance Details
+          </h3>
+
+          <button
+            onClick={() => setSelectedRecord(null)}
+            className="absolute top-2 right-3 text-gray-600 hover:text-black text-lg font-bold"
+          >
+            ✕
+          </button>
+
+          <div className="space-y-3 text-gray-800 text-sm font-medium">
+            <p><span className="font-semibold">Full Name:</span> {selectedRecord.fullName}</p>
+            <p><span className="font-semibold">Date:</span> {format(new Date(selectedRecord.date), "dd-MM-yyyy")}</p>
+            <p><span className="font-semibold">Marked By:</span> {selectedRecord.markedBy}</p>
+
+            <div>
+              <label className="font-semibold block mb-1">Status:</label>
               <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="border border-gray-300 rounded-xl px-4 py-2 bg-white outline-none w-full md:w-40 text-gray-900 text-lg font-medium"
+                value={selectedRecord.status}
+                onChange={(e) =>
+                  setSelectedRecord((prev) => ({ ...prev, status: e.target.value }))
+                }
+                className="border border-gray-300 rounded-md px-2 py-1 w-full text-sm bg-white"
               >
                 <option>Present</option>
                 <option>Absent</option>
@@ -179,203 +331,32 @@ const AdminAttendance = () => {
               </select>
             </div>
 
-            {/* Date Picker */}
-            <div className="flex flex-col w-full md:w-auto">
-              <label className="text-gray-700 text-lg mb-1">Date</label>
-              <div className="flex items-center border border-gray-300 rounded-xl px-4 py-2 bg-white w-full md:w-40">
-                <FaCalendarAlt className="text-gray-500 mr-2" />
-                <input
-                  type="date"
-                  value={markDate}
-                  onChange={(e) => {
-                    setMarkDate(e.target.value);
-                    fetchAttendance(e.target.value);
-                  }}
-                  className="outline-none w-full text-gray-900 text-lg font-medium"
-                />
-              </div>
-            </div>
-
-            <button
-              onClick={handleMarkAttendance}
-              className="bg-gray-800 hover:bg-black text-white font-semibold px-6 py-3 rounded-xl shadow-md mt-4 md:mt-0 transition"
-            >
-              Mark Attendance
-            </button>
+            <p>
+              <span className="font-semibold">Last Updated:</span>{" "}
+              {format(new Date(selectedRecord.updatedAt || selectedRecord.date), "dd-MM-yyyy HH:mm:ss")}
+            </p>
           </div>
-        </div>
 
-        {/* Attendance Table */}
-        <div className="overflow-x-auto rounded-xl">
-          <table className="min-w-full border border-gray-300 text-base sm:text-lg">
-            <thead>
-              <tr className="bg-gray-800 text-white">
-                <th className="py-3 px-2 sm:px-4 text-left">Date</th>
-                <th className="py-3 px-2 sm:px-4 text-left">Full Name</th>
-                <th className="py-3 px-2 sm:px-4 text-left">Status</th>
-                <th className="py-3 px-2 sm:px-4 text-left">Marked By</th>
-                <th className="py-3 px-2 sm:px-4 text-center">View/Edit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentRecords.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan="5"
-                    className="text-center text-gray-500 py-6 italic"
-                  >
-                    No attendance records found
-                  </td>
-                </tr>
-              ) : (
-                currentRecords.map((rec) => (
-                  <tr key={rec._id} className="hover:bg-gray-100 transition">
-                    <td className="py-3 px-2 sm:px-4">
-                      {format(new Date(rec.date), "dd-MM-yyyy")}
-                    </td>
-                    <td className="py-3 px-2 sm:px-4">{rec.fullName}</td>
-                    <td
-                      className={`py-3 px-2 sm:px-4 text-center font-semibold ${
-                        rec.status === "Present"
-                          ? "text-green-600"
-                          : rec.status === "Absent"
-                          ? "text-red-600"
-                          : rec.status === "On Leave"
-                          ? "text-yellow-600"
-                          : rec.status === "WFH"
-                          ? "text-blue-600"
-                          : "text-gray-800"
-                      }`}
-                    >
-                      {rec.status}
-                    </td>
-                    <td className="py-3 px-2 sm:px-4">{rec.markedBy}</td>
-                    <td className="py-3 px-2 sm:px-4 text-center">
-                      <button
-                        onClick={() => setSelectedRecord(rec)}
-                        className="text-gray-700 hover:text-black transition text-xl sm:text-2xl"
-                      >
-                        <FaEye />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Pagination */}
-        {records.length > recordsPerPage && (
-          <div className="flex flex-col sm:flex-row justify-center items-center mt-6 space-y-2 sm:space-y-0 sm:space-x-4">
+          <div className="mt-4 flex justify-end gap-2">
             <button
-              onClick={handlePrev}
-              disabled={currentPage === 1}
-              className={`px-5 py-2 rounded-lg text-white font-medium ${
-                currentPage === 1
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gray-900 hover:bg-black"
-              }`}
+              onClick={() => handleUpdateStatus(selectedRecord._id, selectedRecord.status)}
+              className="px-4 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 text-sm font-semibold"
             >
-              Previous
+              Submit
             </button>
-            <span className="text-gray-700 font-medium text-base">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={handleNext}
-              disabled={currentPage === totalPages}
-              className={`px-5 py-2 rounded-lg text-white font-medium ${
-                currentPage === totalPages
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gray-900 hover:bg-black"
-              }`}
-            >
-              Next
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* View/Edit Modal */}
-      {selectedRecord && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
-          <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-lg relative">
-            <h3 className="text-2xl sm:text-3xl font-extrabold mb-4 sm:mb-6 text-center">
-              Attendance Details
-            </h3>
 
             <button
               onClick={() => setSelectedRecord(null)}
-              className="absolute top-3 right-4 text-gray-600 hover:text-black text-xl sm:text-2xl font-bold"
+              className="px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 text-sm font-semibold"
             >
-              ✕
+              Close
             </button>
-
-            <div className="space-y-4 text-gray-800 text-base sm:text-lg font-medium">
-              <p>
-                <span className="font-bold">Full Name:</span>{" "}
-                {selectedRecord.fullName}
-              </p>
-              <p>
-                <span className="font-bold">Date:</span>{" "}
-                {format(new Date(selectedRecord.date), "dd-MM-yyyy")}
-              </p>
-              <p>
-                <span className="font-bold">Marked By:</span>{" "}
-                {selectedRecord.markedBy}
-              </p>
-
-              <div>
-                <label className="font-bold block mb-1">Status:</label>
-                <select
-                  value={selectedRecord.status}
-                  onChange={(e) =>
-                    setSelectedRecord((prev) => ({
-                      ...prev,
-                      status: e.target.value,
-                    }))
-                  }
-                  className="border border-gray-300 rounded-lg p-2 w-full text-base sm:text-lg bg-white"
-                >
-                  <option>Present</option>
-                  <option>Absent</option>
-                  <option>On Leave</option>
-                  <option>WFH</option>
-                </select>
-              </div>
-
-              <p>
-                <span className="font-bold">Last Updated:</span>{" "}
-                {format(
-                  new Date(selectedRecord.updatedAt || selectedRecord.date),
-                  "dd-MM-yyyy HH:mm:ss"
-                )}
-              </p>
-            </div>
-
-            <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-end gap-2 sm:gap-3">
-              <button
-                onClick={() =>
-                  handleUpdateStatus(selectedRecord._id, selectedRecord.status)
-                }
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 font-semibold"
-              >
-                Submit
-              </button>
-
-              <button
-                onClick={() => setSelectedRecord(null)}
-                className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold"
-              >
-                Close
-              </button>
-            </div>
           </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 };
 
 export default AdminAttendance;

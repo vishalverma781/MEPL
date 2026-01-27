@@ -53,107 +53,155 @@ const CreateIssue = ({ createdIssues, setCreatedIssues }) => {
     }
   };
 
- return (
-  <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-60 px-5 sm:px-8 lg:px-10 py-10">
-      <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl mx-auto ml-5 p-6 sm:p-10 border border-gray-200">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-           Generate Your Issues
-          <span className="block w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
-        </h2>
+return (
+  <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 p-10 md:ml-60 px-4 sm:px-6 py-6">
+    
+    <div className="bg-white shadow-xl rounded-xl w-full max-w-3xl mx-auto p-10 border border-gray-200">
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-6">
+      <h2 className="text-xl p-10 font-bold text-center text-gray-800 mb-4">
+        Generate Your Issues
+        <span className="block w-12 h-0.5 bg-gray-800 mx-auto mt-2 rounded-full"></span>
+      </h2>
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+
         <SelectField
-          label="Select Issue Type"
+          label="Issue Type"
           name="issueType"
           value={formData.issueType}
           onChange={handleChange}
-          icon={<FaBug className="text-gray-400" />}
+          icon={<FaBug className="text-gray-400 text-sm" />}
           options={issueOptions.map(o => ({ label: o, value: o }))}
           openDropdown={openDropdown}
           setOpenDropdown={setOpenDropdown}
         />
 
+        {/* Description */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2 text-base sm:text-lg">Issue Description</label>
+          <label className="block text-gray-700 font-medium mb-1 text-sm">
+            Issue Description
+          </label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
-            placeholder="Describe your issue in detail..."
-            className="w-full border border-gray-300 rounded-xl px-3 sm:px-4 py-2 sm:py-3 shadow-sm bg-white text-base sm:text-lg outline-none"
+            placeholder="Describe your issue..."
+            className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm outline-none"
             required
           />
         </div>
 
+        {/* Date */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2 text-base sm:text-lg">Select Date</label>
-          <div className="flex items-center border border-gray-300 rounded-xl px-3 sm:px-4 shadow-sm bg-white">
-            <FaCalendarAlt className="text-gray-400 mr-2 sm:mr-3" />
+          <label className="block text-gray-700 font-medium mb-1 text-sm">
+            Select Date
+          </label>
+          <div className="flex items-center border border-gray-300 rounded-lg px-2 bg-white">
+            <FaCalendarAlt className="text-gray-400 text-sm mr-2" />
             <DatePicker
               selected={formData.date}
               onChange={date => setFormData(prev => ({ ...prev, date }))}
               placeholderText="DD/MM/YYYY"
               dateFormat="dd/MM/yyyy"
-              className="w-full p-2 sm:p-3 text-base sm:text-lg bg-transparent outline-none cursor-pointer"
+              className="w-full py-1.5 text-sm bg-transparent outline-none cursor-pointer"
               required
             />
           </div>
         </div>
 
+        {/* Time */}
         {formData.time && (
           <div>
-            <label className="block text-gray-700 font-medium mb-2 text-base sm:text-lg">Time</label>
-            <div className="flex items-center border border-gray-300 rounded-xl px-3 sm:px-4 shadow-sm bg-white">
-              <FaClock className="text-gray-400 mr-2 sm:mr-3" />
+            <label className="block text-gray-700 font-medium mb-1 text-sm">
+              Time
+            </label>
+            <div className="flex items-center border border-gray-300 rounded-lg px-2 bg-white">
+              <FaClock className="text-gray-400 text-sm mr-2" />
               <input
                 type="text"
                 value={formData.time}
                 readOnly
-                className="w-full p-2 sm:p-3 text-base sm:text-lg bg-transparent outline-none cursor-not-allowed"
+                className="w-full py-1.5 text-sm bg-transparent outline-none cursor-not-allowed"
               />
             </div>
           </div>
         )}
 
-        <div className="text-center mt-4 sm:mt-6">
+        {/* Button */}
+        <div className="text-center mt-2">
           <button
             type="submit"
-            className="w-full sm:w-1/2 py-2 sm:py-3 text-base sm:text-lg font-semibold text-white rounded-xl shadow-md bg-gray-800 hover:bg-gray-900 transition-all duration-300 transform hover:scale-105"
+            className="w-full sm:w-1/2 py-1.5 text-sm font-semibold 
+                       text-white rounded-lg shadow 
+                       bg-gray-800 hover:bg-gray-900 transition"
           >
             Submit
           </button>
         </div>
+
       </form>
     </div>
   </div>
 );
+
+
 };
 
-const SelectField = ({ label, name, value, onChange, icon, options, openDropdown, setOpenDropdown }) => {
+const SelectField = ({ 
+  label, name, value, onChange, icon, 
+  options, openDropdown, setOpenDropdown 
+}) => {
   const isOpen = openDropdown === name;
-  const handleSelect = opt => { onChange({ target: { name, value: opt.value } }); setOpenDropdown(null); };
+
+  const handleSelect = (opt) => {
+    onChange({ target: { name, value: opt.value } });
+    setOpenDropdown(null);
+  };
+
   return (
     <div className="relative">
-      <label className="block text-gray-700 font-medium mb-2 text-lg">{label}</label>
+      
+      {/* Label */}
+      <label className="block text-gray-700 font-medium mb-1 text-sm">
+        {label}
+      </label>
+
+      {/* Select Box */}
       <div
         onClick={() => setOpenDropdown(isOpen ? null : name)}
-        className="flex items-center justify-between border border-gray-300 rounded-xl px-4 py-3 shadow-sm bg-white cursor-pointer hover:border-gray-500 transition-all duration-200"
+        className="flex items-center justify-between 
+                   border border-gray-300 rounded-lg 
+                   px-3 py-2 bg-white shadow-sm 
+                   cursor-pointer 
+                   hover:border-gray-500 
+                   transition text-sm"
       >
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2 text-gray-700">
           {icon}
-          <span className={`text-gray-700 text-lg ${value ? "font-semibold" : ""}`}>
+          <span className={value ? "font-semibold" : "text-gray-400"}>
             {options.find(o => o.value === value)?.label || `Select ${label}`}
           </span>
         </div>
-        <FaChevronDown className={`text-gray-500 transform transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"}`} />
+
+        <FaChevronDown 
+          className={`text-gray-500 text-xs transition-transform duration-200 
+                     ${isOpen ? "rotate-180" : ""}`} 
+        />
       </div>
+
+      {/* Dropdown */}
       {isOpen && (
-        <ul className="absolute z-20 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+        <ul className="absolute z-30 mt-1 w-full 
+                       bg-white border border-gray-200 
+                       rounded-lg shadow-md 
+                       max-h-44 overflow-y-auto text-sm">
           {options.map((opt, idx) => (
             <li
               key={idx}
               onClick={() => handleSelect(opt)}
-              className={`px-4 py-3 text-lg cursor-pointer ${opt.value === value ? "font-semibold text-gray-700" : "text-gray-700"} hover:bg-gray-100 transition`}
+              className="px-3 py-2 cursor-pointer 
+                         hover:bg-gray-100 
+                         transition"
             >
               {opt.label}
             </li>
@@ -163,5 +211,6 @@ const SelectField = ({ label, name, value, onChange, icon, options, openDropdown
     </div>
   );
 };
+
 
 export default CreateIssue;

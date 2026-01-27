@@ -151,130 +151,166 @@ const AddRoles = ({ setRoles }) => {
     }
   };
 
-  return (
-    <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-60 px-5 sm:px-8 lg:px-10 py-10">
-      <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl mx-auto ml-5 p-6 sm:p-10 border border-gray-200">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-          Change Roles
-          <span className="block w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
-        </h2>
+return (
+  <div className="flex-1 min-h-screen overflow-y-auto transition-all p-10 duration-300 p-10 md:ml-90 px-4 sm:px-6 py-6">
+    
+    <div className="bg-white shadow-xl rounded-xl w-full max-w-3xl mx-auto p-10 border border-gray-200">
+      
+      <h2 className="text-xl font-bold text-center text-gray-800 mb-6">
+        Change Roles
+        <span className="block w-16 h-1 bg-gray-800 mx-auto mt-2 rounded-full"></span>
+      </h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6 pb-40">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
+        <SelectField
+          label=" Employee"
+          name="employeeId"
+          value={formData.employeeId}
+          onChange={handleChange}
+          icon={<FaUserTie className="text-gray-400 text-sm" />}
+          options={employeesList.map(e => ({ label: e.fullName, value: e._id }))}
+          openDropdown={openDropdown}
+          setOpenDropdown={setOpenDropdown}
+        />
+
+        <SelectField
+          label="Assign Role"
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
+          icon={<FaTasks className="text-gray-400 text-sm" />}
+          options={roleOptions.map(r => ({ label: r, value: r }))}
+          openDropdown={openDropdown}
+          setOpenDropdown={setOpenDropdown}
+        />
+
+        {formData.role && !["Software Developer","Senior Software Developer"].includes(formData.role) && (
           <SelectField
-            label="Select Employee"
-            name="employeeId"
-            value={formData.employeeId}
+            label="Assign Project"
+            name="assignedProject"
+            value={formData.assignedProject}
             onChange={handleChange}
-            icon={<FaUserTie className="text-gray-400" />}
-            options={employeesList.map(e => ({ label: e.fullName, value: e._id }))}
+            icon={<FaBuilding className="text-gray-400 text-sm" />}
+            options={projectsList.map(p => ({ label: p.projectName, value: p._id }))}
             openDropdown={openDropdown}
             setOpenDropdown={setOpenDropdown}
           />
+        )}
 
+        {formData.role && formData.assignedProject && !["Project Manager","Software Developer","Senior Software Developer"].includes(formData.role) && (
           <SelectField
-            label="Assign Role"
-            name="role"
-            value={formData.role}
+            label="Assign Plaza"
+            name="assignedPlaza"
+            value={formData.assignedPlaza}
             onChange={handleChange}
-            icon={<FaTasks className="text-gray-400" />}
-            options={roleOptions.map(r => ({ label: r, value: r }))}
+            icon={<FaBuilding className="text-gray-400 text-sm" />}
+            options={plazasList.map(p => ({ label: p.plazaName, value: p._id }))}
             openDropdown={openDropdown}
             setOpenDropdown={setOpenDropdown}
           />
+        )}
 
-          {formData.role && !["Software Developer","Senior Software Developer"].includes(formData.role) && (
-            <SelectField
-              label="Assign to Project"
-              name="assignedProject"
-              value={formData.assignedProject}
-              onChange={handleChange}
-              icon={<FaBuilding className="text-gray-400" />}
-              options={projectsList.map(p => ({ label: p.projectName, value: p._id }))}
-              openDropdown={openDropdown}
-              setOpenDropdown={setOpenDropdown}
+        {["Software Developer","Senior Software Developer"].includes(formData.role) && (
+          <SelectField
+            label="Assign Office"
+            name="office"
+            value={formData.office}
+            onChange={handleChange}
+            icon={<FaBuilding className="text-gray-400 text-sm" />}
+            options={officeOptions}
+            openDropdown={openDropdown}
+            setOpenDropdown={setOpenDropdown}
+          />
+        )}
+
+        {/* Date Picker */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1 text-sm">From Date</label>
+          <div className="flex items-center border border-gray-300 rounded-lg px-3 bg-white">
+            <FaCalendarAlt className="text-gray-400 mr-2 text-sm" />
+            <DatePicker
+              selected={formData.fromDate}
+              onChange={date => setFormData({ ...formData, fromDate: date })}
+              placeholderText="DD/MM/YYYY"
+              dateFormat="dd/MM/yyyy"
+              className="w-full p-2 text-sm bg-transparent outline-none cursor-pointer"
             />
-          )}
-
-          {formData.role && formData.assignedProject && !["Project Manager","Software Developer","Senior Software Developer"].includes(formData.role) && (
-            <SelectField
-              label="Assign to Plaza"
-              name="assignedPlaza"
-              value={formData.assignedPlaza}
-              onChange={handleChange}
-              icon={<FaBuilding className="text-gray-400" />}
-              options={plazasList.map(p => ({ label: p.plazaName, value: p._id }))}
-              openDropdown={openDropdown}
-              setOpenDropdown={setOpenDropdown}
-            />
-          )}
-
-          {["Software Developer","Senior Software Developer"].includes(formData.role) && (
-            <SelectField
-              label="Assign to Office"
-              name="office"
-              value={formData.office}
-              onChange={handleChange}
-              icon={<FaBuilding className="text-gray-400" />}
-              options={officeOptions}
-              openDropdown={openDropdown}
-              setOpenDropdown={setOpenDropdown}
-            />
-          )}
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-2 text-lg">From Date</label>
-            <div className="flex items-center border border-gray-300 rounded-xl px-4 shadow-sm bg-white">
-              <FaCalendarAlt className="text-gray-400 mr-3" />
-              <DatePicker
-                selected={formData.fromDate}
-                onChange={date => setFormData({...formData, fromDate: date})}
-                placeholderText="DD/MM/YYYY"
-                dateFormat="dd/MM/yyyy"
-                className="w-full p-3 text-lg bg-transparent outline-none cursor-pointer"
-              />
-            </div>
           </div>
+        </div>
 
-          <div className="text-center">
-            <button
-              type="submit"
-              className="w-full sm:w-1/2 py-2 text-lg font-semibold text-white rounded-xl shadow-md bg-gray-800 hover:bg-gray-900 transition-all duration-300 transform hover:scale-105"
-            >
-              Assign Role
-            </button>
-          </div>
-        </form>
-      </div>
+        {/* Submit Button */}
+        <div className="text-center pt-2">
+          <button
+            type="submit"
+            className="w-full sm:w-1/2 py-2 text-sm font-semibold text-white rounded-lg bg-gray-800 hover:bg-gray-900 transition"
+          >
+            Assign Role
+          </button>
+        </div>
+
+      </form>
     </div>
-  );
+  </div>
+);
+
 };
 
 // Dropdown component
-const SelectField = ({ label, name, value, onChange, icon, options, openDropdown, setOpenDropdown }) => {
+const SelectField = ({ 
+  label, name, value, onChange, icon, 
+  options, openDropdown, setOpenDropdown 
+}) => {
+
   const isOpen = openDropdown === name;
-  const handleSelect = opt => { onChange({ target: { name, value: opt.value }}); setOpenDropdown(null); };
+
+  const handleSelect = (opt) => {
+    onChange({ target: { name, value: opt.value }});
+    setOpenDropdown(null);
+  };
+
   return (
     <div className="relative">
-      <label className="block text-gray-700 font-medium mb-2 text-lg">{label}</label>
+      
+      {/* Label */}
+      <label className="block text-gray-700 font-medium mb-1 text-sm">
+        {label}
+      </label>
+
+      {/* Select Box */}
       <div
         onClick={() => setOpenDropdown(isOpen ? null : name)}
-        className="flex items-center justify-between border border-gray-300 rounded-xl px-4 py-3 shadow-sm bg-white cursor-pointer hover:border-gray-500 transition-all duration-200"
+        className="flex items-center justify-between 
+                   border border-gray-300 rounded-lg 
+                   px-3 py-2 bg-white cursor-pointer 
+                   hover:border-gray-500 transition-all duration-200"
       >
         <div className="flex items-center space-x-2">
           {icon}
-          <span className={`text-gray-700 text-lg ${value ? "font-semibold" : ""}`}>
+          <span className={`text-gray-700 text-sm ${value ? "font-semibold" : ""}`}>
             {options.find(o => o.value === value)?.label || `Select ${label}`}
           </span>
         </div>
-        <FaChevronDown className={`text-gray-500 transform transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"}`} />
+
+        {/* Dropdown Icon */}
+        <FaChevronDown 
+          className={`text-gray-500 text-sm transform transition-transform duration-200 
+          ${isOpen ? "rotate-180" : "rotate-0"}`} 
+        />
       </div>
+
+      {/* Dropdown List */}
       {isOpen && (
-        <ul className="absolute z-20 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+        <ul className="absolute z-20 mt-1 w-full 
+                       bg-white border border-gray-200 
+                       rounded-lg shadow-lg max-h-52 overflow-y-auto">
           {options.map((opt, idx) => (
             <li
               key={idx}
               onClick={() => handleSelect(opt)}
-              className={`px-4 py-3 text-lg cursor-pointer ${opt.value === value ? "font-semibold text-gray-700" : "text-gray-700"} hover:bg-gray-100 transition`}
+              className={`px-3 py-2 text-sm cursor-pointer 
+              ${opt.value === value ? "font-semibold text-gray-800" : "text-gray-700"} 
+              hover:bg-gray-100 transition`}
             >
               {opt.label}
             </li>

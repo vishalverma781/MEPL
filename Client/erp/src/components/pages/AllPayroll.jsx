@@ -62,285 +62,228 @@ const AllPayroll = () => {
     }
   };
 
-    return (
-    <div className="w-full min-h-screen flex justify-center items-start p-5">
-      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-6 text-gray-900">
-          All Payrolls
-        </h2>
+return (
+<div className="flex-1 min-h-screen p-10 overflow-x-auto overflow-y-auto transition-all duration-300 md:ml-20 pr-8 py-2
+">
 
-        <div className="overflow-x-auto">
-          <table className="w-full border border-gray-300 rounded-xl overflow-hidden text-lg">
-            <thead>
-              <tr className="bg-gray-800 text-white">
-                <th className="py-5 px-6 text-left text-lg">Full Name</th>
-                <th className="py-5 px-6 text-left text-lg hidden md:table-cell">
-                  Username
-                </th>
-                <th className="py-5 px-6 text-left text-lg hidden md:table-cell">
-                  Phone
-                </th>
-                <th className="py-5 px-6 text-left text-lg hidden lg:table-cell">
-                  Department
-                </th>
-                <th className="py-5 px-6 text-left text-lg hidden lg:table-cell">
-                  Salary
-                </th>
-                <th className="py-5 px-6 text-left text-lg hidden lg:table-cell">
-                  Expense
-                </th>
-                <th className="py-3 px-2 text-center text-lg">View</th>
-                <th className="py-3 px-2 text-center text-lg">Edit</th>
-                <th className="py-3 px-2 text-center text-lg">Delete</th>
+<div className="bg-white shadow-xl rounded-xl p-10 w-full max-w-7xl mx-auto">
+
+      <h2 className="text-2xl font-bold text-center mb-5 text-gray-900">
+        All Payrolls
+      </h2>
+
+      <div className="overflow-x-auto">
+        <table className="w-full border border-gray-300 rounded-lg overflow-hidden text-sm">
+          <thead>
+            <tr className="bg-gray-800 text-white text-lg sm:text-xl">
+              <th className="py-2 px-3 whitespace-nowrap text-left">Full Name</th>
+              <th className="py-2 px-2 text-left hidden md:table-cell">Username</th>
+              <th className="py-2 px-2 text-left hidden md:table-cell">Phone</th>
+              <th className="py-2 px-2 text-left hidden lg:table-cell">Department</th>
+              <th className="py-2 px-2 text-left hidden lg:table-cell">Salary</th>
+              <th className="py-2 px-2 text-left hidden lg:table-cell">Expense</th>
+              <th className="py-2 px-2 text-center">View</th>
+              <th className="py-2 px-2 text-center">Edit</th>
+              <th className="py-2 px-2 text-center">Delete</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {currentRecords.length === 0 ? (
+              <tr>
+                <td colSpan="9" className="text-center py-4 text-gray-500 text-sm">
+                  No payroll records found
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {currentRecords.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan="8"
-                    className="text-center py-8 text-gray-500 text-xl"
-                  >
-                    No payroll records found
+            ) : (
+              currentRecords.map((rec) => (
+                <tr key={rec._id} className="border-b border-gray-200 text-sm hover:bg-gray-50">
+                  <td className="py-2 px-2 font-semibold">{rec.fullName}</td>
+                  <td className="py-2 px-2 hidden md:table-cell">{rec.username || "-"}</td>
+                  <td className="py-2 px-3 hidden md:table-cell whitespace-nowrap">{rec.phone || "-"}</td>
+
+                  <td className="py-2 px-2 hidden lg:table-cell">{rec.department}</td>
+                  <td className="py-2 px-2 hidden lg:table-cell">₹ {rec.salary}</td>
+                  <td className="py-2 px-2 hidden lg:table-cell">₹ {rec.expense}</td>
+
+                  <td className="py-2 px-2 text-center">
+                    <button
+                      onClick={() => setSelectedRecord(rec)}
+                      className="text-green-600 hover:text-green-800"
+                    >
+                      <FaEye size={18} />
+                    </button>
+                  </td>
+
+                  <td className="py-2 px-2 text-center">
+                    <button
+                      onClick={() => setEditRecord(rec)}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      <FaEdit size={18} />
+                    </button>
+                  </td>
+
+                  <td className="py-2 px-2 text-center">
+                    <button
+                      onClick={() => handleDelete(rec._id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      <FaTrash size={18} />
+                    </button>
                   </td>
                 </tr>
-              ) : (
-                currentRecords.map((rec) => (
-                  <tr
-                    key={rec._id}
-                    className="border-b border-gray-200 text-lg"
-                  >
-                    <td className="py-5 px-6 font-bold text-lg">
-                      {rec.fullName}
-                    </td>
-                    <td className="py-5 px-6 text-lg hidden md:table-cell">
-                      {rec.username || "-"}
-                    </td>
-                    <td className="py-5 px-6 text-lg hidden md:table-cell">
-                      {rec.phone || "-"}
-                    </td>
-                    <td className="py-5 px-6 text-lg hidden lg:table-cell">
-                      {rec.department}
-                    </td>
-                    <td className="py-5 px-6 font-bold text-lg hidden lg:table-cell">
-                      ₹ {rec.salary}
-                    </td>
-                    <td className="py-5 px-6 text-lg hidden lg:table-cell">
-                      ₹ {rec.expense}
-                    </td>
-
-                    <td className="py-5 px-6 text-center">
-                      <button
-                        onClick={() => setSelectedRecord(rec)}
-                        className="text-green-600 hover:text-green-800 transition"
-                      >
-                        <FaEye size={20} />
-                      </button>
-                    </td>
-                    <td className="py-5 px-6 text-center">
-                      <button
-                        onClick={() => setEditRecord(rec)}
-                        className="text-blue-600 hover:text-blue-800 transition"
-                      >
-                        <FaEdit size={20} />
-                      </button>
-                    </td>
-                    <td className="py-5 px-6 text-center">
-                      <button
-                        onClick={() => handleDelete(rec._id)}
-                        className="text-red-600 hover:text-red-800 transition"
-                      >
-                        <FaTrash size={20} />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        {allRecords.length > recordsPerPage && (
-          <div className="flex justify-center items-center mt-8 space-x-6">
-            <button
-              onClick={handlePrev}
-              disabled={currentPage === 1}
-              className={`px-4 py-2 rounded-lg text-white font-semibold text-lg ${
-                currentPage === 1
-                  ? "bg-blue-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              Previous
-            </button>
-            <span className="text-gray-700 font-medium text-lg">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={handleNext}
-              disabled={currentPage === totalPages}
-              className={`px-4 py-2 rounded-lg text-white font-semibold text-lg ${
-                currentPage === totalPages
-                  ? "bg-blue-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              Next
-            </button>
-          </div>
-        )}
-
-        {selectedRecord && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
-            <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg">
-              <h3 className="text-2xl font-extrabold mb-6 text-center text-gray-900">
-                Payroll Details
-              </h3>
-              <div className="space-y-3 text-gray-800 text-lg font-medium">
-                <p>
-                  <span className="font-bold">Full Name:</span>{" "}
-                  {selectedRecord.fullName}
-                </p>
-                <p>
-                  <span className="font-bold">Username:</span>{" "}
-                  {selectedRecord.username || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Phone:</span>{" "}
-                  {selectedRecord.phone || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Bank Name:</span>{" "}
-                  {selectedRecord.bankName || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Account Number:</span>{" "}
-                  {selectedRecord.accountNumber || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">IFSC:</span>{" "}
-                  {selectedRecord.ifsc || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Department:</span>{" "}
-                  {selectedRecord.department || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Leaves:</span>{" "}
-                  {selectedRecord.leaves || "0"}
-                </p>
-                <p>
-                  <span className="font-bold">Salary:</span>{" "}
-                  {selectedRecord.salary}
-                </p>
-                <p>
-                  <span className="font-bold">Expense:</span>{" "}
-                  {selectedRecord.expense}
-                </p>
-                <p>
-                  <span className="font-bold">Month:</span>{" "}
-                  {selectedRecord.month || "N/A"}
-                </p>
-                <p>
-                  <span className="font-bold">Date:</span>{" "}
-                  {selectedRecord.date || "N/A"}
-                </p>
-              </div>
-              <div className="mt-12 flex justify-center">
-                <button
-                  onClick={() => setSelectedRecord(null)}
-                  className="px-10 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-xl font-semibold"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {editRecord && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
-            <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg">
-              <h3 className="text-2xl font-extrabold mb-6 text-center text-gray-900">
-                Edit Payroll
-              </h3>
-              <div className="space-y-3 text-gray-800 text-lg font-medium">
-                <div>
-                  <label className="font-bold">Leaves:</label>
-                  <input
-                    type="number"
-                    className="border px-3 py-2 rounded w-full"
-                    value={editRecord.leaves || 0}
-                    onChange={(e) =>
-                      setEditRecord({ ...editRecord, leaves: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="font-bold">Salary:</label>
-                  <input
-                    type="number"
-                    className="border px-3 py-2 rounded w-full"
-                    value={editRecord.salary}
-                    onChange={(e) =>
-                      setEditRecord({ ...editRecord, salary: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="font-bold">Expense:</label>
-                  <input
-                    type="number"
-                    className="border px-3 py-2 rounded w-full"
-                    value={editRecord.expense}
-                    onChange={(e) =>
-                      setEditRecord({ ...editRecord, expense: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="font-bold">Month:</label>
-                  <input
-                    type="month"
-                    className="border px-3 py-2 rounded w-full"
-                    value={editRecord.month}
-                    onChange={(e) =>
-                      setEditRecord({ ...editRecord, month: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="font-bold">Date:</label>
-                  <input
-                    type="date"
-                    className="border px-3 py-2 rounded w-full"
-                    value={editRecord.date}
-                    onChange={(e) =>
-                      setEditRecord({ ...editRecord, date: e.target.value })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="mt-6 flex justify-end gap-4">
-                <button
-                  onClick={() => setEditRecord(null)}
-                  className="px-6 py-2 bg-gray-300 rounded hover:bg-gray-400"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleSaveEdit}
-                  className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                >
-                  Save
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
+
+      {/* Pagination */}
+      {allRecords.length > recordsPerPage && (
+        <div className="flex justify-center items-center mt-4 space-x-3">
+          <button
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+            className={`px-4 py-1 rounded text-sm text-white ${
+              currentPage === 1 ? "bg-gray-400" : "bg-gray-900 hover:bg-black"
+            }`}
+          >
+            Previous
+          </button>
+
+          <span className="text-gray-700 text-sm">
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-1 rounded text-sm text-white ${
+              currentPage === totalPages ? "bg-gray-400" : "bg-gray-900 hover:bg-black"
+            }`}
+          >
+            Next
+          </button>
+        </div>
+      )}
+
+      {/* View Modal */}
+      {selectedRecord && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50 p-3">
+          <div className="bg-white p-5 rounded-xl shadow-xl w-full max-w-md">
+            <h3 className="text-xl font-bold mb-4 text-center text-gray-900">
+              Payroll Details
+            </h3>
+
+            <div className="space-y-2 text-gray-800 text-sm font-medium">
+              <p><span className="font-semibold">Full Name:</span> {selectedRecord.fullName}</p>
+              <p><span className="font-semibold">Username:</span> {selectedRecord.username || "N/A"}</p>
+              <p><span className="font-semibold">Phone:</span> {selectedRecord.phone || "N/A"}</p>
+              <p><span className="font-semibold">Bank Name:</span> {selectedRecord.bankName || "N/A"}</p>
+              <p><span className="font-semibold">Account Number:</span> {selectedRecord.accountNumber || "N/A"}</p>
+              <p><span className="font-semibold">IFSC:</span> {selectedRecord.ifsc || "N/A"}</p>
+              <p><span className="font-semibold">Department:</span> {selectedRecord.department || "N/A"}</p>
+              <p><span className="font-semibold">Leaves:</span> {selectedRecord.leaves || "0"}</p>
+              <p><span className="font-semibold">Salary:</span> ₹ {selectedRecord.salary}</p>
+              <p><span className="font-semibold">Expense:</span> ₹ {selectedRecord.expense}</p>
+              <p><span className="font-semibold">Month:</span> {selectedRecord.month || "N/A"}</p>
+              <p><span className="font-semibold">Date:</span> {selectedRecord.date || "N/A"}</p>
+            </div>
+
+            <div className="mt-4 flex justify-center">
+              <button
+                onClick={() => setSelectedRecord(null)}
+                className="px-5 py-1.5 bg-red-500 text-white rounded-md hover:bg-red-600 text-sm font-semibold"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      {editRecord && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50 p-3">
+          <div className="bg-white p-5 rounded-xl shadow-xl w-full max-w-md">
+            <h3 className="text-xl font-bold mb-4 text-center text-gray-900">
+              Edit Payroll
+            </h3>
+
+            <div className="space-y-3 text-sm font-medium text-gray-800">
+              <div>
+                <label className="font-semibold">Leaves</label>
+                <input
+                  type="number"
+                  className="border px-2 py-1 rounded w-full text-sm"
+                  value={editRecord.leaves || 0}
+                  onChange={(e) => setEditRecord({ ...editRecord, leaves: e.target.value })}
+                />
+              </div>
+
+              <div>
+                <label className="font-semibold">Salary</label>
+                <input
+                  type="number"
+                  className="border px-2 py-1 rounded w-full text-sm"
+                  value={editRecord.salary}
+                  onChange={(e) => setEditRecord({ ...editRecord, salary: e.target.value })}
+                />
+              </div>
+
+              <div>
+                <label className="font-semibold">Expense</label>
+                <input
+                  type="number"
+                  className="border px-2 py-1 rounded w-full text-sm"
+                  value={editRecord.expense}
+                  onChange={(e) => setEditRecord({ ...editRecord, expense: e.target.value })}
+                />
+              </div>
+
+              <div>
+                <label className="font-semibold">Month</label>
+                <input
+                  type="month"
+                  className="border px-2 py-1 rounded w-full text-sm"
+                  value={editRecord.month}
+                  onChange={(e) => setEditRecord({ ...editRecord, month: e.target.value })}
+                />
+              </div>
+
+              <div>
+                <label className="font-semibold">Date</label>
+                <input
+                  type="date"
+                  className="border px-2 py-1 rounded w-full text-sm"
+                  value={editRecord.date}
+                  onChange={(e) => setEditRecord({ ...editRecord, date: e.target.value })}
+                />
+              </div>
+            </div>
+
+            <div className="mt-4 flex justify-end gap-3">
+              <button
+                onClick={() => setEditRecord(null)}
+                className="px-4 py-1 bg-gray-300 rounded text-sm"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveEdit}
+                className="px-4 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
-  );
+  </div>
+);
 };
 
 export default AllPayroll;

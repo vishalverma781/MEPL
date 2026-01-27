@@ -69,20 +69,28 @@ const AddProject = ({ projects, setProjects }) => {
     }
   };
 
- return (
-  <div className="flex-1 bg-gray-50 transition-all duration-300 md:ml-60 min-h-[100vh]">
-    {/* ✅ Scrollable area */}
-    <div className="w-full h-full overflow-y-auto px-4 sm:px-8 lg:px-10 py-8">
-      <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl mx-auto p-6 sm:p-10 border border-gray-200">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+return (
+  <div className="flex-1 transition-all duration-300 md:ml-60 min-h-[100vh] ">
+    
+    {/* Scrollable area */}
+    <div className="w-full h-full overflow-y-auto px-3 sm:px-6 lg:px-8 py-6">
+      
+      {/* Card */}
+      <div className="bg-white shadow-md rounded-xl 
+                      w-full max-w-4xl mx-auto 
+                      p-10 sm:p-6 
+                      border border-gray-200">
+
+        {/* Heading */}
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-5">
           Add Project
-          <span className="block w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
+          <span className="block w-14 h-1 bg-gray-800 mx-auto mt-2 rounded-full"></span>
         </h2>
 
-        {/* ✅ Form with full scroll + visible bottom padding */}
+        {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pb-40"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 pb-10"
         >
           <InputField
             label="Project Name"
@@ -90,34 +98,37 @@ const AddProject = ({ projects, setProjects }) => {
             placeholder="Enter project name"
             value={formData.projectName}
             onChange={handleChange}
-            icon={<FaBuilding className="text-gray-400 mr-3" />}
+            icon={<FaBuilding className="text-gray-400 mr-2 text-sm" />}
             required
           />
+
           <InputField
             label="PIU Name"
             name="piuName"
             placeholder="Enter PIU name"
             value={formData.piuName}
             onChange={handleChange}
-            icon={<FaUserTie className="text-gray-400 mr-3" />}
+            icon={<FaUserTie className="text-gray-400 mr-2 text-sm" />}
             required
           />
+
           <InputField
             label="Client Name"
             name="clientName"
             placeholder="Enter client name"
             value={formData.clientName}
             onChange={handleChange}
-            icon={<FaUsers className="text-gray-400 mr-3" />}
+            icon={<FaUsers className="text-gray-400 mr-2 text-sm" />}
             required
           />
+
           <InputField
             label="Location"
             name="location"
             placeholder="Enter location"
             value={formData.location}
             onChange={handleChange}
-            icon={<FaMapMarkerAlt className="text-gray-400 mr-3" />}
+            icon={<FaMapMarkerAlt className="text-gray-400 mr-2 text-sm" />}
             required
           />
 
@@ -126,44 +137,49 @@ const AddProject = ({ projects, setProjects }) => {
             name="assignedTo"
             value={formData.assignedTo}
             onChange={handleChange}
-            icon={<FaTasks className="text-gray-400 mr-2" />}
+            icon={<FaTasks className="text-gray-400 mr-2 text-sm" />}
             options={["N/A", "Admin", "Manager", "Supervisor"]}
           />
 
+          {/* Date Picker */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2 text-lg">
+            <label className="block text-gray-700 font-medium mb-1 text-sm">
               Date of Creation
             </label>
-            <div className="flex items-center border border-gray-300 rounded-xl px-4 shadow-sm 
-                       focus-within:border-gray-800 focus-within:ring-2 focus-within:ring-gray-800/20
-                       transition-all duration-300 bg-white">
-              <FaCalendarAlt className="text-gray-400 mr-3" />
+            <div className="flex items-center border border-gray-300 rounded-lg px-3 
+                            focus-within:border-gray-800 focus-within:ring-1 
+                            focus-within:ring-gray-800/20 transition bg-white">
+              <FaCalendarAlt className="text-gray-400 mr-2 text-sm" />
               <DatePicker
                 selected={formData.startDate}
                 onChange={(date) => setFormData({ ...formData, startDate: date })}
                 placeholderText="DD/MM/YYYY"
                 dateFormat="dd/MM/yyyy"
-                className="w-full p-3 text-lg bg-transparent outline-none cursor-pointer"
+                className="w-full p-3 text-sm bg-transparent outline-none cursor-pointer"
                 required
               />
             </div>
           </div>
 
-          {/* ✅ Button with safe bottom space */}
-          <div className="sm:col-span-2 mt-6 text-center">
+          {/* Button */}
+          <div className="sm:col-span-2 mt-4 text-center">
             <button
               type="submit"
-              className="w-full sm:w-1/2 py-4 text-lg font-semibold text-white rounded-xl shadow-md 
-                bg-gray-800 hover:bg-gray-900 transition-all duration-300 transform hover:scale-105"
+              className="w-full sm:w-1/2 py-2.5 text-sm font-semibold text-white 
+                         rounded-lg shadow 
+                         bg-gray-800 hover:bg-gray-900 
+                         transition transform hover:scale-105"
             >
               Add Project
             </button>
           </div>
+
         </form>
       </div>
     </div>
   </div>
 );
+
 
 };
 
@@ -199,10 +215,10 @@ const SelectField = ({ label, name, value, onChange, icon, options }) => {
 
   return (
     <div className="relative">
-      <label className="block text-gray-700 font-medium mb-2 text-lg">{label}</label>
+      <label className="block text-gray-700 font-medium text-lg">{label}</label>
       <div
         onClick={() => setOpen(!open)}
-        className="flex items-center justify-between border border-gray-300 rounded-xl px-4 py-3 shadow-sm 
+        className="flex items-center justify-between border border-gray-300 rounded-xl px-2 py-2 shadow-sm 
                    bg-white cursor-pointer hover:border-gray-500 transition-all duration-200"
       >
         <div className="flex items-center space-x-2">
@@ -231,5 +247,6 @@ const SelectField = ({ label, name, value, onChange, icon, options }) => {
     </div>
   );
 };
+
 
 export default AddProject;

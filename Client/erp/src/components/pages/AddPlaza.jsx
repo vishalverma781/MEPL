@@ -63,16 +63,18 @@ const AddPlaza = () => {
     }
   };
 
- return (
-  <div className="ml-0 md:ml-64 px-10 sm:px-6 pt-10 pb-20 min-h-screen">
-    <div className="bg-white shadow-2xl rounded-2xl w-full max-w-screen-lg mx-auto p-6 sm:p-10 border border-gray-200">
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12">
-        Add Plaza
+return (
+  <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 p-10 md:ml-60 px-4 sm:px-6 py-6">
+    
+    <div className="bg-white shadow-xl rounded-xl w-full max-w-3xl mx-auto p-10 border border-gray-200">
+      
+      <h2 className="text-xl sm:text-2xl font-bold text-center mb-5 text-gray-900">
+        ➕ Add Plaza
       </h2>
 
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
       >
         <InputField
           label="Plaza Name"
@@ -80,7 +82,7 @@ const AddPlaza = () => {
           value={formData.plazaName}
           onChange={handleChange}
           placeholder="Enter plaza name"
-          icon={<FaBuilding />}
+          icon={<FaBuilding className="text-gray-400 text-sm" />}
           required
         />
 
@@ -89,32 +91,36 @@ const AddPlaza = () => {
           name="projectId"
           value={formData.projectId}
           onChange={handleChange}
-          icon={<FaTasks />}
+          icon={<FaTasks className="text-gray-400 text-sm" />}
           options={projects.map((p) => ({
             label: `${p.projectName} (${p.piuName}, ${p.location})`,
             value: p._id,
           }))}
         />
 
-        <div className="sm:col-span-2 text-center">
+        <div className="sm:col-span-2 text-center mt-2">
           <button
             type="submit"
-            className="w-full sm:w-auto py-4 sm:py-5 px-6 sm:px-10 bg-gray-800 text-white rounded-xl text-base sm:text-lg font-semibold"
+            className="px-5 py-2 bg-gray-800 text-white rounded text-xs sm:text-sm font-semibold hover:bg-gray-900 transition"
           >
-            ➕ Add Plaza
+            Add Plaza
           </button>
         </div>
       </form>
     </div>
   </div>
 );
+
 };
 
 // Input Field
 const InputField = ({ label, name, value, onChange, placeholder, icon }) => (
   <div>
-    <label className="block mb-2 font-semibold text-lg">{label}</label>
-    <div className="flex items-center border rounded-xl p-4 text-lg">
+    <label className="block mb-1 font-semibold text-xs text-gray-700">
+      {label}
+    </label>
+
+    <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 text-xs bg-white focus-within:border-gray-800 focus-within:ring-1 focus-within:ring-gray-800/20 transition">
       {icon}
       <input
         type="text"
@@ -122,11 +128,12 @@ const InputField = ({ label, name, value, onChange, placeholder, icon }) => (
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="ml-2 w-full outline-none"
+        className="ml-2 w-full outline-none bg-transparent"
       />
     </div>
   </div>
 );
+
 
 // Select Field
 const SelectField = ({ label, name, value, onChange, icon, options }) => {
@@ -139,27 +146,44 @@ const SelectField = ({ label, name, value, onChange, icon, options }) => {
 
   return (
     <div className="relative">
-      <label className="block mb-2 font-semibold text-lg">{label}</label>
+      
+      <label className="block mb-1 font-semibold text-xs text-gray-700">
+        {label}
+      </label>
+
       <div
         onClick={() => setOpen(!open)}
-        className="flex items-center justify-between border rounded-xl p-4 cursor-pointer text-lg"
+        className="flex items-center justify-between 
+                   border border-gray-300 rounded-lg 
+                   px-3 py-2 cursor-pointer 
+                   text-xs bg-white 
+                   hover:border-gray-500 transition"
       >
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           {icon}
-          <span className="ml-2">
+          <span>
             {options.find((o) => o.value === value)?.label || "Select Project"}
           </span>
         </div>
+
+        <FaChevronDown 
+          className={`text-gray-500 transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`} 
+        />
       </div>
 
       {open && (
         <ul
-          className="absolute bg-white border rounded-xl w-full mt-1 z-10 max-h-48 overflow-y-auto shadow-lg text-lg"
+          className="absolute bg-white border border-gray-200 
+                     rounded-lg w-full mt-1 z-10 
+                     max-h-40 overflow-y-auto 
+                     shadow-lg text-xs"
         >
           {options.map((opt) => (
             <li
               key={opt.value}
-              className="p-3 hover:bg-gray-100 cursor-pointer"
+              className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
               onClick={() => handleSelect(opt)}
             >
               {opt.label}
@@ -170,5 +194,6 @@ const SelectField = ({ label, name, value, onChange, icon, options }) => {
     </div>
   );
 };
+
 
 export default AddPlaza;

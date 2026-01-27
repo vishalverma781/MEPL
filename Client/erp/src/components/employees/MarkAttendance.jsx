@@ -64,25 +64,45 @@ const MarkAttendance = () => {
     }
   };
 
-  return (
-  <div className="w-full min-h-screen bg-gradient-to-br flex items-start justify-center pt-24 pb-16 px-18 sm:px-6 lg:px-8">
-    <div className="bg-white shadow-2xl rounded-3xl w-full max-w-md sm:max-w-lg p-8 sm:p-16 border border-gray-200 flex flex-col items-center space-y-6 sm:space-y-8">
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-800">Mark Attendance</h1>
-      <p className="text-center text-gray-700 text-base sm:text-lg md:text-xl font-semibold">Hello, {currentUser}</p>
-      <p className="text-center text-gray-600 text-sm sm:text-base md:text-lg">
+return (
+<div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-80 px-10 sm:px-6 lg:px-8 py-6">
+
+    <div className="bg-white shadow-xl rounded-2xl 
+                    w-full max-w-md 
+                    p-10 sm:p-8 
+                    border border-gray-200 
+                    flex flex-col items-center space-y-4">
+
+      <h1 className="text-xl sm:text-2xl font-bold text-center text-gray-800">
+        Mark Attendance
+      </h1>
+
+      <p className="text-center text-gray-700 text-sm sm:text-base font-semibold">
+        Hello, {currentUser}
+      </p>
+
+      <p className="text-center text-gray-500 text-xs sm:text-sm">
         {format(currentDate, "EEEE, MMMM do yyyy, h:mm:ss a")}
       </p>
+
       <button
         onClick={handleMark}
         disabled={todayMarked || loading}
-        className={`w-full py-4 sm:py-5 md:py-6 rounded-3xl text-white font-bold text-base sm:text-lg md:text-xl transition-all duration-300 transform ${
+        className={`w-full py-2.5 sm:py-3 rounded-xl 
+                    text-white font-semibold text-sm sm:text-base
+                    transition-all duration-300 ${
           todayMarked || loading
             ? "bg-gray-400 cursor-not-allowed"
-            : "bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black shadow-xl hover:scale-105 hover:shadow-2xl"
+            : "bg-gray-800 hover:bg-black hover:shadow-lg hover:scale-[1.02]"
         }`}
       >
-        {loading ? "Marking..." : todayMarked ? "Already Marked" : "Mark Attendance"}
+        {loading 
+          ? "Marking..." 
+          : todayMarked 
+            ? "Already Marked" 
+            : "Mark Attendance"}
       </button>
+
     </div>
   </div>
 );

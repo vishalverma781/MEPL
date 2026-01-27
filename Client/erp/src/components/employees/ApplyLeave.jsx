@@ -80,82 +80,95 @@ const ApplyLeave = ({ refreshLeaves }) => {
     }
   };
 
-   return (
-    <div className="min-h-screen pt-8 pb-16 px-10 sm:px-6 lg:px-8 transition-all duration-300">
-      <div className="bg-white shadow-2xl rounded-2xl mb-10 p-5 sm:p-8 md:p-10 border border-gray-200 w-full max-w-md sm:max-w-2xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6 sm:mb-8">
-          Apply Leave
-          <span className="block w-16 sm:w-20 h-1 bg-gray-800 mx-auto mt-3 rounded-full"></span>
-        </h2>
 
-        <form className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6" onSubmit={handleSubmit}>
-          <InputField
-            label="Start Date"
-            name="startDate"
-            type="date"
-            value={formData.startDate}
-            onChange={handleChange}
-            icon={<FaCalendarAlt className="text-gray-400 mr-2 sm:mr-3" />}
-            required
-          />
-          <InputField
-            label="End Date"
-            name="endDate"
-            type="date"
-            value={formData.endDate}
-            onChange={handleChange}
-            icon={<FaCalendarAlt className="text-gray-400 mr-2 sm:mr-3" />}
-            required
-          />
-          <InputField
-            label="Number of Days"
-            name="numberOfDays"
-            type="number"
-            value={formData.numberOfDays}
-            onChange={handleChange}
-            icon={<FaRegClock className="text-gray-400 mr-2 sm:mr-3" />}
-            placeholder="Auto-calculated"
-            readOnly
-          />
+return (
+  <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-60 px-10 sm:px-6 lg:px-8 py-6">
+    
+    <div className="bg-white shadow-xl rounded-xl w-full max-w-4xl mx-auto p-10 sm:p-7 border border-gray-200">
 
-          <div className="sm:col-span-2">
-            <label className="block text-gray-700 font-bold mb-1 sm:mb-2 text-sm sm:text-base">Reason for Leave</label>
-            <div className="flex items-start border border-gray-300 rounded-xl px-3 sm:px-4 py-2 shadow-sm
-                            focus-within:border-gray-800 focus-within:ring-2 focus-within:ring-gray-800/20
-                            transition-all duration-300 bg-white">
-              <FaPen className="text-gray-400 mt-2 mr-2 sm:mr-3" />
-              <textarea
-                name="reason"
-                placeholder="Briefly describe the reason for your leave"
-                value={formData.reason}
-                onChange={handleChange}
-                className="w-full p-2 sm:p-3 text-sm sm:text-base text-gray-800 bg-transparent outline-none resize-none h-24 sm:h-28 rounded-md"
-                required
-              />
-            </div>
+      <h2 className="text-xl sm:text-2xl font-bold text-center text-gray-800 mb-4">
+        Apply Leave
+        <span className="block w-12 h-0.5 bg-gray-800 mx-auto mt-2 rounded-full"></span>
+      </h2>
+
+      <form 
+        className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4"
+        onSubmit={handleSubmit}
+      >
+        <InputField
+          label="Start Date"
+          name="startDate"
+          type="date"
+          value={formData.startDate}
+          onChange={handleChange}
+          icon={<FaCalendarAlt className="text-gray-400 mr-2 text-sm" />}
+          required
+        />
+
+        <InputField
+          label="End Date"
+          name="endDate"
+          type="date"
+          value={formData.endDate}
+          onChange={handleChange}
+          icon={<FaCalendarAlt className="text-gray-400 mr-2 text-sm" />}
+          required
+        />
+
+        <InputField
+          label="Number of Days"
+          name="numberOfDays"
+          type="number"
+          value={formData.numberOfDays}
+          onChange={handleChange}
+          icon={<FaRegClock className="text-gray-400 mr-2 text-sm" />}
+          placeholder="Auto"
+          readOnly
+        />
+
+        {/* Reason */}
+        <div className="sm:col-span-2">
+          <label className="block text-gray-700 font-semibold mb-1 text-sm">
+            Reason for Leave
+          </label>
+
+          <div className="flex items-start border border-gray-300 rounded-lg px-2 py-1.5 bg-white">
+            <FaPen className="text-gray-400 mt-2 mr-2 text-sm" />
+            <textarea
+              name="reason"
+              placeholder="Reason..."
+              value={formData.reason}
+              onChange={handleChange}
+              className="w-full text-sm text-gray-800 bg-transparent outline-none resize-none h-20"
+              required
+            />
           </div>
+        </div>
 
-          <div className="sm:col-span-2 text-center mt-4">
-            <button
-              type="submit"
-              className="w-full sm:w-3/4 md:w-1/2 py-3 text-sm sm:text-base md:text-lg font-bold text-white rounded-xl shadow-md
-                         bg-gray-800 hover:bg-gray-900 transition-all duration-300 transform hover:scale-105"
-            >
-              Apply Leave
-            </button>
-          </div>
-        </form>
-      </div>
+        {/* Button */}
+        <div className="sm:col-span-2 text-center mt-2">
+          <button
+            type="submit"
+            className="w-full sm:w-2/3 py-2 text-sm font-bold text-white rounded-lg
+                       bg-gray-800 hover:bg-gray-900 transition"
+          >
+            Apply Leave
+          </button>
+        </div>
+      </form>
     </div>
-  );
+  </div>
+);
+
 };
 
 const InputField = ({ label, name, type, value, onChange, icon, placeholder, readOnly, required }) => (
   <div>
-    <label className="block text-gray-700 font-bold mb-1 sm:mb-2 text-sm sm:text-base">{label}</label>
-    <div className="flex items-center border border-gray-300 rounded-xl px-2 sm:px-4 py-2 shadow-sm
-                    focus-within:border-gray-800 focus-within:ring-2 focus-within:ring-gray-800/20
-                    transition-all duration-300 bg-white">
+    <label className="block text-gray-700 font-semibold mb-1 text-sm">
+      {label}
+    </label>
+
+    <div className="flex items-center border border-gray-300 rounded-lg px-2 py-1.5 bg-white">
       {icon}
       <input
         type={type}
@@ -165,7 +178,7 @@ const InputField = ({ label, name, type, value, onChange, icon, placeholder, rea
         placeholder={placeholder}
         readOnly={readOnly}
         required={required}
-        className="w-full p-2 sm:p-3 text-sm sm:text-base text-gray-800 bg-transparent outline-none font-bold"
+        className="w-full text-sm text-gray-800 bg-transparent outline-none font-medium"
       />
     </div>
   </div>

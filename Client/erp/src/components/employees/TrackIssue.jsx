@@ -82,45 +82,74 @@ const TrackIssues = () => {
   const currentIssues = issues.slice(indexOfFirst, indexOfLast);
 
 return (
-  <div className="w-full min-h-screen flex justify-center items-start p-4 sm:p-10">
-    <div className="bg-white shadow-2xl rounded-2xl mb-10 p-4 sm:p-10 w-full max-w-7xl">
-      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 text-gray-900">Track Issues</h2>
+ <div className="flex-1 min-h-screen p-10 overflow-x-auto overflow-y-auto transition-all duration-300 md:ml-50 pr-8 py-2
+">
+
+<div className="bg-white shadow-xl rounded-xl p-10 w-full max-w-7xl mx-auto">
+
+      <h2 className="text-2xl font-bold text-center mb-5 text-gray-900">
+        Track Issues
+      </h2>
 
       {issues.length === 0 ? (
-        <p className="text-center text-gray-500 text-base sm:text-lg">No issues found!</p>
+        <p className="text-center text-gray-500 text-sm">
+          No issues found!
+        </p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
+          <table className="w-full border border-gray-300 rounded-lg overflow-hidden text-sm">
             <thead>
-              <tr className="bg-gray-800 text-white text-base sm:text-xl">
-                <th className="p-2 sm:p-3 hidden sm:table-cell">Sr. No</th>
-                <th className="p-2 sm:p-3 hidden sm:table-cell">Issue ID</th>
-                <th className="p-2 sm:p-3">Plaza Name</th>
-                <th className="p-2 sm:p-3 hidden sm:table-cell">Issue Type</th>
-                <th className="p-2 sm:p-3">Description</th>
-                <th className="p-2 sm:p-3">Status</th>
-                <th className="p-2 sm:p-3 hidden sm:table-cell">Reported By</th>
-                <th className="p-2 sm:p-3 hidden sm:table-cell">Office</th>
-                <th className="p-2 sm:p-3 text-center">View</th>
+              <tr className="bg-gray-800 text-white text-sm sm:text-base">
+                <th className="p-2 hidden sm:table-cell">Sr</th>
+                <th className="p-2 hidden sm:table-cell">ID</th>
+                <th className="p-2">Plaza</th>
+                <th className="p-2 hidden sm:table-cell">Type</th>
+                <th className="p-2">Desc</th>
+                <th className="p-2">Status</th>
+                <th className="p-2 hidden sm:table-cell">By</th>
+                <th className="p-2 text-center">View</th>
               </tr>
             </thead>
+
             <tbody>
               {currentIssues.map((issue, index) => (
-                <tr key={issue._id} className="border-b border-gray-200 hover:bg-gray-100 transition text-sm sm:text-lg">
-                  <td className="py-2 px-2 sm:py-4 sm:px-4 hidden sm:table-cell">{indexOfFirst + index + 1}</td>
-                  <td className="py-2 px-2 sm:py-4 sm:px-4 hidden sm:table-cell">{issue.issueId}</td>
-                  <td className="py-2 px-2 sm:py-4 sm:px-4">{issue.plazaName || "N/A"}</td>
-                  <td className="py-2 px-2 sm:py-4 sm:px-4 hidden sm:table-cell">{issue.issueType}</td>
-                  <td className="py-2 px-2 sm:py-4 sm:px-4">{issue.description}</td>
-                  <td className="py-2 px-2 sm:py-4 sm:px-4">{issue.status}</td>
-                  <td className="py-2 px-2 sm:py-4 sm:px-4 hidden sm:table-cell font-medium">{issue.reporterFullName || issue.reporterUsername}</td>
-                  <td className="py-2 px-2 sm:py-4 sm:px-4 hidden sm:table-cell">{issue.reporterOffice || "Not Assigned"}</td>
-                  <td className="py-2 px-2 sm:py-4 sm:px-4 text-center">
+                <tr key={issue._id}
+                  className="border-b hover:bg-gray-50 transition text-xs sm:text-sm">
+
+                  <td className="p-2 hidden sm:table-cell">
+                    {indexOfFirst + index + 1}
+                  </td>
+
+                  <td className="p-2 hidden sm:table-cell">
+                    {issue.issueId}
+                  </td>
+
+                  <td className="p-2">
+                    {issue.plazaName || "N/A"}
+                  </td>
+
+                  <td className="p-2 hidden sm:table-cell">
+                    {issue.issueType}
+                  </td>
+
+                  <td className="p-2">
+                    {issue.description}
+                  </td>
+
+                  <td className="p-2 font-medium">
+                    {issue.status}
+                  </td>
+
+                  <td className="p-2 hidden sm:table-cell">
+                    {issue.reporterFullName || issue.reporterUsername}
+                  </td>
+
+                  <td className="p-2 text-center">
                     <button
                       onClick={() => setSelectedIssue(issue)}
                       className="text-green-600 hover:text-green-800"
                     >
-                      <FaEye size={20} />
+                      <FaEye size={16} />
                     </button>
                   </td>
                 </tr>
@@ -132,19 +161,31 @@ return (
 
       {/* Pagination */}
       {issues.length > issuesPerPage && (
-        <div className="flex justify-center items-center mt-4 sm:mt-6 space-x-2 sm:space-x-4">
+        <div className="flex justify-center items-center mt-3 gap-2 text-sm">
           <button
             onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
             disabled={currentPage === 1}
-            className={`px-3 py-1 sm:px-5 sm:py-2 rounded-lg text-white font-medium ${currentPage === 1 ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
+            className={`px-3 py-1 rounded text-white ${
+              currentPage === 1
+                ? "bg-gray-400"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
-            Previous
+            Prev
           </button>
-          <span className="text-gray-700 font-medium text-sm sm:text-lg">Page {currentPage} of {totalPages}</span>
+
+          <span className="text-gray-700">
+            {currentPage} / {totalPages}
+          </span>
+
           <button
             onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className={`px-3 py-1 sm:px-5 sm:py-2 rounded-lg text-white font-medium ${currentPage === totalPages ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
+            className={`px-3 py-1 rounded text-white ${
+              currentPage === totalPages
+                ? "bg-gray-400"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
             Next
           </button>
@@ -162,6 +203,7 @@ return (
   </div>
 );
 
+
 };
 
 // ✅ IssueModal
@@ -173,71 +215,71 @@ const IssueModal = ({ issue, onClose, onResolve }) => {
   const formatDateTime = (date) => {
     if (!date) return "Not Yet Rectified";
     const d = new Date(date);
-    const dd = String(d.getDate()).padStart(2, "0");
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const yyyy = d.getFullYear();
-    const hh = String(d.getHours()).padStart(2, "0");
-    const min = String(d.getMinutes()).padStart(2, "0");
-    const ss = String(d.getSeconds()).padStart(2, "0");
-    return `${dd}-${mm}-${yyyy} ${hh}:${min}:${ss}`;
+    return d.toLocaleString();
   };
 
   const handleSubmit = () => {
     if (!remarks.trim()) return;
-
     const updatedDate = status === "Resolved" ? new Date() : null;
     setRectifiedDate(updatedDate);
-
     onResolve(issue._id, remarks, status);
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
-      <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg">
-        <h3 className="text-2xl font-extrabold mb-6 text-center text-gray-900">Issue Details</h3>
-        <div className="space-y-3 text-gray-800 text-lg font-medium">
-          <p><span className="font-bold">Issue ID:</span> {issue.issueId}</p>
-          <p><span className="font-bold">Plaza Name:</span> {issue.plazaName || "N/A"}</p>
-          <p><span className="font-bold">Issue Type:</span> {issue.issueType}</p>
-          <p><span className="font-bold">Description:</span> {issue.description}</p>
-          <p><span className="font-bold">Status:</span>
+    <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-3">
+      <div className="bg-white p-5 rounded-xl shadow-xl w-full max-w-md">
+
+        <h3 className="text-lg font-bold mb-4 text-center text-gray-900">
+          Issue Details
+        </h3>
+
+        <div className="space-y-2 text-sm text-gray-800">
+          <p><b>ID:</b> {issue.issueId}</p>
+          <p><b>Plaza:</b> {issue.plazaName}</p>
+          <p><b>Type:</b> {issue.issueType}</p>
+          <p><b>Description:</b> {issue.description}</p>
+
+          <div>
+            <b>Status:</b>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="border rounded-lg p-2 w-full text-lg bg-white"
+              className="border rounded px-2 py-1 w-full text-sm mt-1"
             >
-              <option value="Pending">Pending</option>
-              <option value="Resolved">Resolved</option>
+              <option>Pending</option>
+              <option>Resolved</option>
             </select>
-          </p>
-          <p>
-            <span className="font-bold">Remarks:</span>
+          </div>
+
+          <div>
+            <b>Remarks:</b>
             <input
-              type="text"
               value={remarks}
               onChange={(e) => setRemarks(e.target.value)}
+              className="border rounded px-2 py-1 w-full text-sm mt-1"
               placeholder="Add remarks..."
-              className="border rounded-lg p-2 w-full text-lg"
             />
-          </p>
+          </div>
+
           {status === "Resolved" && (
-            <p><span className="font-bold">Rectified Date:</span> {formatDateTime(rectifiedDate)}</p>
+            <p><b>Rectified:</b> {formatDateTime(rectifiedDate)}</p>
           )}
-          <p><span className="font-bold">Reported By:</span> {issue.reporterFullName || issue.reporterUsername}</p>
-          <p><span className="font-bold">Office:</span> {issue.reporterOffice || "Not Assigned"}</p>
+
+          <p><b>Reported By:</b> {issue.reporterFullName || issue.reporterUsername}</p>
+          <p><b>Office:</b> {issue.reporterOffice || "N/A"}</p>
         </div>
 
-        <div className="mt-6 flex justify-end gap-3">
+        <div className="mt-4 flex justify-end gap-2">
           <button
             onClick={handleSubmit}
-            className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 font-semibold"
+            className="px-4 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700"
           >
             Submit
           </button>
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold"
+            className="px-4 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600"
           >
             Close
           </button>

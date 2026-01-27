@@ -215,9 +215,9 @@ const Sidebar = () => {
         }}
         isSidebarOpen={!collapsed}
         lightMode={lightMode}
-        toggleMode={toggleMode} 
+         toggleMode={toggleMode} 
       />
-       {/* ✅ Mobile Hamburger Button */}
+       {/*  Mobile Hamburger Button */}
    <button
   onClick={() => setIsMobileOpen(!isMobileOpen)}
   className="md:hidden fixed top-3 left-4 z-50 p-2 rounded-md text-white"
@@ -238,18 +238,19 @@ const Sidebar = () => {
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
       `}
       >
- {/* Logo */}
-        <div className="flex items-center justify-center py-2.5 border-b border-slate-500">
-          <img
-            src="/logo.png"
-            alt="Company Logo"
-            className="w-12 h-12 rounded-full bg-white p-2 shadow-lg"
-          />
-        </div>
-        
+        {/* Logo */}
+<div className="flex items-center justify-center h-[56px] border-b border-slate-500">
+  <img
+    src="/logo.png"
+    alt="Company Logo"
+    className="w-9 h-9 rounded-full bg-white p-1 shadow"
+  />
+</div>
+
+
         {/* Scrollable Menu */}
-        <div className="flex-1 px-3 overflow-y-auto">
-          <ul className="space-y-1 p-2 text-xl font-semibold">
+        <div className="flex-1 overflow-y-auto">
+          <ul className="space-y-1 p-2 text-xl ">
             {/* ✅ Employee Menus */}
             {userType === "employee" && (
               <>
@@ -766,14 +767,16 @@ const Sidebar = () => {
         </div> */}
 
        {/* Footer */}
-        <div className="border-t border-slate-700 p-5 text-center relative z-10">
-          {!collapsed && (
-            <>
-              <p className="text-slate-400 text-sm">Powered By</p>
-              <strong className="text-slate-200 text-base">
-                Mahakalinfra Esolution Pvt Ltd
-              </strong>
-            </>
+        <div className="border-t border-slate-700 p-3 text-center relative z-10">
+         {!collapsed && (
+    <>
+      <p className="text-slate-400 text-[11px] leading-tight">
+        Powered By
+      </p>
+      <strong className="text-slate-200 text-[12px] font-medium leading-tight">
+        Mahakalinfra Esolution Pvt Ltd
+      </strong>
+    </>
           )}
         </div>
       </div>
@@ -786,18 +789,22 @@ const Sidebar = () => {
         ></div>
       )}
 
-      {/* ✅ Desktop Collapse Button */}
-      <button
-        onClick={toggleSidebar}
-        className={`hidden md:block fixed top-6 left-68 z-50 p-1 rounded-full text-4xl transition-all
-          ${
-            lightMode
-              ? "text-gray-800 hover:text-black hover:shadow-lg hover:scale-110"
-              : "text-gray-400 hover:text-gray-200 hover:shadow-lg hover:scale-110"
-          }`}
-      >
-        <FaBars />
-      </button>
+     <button
+  onClick={toggleSidebar}
+  className={`hidden md:flex items-center justify-center
+    fixed top-[20px] z-50
+    transition-all duration-300 ease-in-out
+    ${collapsed ? "left-[120px]" : "left-[300px]"}
+    ${
+      lightMode
+        ? "text-gray-800 hover:text-black"
+        : "text-gray-300 hover:text-white"
+    }
+  `}
+>
+  <FaBars className="text-2xl" />
+</button>
+
 
       {/* ✅ Main Content */}
       <div

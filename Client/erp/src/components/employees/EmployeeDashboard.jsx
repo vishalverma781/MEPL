@@ -115,103 +115,127 @@ const EmployeeDashboardFull = () => {
     },
   };
 
-  return (
-    <div className="min-h-screen w-full px-6 py-10 overflow-auto font-sans">
-      {/* Header */}
-      <div className="w-full bg-white p-6 mb-6 shadow-lg rounded-xl border-l-8 border-blue-500 flex flex-col sm:flex-row justify-between items-center">
-        <div>
-          <h1 className="text-4xl font-bold text-gray-800 tracking-wide">
-            MahakalInfra Esolution Pvt Ltd.
-          </h1>
-          <p className="text-gray-500 mt-1">Dashboard Overview</p>
-        </div>
-        <div className="mt-4 sm:mt-0 flex items-center space-x-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-xl shadow">
-          <FaCalendarAlt className="text-xl" />
-          <span className="font-medium">{currentDate}</span>
-        </div>
+return (
+  <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-50 p-10 px-8 py-6">
+    {/* Header */}
+    <div className="w-full bg-white px-6 py-4 mb-6 
+                    shadow-md rounded-xl 
+                    border-l-4 border-blue-600
+                    flex flex-col sm:flex-row justify-between items-center">
+
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 tracking-wide">
+          MahakalInfra Esolution Pvt Ltd.
+        </h1>
+        <p className="text-gray-500 text-sm mt-1">
+          Dashboard Overview
+        </p>
       </div>
 
-      {/* Cards */}
-      <motion.div
-        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 justify-items-center mb-16"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {cards.map((card, idx) => (
-          <motion.div
-            key={idx}
-            className="flex flex-col items-center bg-white p-6 rounded-2xl shadow-md w-48 transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50"
-            variants={cardVariants}
-          >
-            <motion.div
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 2, delay: idx * 0.3 }}
-            >
-              {card.icon}
-            </motion.div>
-            <h3 className="mt-3 text-gray-700 text-lg font-semibold">
-              {card.title}
-            </h3>
-            <p className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2">
-              {card.value}
-            </p>
-          </motion.div>
-        ))}
-      </motion.div>
-
-      {/* Charts */}
-      <motion.div
-        className="flex flex-col lg:flex-row gap-12 w-full mb-16"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div
-          className="flex-1 bg-white p-6 shadow-lg rounded-xl hover:shadow-2xl transition"
-          variants={chartVariants}
-        >
-          <h2 className="text-2xl font-semibold text-center mb-4 text-gray-700">
-            Workforce States
-          </h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={barData}>
-              <XAxis dataKey="name" stroke="#4B5563" />
-              <YAxis stroke="#4B5563" />
-              <Tooltip />
-              <Bar dataKey="count" fill="#4F46E5" radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </motion.div>
-
-        <motion.div
-          className="flex-1 bg-white p-6 shadow-lg rounded-xl hover:shadow-2xl transition"
-          variants={chartVariants}
-        >
-          <h2 className="text-2xl font-semibold text-center mb-4 text-gray-700">
-            Team Composition
-          </h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={pieData}
-                dataKey="value"
-                nameKey="name"
-                outerRadius={120}
-                label
-              >
-                {pieData.map((entry, index) => (
-                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend verticalAlign="bottom" />
-            </PieChart>
-          </ResponsiveContainer>
-        </motion.div>
-      </motion.div>
+      <div className="mt-3 sm:mt-0 flex items-center gap-2 
+                      bg-blue-50 text-blue-700 
+                      px-4 py-2 rounded-lg 
+                      text-sm font-semibold shadow-sm">
+        <FaCalendarAlt />
+        <span>{currentDate}</span>
+      </div>
     </div>
-  );
+
+    {/* Cards */}
+    <motion.div
+      className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {cards.map((card, idx) => (
+        <motion.div
+          key={idx}
+          variants={cardVariants}
+          className="flex flex-col items-center bg-white 
+                     px-3 py-3 rounded-lg shadow-sm 
+                     border border-gray-100
+                     hover:shadow-md hover:border-blue-200
+                     transition cursor-pointer"
+        >
+          <motion.div
+            className="text-xl text-blue-600"
+            animate={{ rotate: [0, 8, -8, 0] }}
+            transition={{ repeat: Infinity, duration: 2, delay: idx * 0.15 }}
+          >
+            {card.icon}
+          </motion.div>
+
+          <h3 className="mt-1 text-gray-700 text-xs font-semibold text-center">
+            {card.title}
+          </h3>
+
+          <p className="text-lg font-bold text-gray-900 mt-1">
+            {card.value}
+          </p>
+        </motion.div>
+      ))}
+    </motion.div>
+
+    {/* Charts */}
+    <motion.div
+      className="grid grid-cols-1 lg:grid-cols-2 gap-4"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      
+      {/* Bar Chart */}
+      <motion.div
+        variants={chartVariants}
+        className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition"
+      >
+        <h2 className="text-sm font-semibold text-center mb-2 text-gray-700">
+          Workforce States
+        </h2>
+
+        <ResponsiveContainer width="100%" height={230}>
+          <BarChart data={barData}>
+            <XAxis dataKey="name" stroke="#6B7280" fontSize={10} />
+            <YAxis stroke="#6B7280" fontSize={10} />
+            <Tooltip />
+            <Bar dataKey="count" fill="#2563EB" radius={[4,4,0,0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </motion.div>
+
+      {/* Pie Chart */}
+      <motion.div 
+        variants={chartVariants}
+        className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition"
+      >
+        <h2 className="text-sm font-semibold text-center mb-2 text-gray-700">
+          Team Composition
+        </h2>
+
+        <ResponsiveContainer width="100%" height={230}>
+          <PieChart>
+            <Pie 
+              data={pieData}
+              dataKey="value"
+              nameKey="name"
+              outerRadius={85}
+              label
+            >
+              {pieData.map((entry, index) => (
+                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend verticalAlign="bottom" wrapperStyle={{ fontSize: "10px" }} />
+          </PieChart>
+        </ResponsiveContainer>
+      </motion.div>
+
+    </motion.div>
+  </div>
+);
+
 };
 
 export default EmployeeDashboardFull;

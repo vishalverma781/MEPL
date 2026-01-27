@@ -124,194 +124,215 @@ const handleSaveEdit = async () => {
     setEditEmployee({ ...emp });
   };
 
-  return (
-    <div className="w-full min-h-screen flex justify-center items-start p-3">
-      <div className="bg-white shadow-2xl rounded-2xl p-4 w-full max-w-7xl">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
-          ⚙️ Manage Employees
-        </h2>
+return (
+  <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-30 p-10 px-4 sm:px-6 py-6">
+    
+    <div className="bg-white shadow-xl rounded-xl p-10 sm:p-8 w-full max-w-6xl mx-auto">
 
-        {employees.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg">
-            No employees added yet.
-          </p>
-        ) : (
-         <div className="overflow-x-auto">
-  <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
-    <thead>
-      <tr className="bg-gray-800 text-white text-xl">
-        {/* 👇 Profile hidden in mobile */}
-        <th className="p-5 text-left hidden md:table-cell">Profile</th>
-        <th className="p-5 text-left">Full Name</th>
+      <h2 className="text-xl font-bold text-center mb-4 text-gray-900">
+        ⚙️ Manage Employees
+      </h2>
 
-        {/* 👇 Hide these on small screens */}
-        <th className="p-5 text-left hidden md:table-cell">Email</th>
-        <th className="p-5 text-left hidden md:table-cell">Phone</th>
-        <th className="p-5 text-left hidden md:table-cell">Department</th>
-        <th className="p-5 text-left hidden md:table-cell">Designation</th>
+      {employees.length === 0 ? (
+        <p className="text-center text-gray-500 text-sm">
+          No employees added yet.
+        </p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
+            
+            <thead>
+              <tr className="bg-gray-800 text-white text-sm sm:text-base">
+                <th className="p-2 hidden md:table-cell">Profile</th>
+                <th className="p-2 text-left">Full Name</th>
+                <th className="p-2 hidden md:table-cell">Email</th>
+                <th className="p-2 hidden md:table-cell">Phone</th>
+                <th className="p-2 hidden md:table-cell">Department</th>
+                <th className="p-2 hidden md:table-cell">Designation</th>
+                <th className="p-2 text-center">View</th>
+                <th className="p-2 text-center">Edit</th>
+                <th className="p-2 text-center">Delete</th>
+              </tr>
+            </thead>
 
-        <th className="p-5 text-center">View</th>
-        <th className="p-5 text-center">Edit</th>
-        <th className="p-5 text-center">Delete</th>
-      </tr>
-    </thead>
+            <tbody>
+              {currentEmployees.map((emp, idx) => (
+                <tr
+                  key={idx}
+                  className="border-b border-gray-200 hover:bg-gray-50 transition text-xs sm:text-sm"
+                >
+                  {/* Profile */}
+                  <td className="p-2 hidden md:table-cell">
+                    {emp.profilePic ? (
+                      <img
+                        src={getImageSrc(emp.profilePic)}
+                        alt={emp.fullName}
+                        className="w-9 h-9 rounded-full border object-cover"
+                      />
+                    ) : (
+                      <div className="w-9 h-9 rounded-full border flex items-center justify-center text-[9px] text-gray-400">
+                        No Img
+                      </div>
+                    )}
+                  </td>
 
-    <tbody>
-      {currentEmployees.map((emp, idx) => (
-        <tr
-          key={idx}
-          className="border-b border-gray-200 hover:bg-gray-100 transition text-lg"
-        >
-          {/* ✅ Hidden on mobile */}
-          <td className="p-5 hidden md:table-cell">
-            {emp.profilePic ? (
-              <img
-                src={getImageSrc(emp.profilePic)}
-                alt={emp.fullName}
-                className="w-12 h-12 rounded-full object-cover border"
-              />
-            ) : (
-              <div className="w-12 h-12 rounded-full border flex items-center justify-center text-gray-500 text-xs">
-                No Img
-              </div>
-            )}
-          </td>
+                  <td className="p-2 font-medium">{emp.fullName}</td>
+                  <td className="p-2 hidden md:table-cell">{emp.email}</td>
 
-          <td className="p-5">{emp.fullName}</td>
+                  <td className="p-2 hidden md:table-cell whitespace-nowrap">
+                    {emp.phone}
+                  </td>
 
-          {/* ✅ Hidden on mobile */}
-          <td className="p-5 hidden md:table-cell">{emp.email}</td>
-          <td className="p-5 hidden md:table-cell">{emp.phone}</td>
-          <td className="p-5 hidden md:table-cell">{emp.department}</td>
-          <td className="p-5 hidden md:table-cell">{emp.designation}</td>
+                  <td className="p-2 hidden md:table-cell">{emp.department}</td>
+                  <td className="p-2 hidden md:table-cell">{emp.designation}</td>
 
-          <td className="p-5 text-center">
-            <button
-              onClick={() => setSelectedEmployee(emp)}
-              className="text-green-600 hover:text-green-800"
-            >
-              <FaEye size={20} />
-            </button>
-          </td>
-          <td className="p-5 text-center">
-            <button
-              onClick={() => openEdit(emp)}
-              className="text-blue-600 hover:text-blue-800"
-            >
-              <FaEdit size={20} />
-            </button>
-          </td>
-          <td className="p-5 text-center">
-            <button
-              onClick={() => setDeleteEmployee(emp)}
-              className="text-red-600 hover:text-red-800"
-            >
-              <FaTrash size={20} />
-            </button>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+                  {/* Actions */}
+                  <td className="p-2 text-center">
+                    <button
+                      onClick={() => setSelectedEmployee(emp)}
+                      className="text-green-600 hover:text-green-800"
+                    >
+                      <FaEye size={14} />
+                    </button>
+                  </td>
 
-        )}
+                  <td className="p-2 text-center">
+                    <button
+                      onClick={() => openEdit(emp)}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      <FaEdit size={14} />
+                    </button>
+                  </td>
 
-        {employees.length > employeesPerPage && (
-          <div className="flex justify-center items-center mt-4 space-x-4">
-            <button
-              onClick={handlePrev}
-              disabled={currentPage === 1}
-              className={`px-5 py-2 rounded-lg text-white font-medium ${
-                currentPage === 1
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              Previous
-            </button>
-            <span className="text-gray-700 font-medium text-lg">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={handleNext}
-              disabled={currentPage === totalPages}
-              className={`px-5 py-2 rounded-lg text-white font-medium ${
-                currentPage === totalPages
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              Next
-            </button>
-          </div>
-        )}
-      </div>
+                  <td className="p-2 text-center">
+                    <button
+                      onClick={() => setDeleteEmployee(emp)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      <FaTrash size={14} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
 
-      {/* Modals */}
-      {selectedEmployee && (
-        <EmployeeModal
-          employee={selectedEmployee}
-          onClose={() => setSelectedEmployee(null)}
-        />
+          </table>
+        </div>
       )}
-      {editEmployee && (
-        <EditEmployeeModal
-          employee={editEmployee}
-          setEmployee={setEditEmployee}
-          onSave={handleSaveEdit}
-          onClose={() => setEditEmployee(null)}
-        />
-      )}
-      {deleteEmployee && (
-        <DeleteEmployeeModal
-          employee={deleteEmployee}
-          onConfirm={handleConfirmDelete}
-          onClose={() => setDeleteEmployee(null)}
-        />
+
+      {/* Pagination */}
+      {employees.length > employeesPerPage && (
+        <div className="flex justify-center items-center mt-4 gap-3">
+          <button
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+            className={`px-3 py-1 rounded text-xs text-white ${
+              currentPage === 1
+                ? "bg-gray-400"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            Previous
+          </button>
+
+          <span className="text-xs text-gray-700">
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-3 py-1 rounded text-xs text-white ${
+              currentPage === totalPages
+                ? "bg-gray-400"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            Next
+          </button>
+        </div>
       )}
     </div>
-  );
+
+    {/* ===== Modals unchanged ===== */}
+    {selectedEmployee && (
+      <EmployeeModal
+        employee={selectedEmployee}
+        onClose={() => setSelectedEmployee(null)}
+      />
+    )}
+
+    {editEmployee && (
+      <EditEmployeeModal
+        employee={editEmployee}
+        setEmployee={setEditEmployee}
+        onSave={handleSaveEdit}
+        onClose={() => setEditEmployee(null)}
+      />
+    )}
+
+    {deleteEmployee && (
+      <DeleteEmployeeModal
+        employee={deleteEmployee}
+        onConfirm={handleConfirmDelete}
+        onClose={() => setDeleteEmployee(null)}
+      />
+    )}
+
+  </div>
+);
+
+
+
 };
 
 // ================= MODALS =================
 const EmployeeModal = ({ employee, onClose }) => (
   <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-    <div className="bg-white rounded-2xl shadow-2xl w-[95%] max-w-4xl p-4 sm:p-6 overflow-y-auto max-h-[90vh]">
-      
-      {/* Header Section */}
-      <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-4 mb-6">
+    
+    <div className="bg-white rounded-xl shadow-xl w-[95%] max-w-3xl p-4 overflow-y-auto max-h-[90vh]">
+
+      {/* ===== Header Section ===== */}
+      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-4">
+
+        {/* Profile */}
         <div className="flex flex-col items-center">
           {employee.profilePic ? (
             <img
               src={getImageSrc(employee.profilePic)}
               alt={employee.fullName}
-              className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-gray-300 object-cover"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border object-cover"
             />
           ) : (
-            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-500">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border flex items-center justify-center text-gray-400 text-xs">
               No Image
             </div>
           )}
         </div>
 
-        <div className="mt-4 sm:mt-0 text-center sm:text-left w-full">
-          <h3 className="text-xl sm:text-2xl font-bold">{employee.fullName}</h3>
-          <p className="text-gray-600 text-sm sm:text-base">
+        {/* Name */}
+        <div className="text-center sm:text-left flex-1">
+          <h3 className="text-lg sm:text-xl font-bold">
+            {employee.fullName}
+          </h3>
+          <p className="text-gray-600 text-xs sm:text-sm">
             {employee.designation || "N/A"} - {employee.department || "N/A"}
           </p>
         </div>
 
+        {/* Close Button */}
         <button
           onClick={onClose}
-          className="mt-3 sm:mt-0 sm:ml-auto px-3 py-1 sm:px-4 sm:py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold text-sm sm:text-base"
+          className="px-3 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600"
         >
           Close
         </button>
       </div>
 
-      {/* Details Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base">
+      {/* ===== Details Grid ===== */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+
         <Section title="👤 Personal Details">
           <GridRow label="Email" value={employee.email} />
           <GridRow label="Phone" value={employee.phone} />
@@ -342,38 +363,42 @@ const EmployeeModal = ({ employee, onClose }) => (
           <GridRow label="Account Number" value={employee.accountNumber} />
           <GridRow label="IFSC" value={employee.ifsc} />
         </Section>
+
       </div>
     </div>
   </div>
 );
 
+
 const EditEmployeeModal = ({ employee, setEmployee, onSave, onClose }) => (
   <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-    <div className="bg-white rounded-2xl shadow-2xl w-[95%] max-w-4xl p-4 sm:p-6 overflow-y-auto max-h-[90vh]">
-      
-      {/* ===== Header Section ===== */}
+    
+    <div className="bg-white rounded-xl shadow-xl w-[95%] max-w-3xl p-4 overflow-y-auto max-h-[90vh]">
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
           onSave();
         }}
       >
-        <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-4 mb-6">
-          {/* Profile Picture */}
+        {/* ===== Header ===== */}
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-4">
+
+          {/* Profile */}
           <div className="flex flex-col items-center">
             {employee.profilePic ? (
               <img
                 src={getImageSrc(employee.profilePic)}
                 alt={employee.fullName}
-                className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-gray-300 object-cover"
+                className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border object-cover"
               />
             ) : (
-              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-500">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border flex items-center justify-center text-gray-400 text-xs">
                 No Image
               </div>
             )}
 
-            <label className="mt-3 cursor-pointer bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 text-sm">
+            <label className="mt-2 cursor-pointer bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600">
               Change Photo
               <input
                 type="file"
@@ -387,81 +412,88 @@ const EditEmployeeModal = ({ employee, setEmployee, onSave, onClose }) => (
             </label>
           </div>
 
+          {/* Name */}
+          <div className="text-center sm:text-left flex-1">
+            <h3 className="text-lg sm:text-xl font-bold">
+              {employee.fullName}
+            </h3>
+            <p className="text-gray-500 text-xs">
+              Edit Employee Details
+            </p>
+          </div>
+
           {/* Buttons */}
-          <div className="mt-4 sm:mt-0 flex sm:ml-auto gap-2">
+          <div className="flex gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 font-semibold text-sm sm:text-base"
+              className="px-3 py-1 bg-gray-400 text-white rounded text-xs hover:bg-gray-500"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold text-sm sm:text-base"
+              className="px-3 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700"
             >
               Save
             </button>
           </div>
         </div>
 
-        {/* ===== Form Fields ===== */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base">
+        {/* ===== Form Sections ===== */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
 
-          {/* 👤 Personal Details */}
           <Section title="👤 Personal Details">
             <InputRow label="Email" value={employee.email}
-              onChange={(val) => setEmployee({ ...employee, email: val })}  />
+              onChange={(val) => setEmployee({ ...employee, email: val })} />
             <InputRow label="Phone" value={employee.phone}
-              onChange={(val) => setEmployee({ ...employee, phone: val })}  />
+              onChange={(val) => setEmployee({ ...employee, phone: val })} />
             <InputRow label="Gender" value={employee.gender}
-              onChange={(val) => setEmployee({ ...employee, gender: val })}  />
+              onChange={(val) => setEmployee({ ...employee, gender: val })} />
             <InputRow label="DOB" type="date" value={formatDate(employee.dob)}
-              onChange={(val) => setEmployee({ ...employee, dob: val })}  />
+              onChange={(val) => setEmployee({ ...employee, dob: val })} />
             <InputRow label="City" value={employee.city}
-              onChange={(val) => setEmployee({ ...employee, city: val })}  />
+              onChange={(val) => setEmployee({ ...employee, city: val })} />
             <InputRow label="State" value={employee.state}
-              onChange={(val) => setEmployee({ ...employee, state: val })}  />
+              onChange={(val) => setEmployee({ ...employee, state: val })} />
             <InputRow label="Street" value={employee.street}
-              onChange={(val) => setEmployee({ ...employee, street: val })}  />
+              onChange={(val) => setEmployee({ ...employee, street: val })} />
           </Section>
 
-          {/* 🎓 Education Details */}
           <Section title="🎓 Education Details">
             <InputRow label="Qualification" value={employee.qualification}
-              onChange={(val) => setEmployee({ ...employee, qualification: val })}  />
+              onChange={(val) => setEmployee({ ...employee, qualification: val })} />
             <InputRow label="University" value={employee.university}
-              onChange={(val) => setEmployee({ ...employee, university: val })}  />
+              onChange={(val) => setEmployee({ ...employee, university: val })} />
             <InputRow label="Passing Year" type="date" value={formatDate(employee.passingYear)}
-              onChange={(val) => setEmployee({ ...employee, passingYear: val })}  />
+              onChange={(val) => setEmployee({ ...employee, passingYear: val })} />
           </Section>
 
-          {/* 💼 Employment Details */}
           <Section title="💼 Employment Details">
             <InputRow label="Employee ID" value={employee.employeeId}
-              onChange={(val) => setEmployee({ ...employee, employeeId: val })}  />
+              onChange={(val) => setEmployee({ ...employee, employeeId: val })} />
             <InputRow label="Username" value={employee.username}
-              onChange={(val) => setEmployee({ ...employee, username: val })}  />
+              onChange={(val) => setEmployee({ ...employee, username: val })} />
             <InputRow label="Designation" value={employee.designation}
-              onChange={(val) => setEmployee({ ...employee, designation: val })}  />
+              onChange={(val) => setEmployee({ ...employee, designation: val })} />
             <InputRow label="Department" value={employee.department}
-              onChange={(val) => setEmployee({ ...employee, department: val })}  />
+              onChange={(val) => setEmployee({ ...employee, department: val })} />
             <InputRow label="Joining Date" type="date" value={formatDate(employee.joinDate)}
-              onChange={(val) => setEmployee({ ...employee, joinDate: val })}  />
+              onChange={(val) => setEmployee({ ...employee, joinDate: val })} />
             <InputRow label="Password" type="password"
               value={employee.password || ""}
-              onChange={(val) => setEmployee({ ...employee, password: val })}  />
+              onChange={(val) => setEmployee({ ...employee, password: val })} />
           </Section>
 
-          {/* 🏦 Bank Details */}
           <Section title="🏦 Bank Details">
             <InputRow label="Bank Name" value={employee.bankName}
-              onChange={(val) => setEmployee({ ...employee, bankName: val })}  />
+              onChange={(val) => setEmployee({ ...employee, bankName: val })} />
             <InputRow label="Account Number" value={employee.accountNumber}
-              onChange={(val) => setEmployee({ ...employee, accountNumber: val })}  />
+              onChange={(val) => setEmployee({ ...employee, accountNumber: val })} />
             <InputRow label="IFSC" value={employee.ifsc}
-              onChange={(val) => setEmployee({ ...employee, ifsc: val })}  />
+              onChange={(val) => setEmployee({ ...employee, ifsc: val })} />
           </Section>
+
         </div>
       </form>
     </div>
@@ -469,26 +501,30 @@ const EditEmployeeModal = ({ employee, setEmployee, onSave, onClose }) => (
 );
 
 
+
+
 const DeleteEmployeeModal = ({ employee, onConfirm, onClose }) => (
   <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-    <div className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-md p-6">
-      <h3 className="text-xl font-bold mb-4">
+    <div className="bg-white rounded-xl shadow-xl w-[90%] max-w-sm p-4">
+
+      <h3 className="text-sm font-bold mb-2">
         Delete {employee.fullName}?
       </h3>
-      <p className="text-gray-600 mb-6">
-        Are you sure you want to delete this employee? This action
-        cannot be undone.
+
+      <p className="text-gray-600 text-xs mb-4">
+        Are you sure you want to delete this employee? This action cannot be undone.
       </p>
-      <div className="flex justify-end gap-4">
+
+      <div className="flex justify-end gap-2">
         <button
           onClick={onClose}
-          className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 font-semibold"
+          className="px-3 py-1 bg-gray-400 text-white rounded text-xs hover:bg-gray-500"
         >
           Cancel
         </button>
         <button
           onClick={onConfirm}
-          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold"
+          className="px-3 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700"
         >
           Delete
         </button>
@@ -497,40 +533,37 @@ const DeleteEmployeeModal = ({ employee, onConfirm, onClose }) => (
   </div>
 );
 
+
 // ================= COMMON =================
 const Section = ({ title, children }) => (
   <div>
-    <h4 className="text-lg font-semibold text-gray-700 mb-2 border-b border-gray-300 pb-1">
+    <h4 className="text-xs font-semibold text-gray-700 mb-1 border-b pb-1">
       {title}
     </h4>
-    <div className="grid grid-cols-1 gap-2">{children}</div>
+    <div className="space-y-1">{children}</div>
   </div>
 );
+
 
 const GridRow = ({ label, value }) => {
   let displayValue = value;
 
-  // ✅ Password ke liye date conversion mat karo
   if (label !== "Password") {
-    if (value instanceof Date) {
-      displayValue = value.toLocaleDateString();
-    } else if (
-      typeof value === "string" &&
-      !isNaN(Date.parse(value))
-    ) {
+    if (value instanceof Date) displayValue = value.toLocaleDateString();
+    else if (typeof value === "string" && !isNaN(Date.parse(value)))
       displayValue = new Date(value).toLocaleDateString();
-    }
   }
 
   return (
-    <div className="flex justify-between items-center py-1 border-b border-gray-100">
-      <span className="text-gray-600 font-medium">{label}:</span>
-      <span className="text-gray-900 font-bold">
+    <div className="flex justify-between border-b border-gray-100 py-1 text-xs">
+      <span className="text-gray-600">{label}:</span>
+      <span className="font-semibold text-gray-900">
         {displayValue || "N/A"}
       </span>
     </div>
   );
 };
+
 
 const InputRow = ({
   label,

@@ -156,171 +156,227 @@ const ReportScheduler = () => {
   };
 
  // 🧱 UI Section Below (unchanged UI)
-  return (
-      <div className="w-full min-h-screen flex justify-center items-start ">
-      <div className="bg-white pb-40 shadow-2xl rounded-2xl p-4 w-full max-w-7xl">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
-          REPORT SCHEDULER
-        </h2>
+return (
+<div className="flex-1 min-h-screen p-10 overflow-x-auto overflow-y-auto transition-all duration-300 md:ml-20 pr-8 py-2
+">
 
-        {reports.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg">No reports added yet.</p>
-        ) : (
-          <div className="overflow-x-auto">
-  <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
-    <thead>
-      <tr className="bg-gray-800 text-white text-xl">
-        <th className="p-5 text-left hidden sm:table-cell">S. No.</th>
-        <th className="p-5 text-left">Project Name</th>
-        <th className="p-5 text-left hidden sm:table-cell">Plaza Names</th>
-        <th className="p-5 text-left hidden sm:table-cell">Client Emails</th>
-        <th className="p-5 text-left hidden sm:table-cell">Permission</th>
-        <th className="p-5 text-center">View</th>
-        <th className="p-5 text-center">Add</th>
-        <th className="p-5 text-center">Remove</th>
-      </tr>
-    </thead>
-    <tbody>
-      {currentReports.map((report, index) => (
-        <tr
-          key={report._id}
-          className="border-b border-gray-200 hover:bg-gray-100 transition text-lg"
-        >
-          <td className="py-6 px-4 hidden sm:table-cell">{indexOfFirst + index + 1}</td>
-          <td className="py-6 px-4">{report.projectName}</td>
-          <td className="py-6 px-4 font-bold hidden sm:table-cell">
-            {report.plazaNames?.length > 0 ? report.plazaNames.join(", ") : "—"}
-          </td>
-          <td className="py-6 px-4 font-bold hidden sm:table-cell">
-            {report.emails.length > 0 ? report.emails.join(", ") : "—"}
-          </td>
-          <td className="py-6 px-4 font-bold hidden sm:table-cell">
-            {report.permission === "Yes" ? (
-              <span className="text-green-600 font-semibold">Yes</span>
-            ) : (
-              <span className="text-red-600 font-semibold">No</span>
-            )}
-          </td>
+<div className="bg-white shadow-xl rounded-xl p-10 w-full max-w-7xl mx-auto">
 
-          {/* Buttons: View/Add/Remove - Always visible */}
-          <td className="py-6 px-4 text-center">
-            <button
-              onClick={() => {
-                setSelectedReport(report);
-                setPermission(report.permission || "Yes");
-              }}
-              className="text-green-600 hover:text-green-800"
-            >
-              <FaEye size={22} />
-            </button>
-          </td>
-          <td className="py-6 px-4 text-center">
-            <button
-              onClick={() => setAddEmailReport(report)}
-              className="text-blue-600 hover:text-blue-800"
-            >
-              <FaPlus size={22} />
-            </button>
-          </td>
-          <td className="py-6 px-4 text-center">
-            <button
-              onClick={() => setRemoveEmailReport(report)}
-              className="text-red-600 hover:text-red-800"
-            >
-              <FaMinus size={22} />
-            </button>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-5 text-gray-900">
+        REPORT SCHEDULER
+      </h2>
 
-        )}
+      {reports.length === 0 ? (
+        <p className="text-center text-gray-500 text-sm">
+          No reports added yet.
+        </p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
+            <thead>
+              <tr className="bg-gray-800 text-white text-sm sm:text-base">
+                <th className="p-3 hidden sm:table-cell">S.No</th>
+                <th className="p-3  whitespace-nowrap">Project Name</th>
+                <th className="p-3 hidden whitespace-nowrap sm:table-cell">Plaza Names</th>
+                <th className="p-3 hidden sm:table-cell">Client Emails</th>
+                <th className="p-3 hidden sm:table-cell">Permission</th>
+                <th className="p-3 text-center">View</th>
+                <th className="p-3 text-center">Add</th>
+                <th className="p-3 text-center">Remove</th>
+              </tr>
+            </thead>
 
-        {/* Pagination */}
-        {reports.length > reportsPerPage && (
-          <div className="flex justify-center items-center mt-6 space-x-4">
+            <tbody>
+              {currentReports.map((report, index) => (
+                <tr
+                  key={report._id}
+                  className="border-b border-gray-200 hover:bg-gray-50 transition text-sm sm:text-base"
+                >
+                  <td className="p-3 hidden sm:table-cell">
+                    {indexOfFirst + index + 1}
+                  </td>
+
+                  <td className="p-3  whitespace-nowrap">{report.projectName}</td>
+
+                  <td className="p-3 hidden sm:table-cell">
+                    {report.plazaNames?.length > 0 ? report.plazaNames.join(", ") : "—"}
+                  </td>
+
+                  <td className="p-3 hidden sm:table-cell">
+                    {report.emails.length > 0 ? report.emails.join(", ") : "—"}
+                  </td>
+
+                  <td className="p-3 hidden sm:table-cell">
+                    {report.permission === "Yes" ? (
+                      <span className="text-green-600 font-semibold">Yes</span>
+                    ) : (
+                      <span className="text-red-600 font-semibold">No</span>
+                    )}
+                  </td>
+
+                  <td className="p-3 text-center">
+                    <button
+                      onClick={() => {
+                        setSelectedReport(report);
+                        setPermission(report.permission || "Yes");
+                      }}
+                      className="text-green-600 hover:text-green-800"
+                    >
+                      <FaEye size={18} />
+                    </button>
+                  </td>
+
+                  <td className="p-3 text-center">
+                    <button
+                      onClick={() => setAddEmailReport(report)}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      <FaPlus size={18} />
+                    </button>
+                  </td>
+
+                  <td className="p-3 text-center">
+                    <button
+                      onClick={() => setRemoveEmailReport(report)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      <FaMinus size={18} />
+                    </button>
+                  </td>
+
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Pagination */}
+      {reports.length > reportsPerPage && (
+        <div className="flex justify-center items-center mt-4 gap-3">
+          <button
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+            className={`px-3 py-1 rounded text-xs text-white ${
+              currentPage === 1 ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            Previous
+          </button>
+
+          <span className="text-xs text-gray-700">
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-3 py-1 rounded text-xs text-white ${
+              currentPage === totalPages ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </div>
+
+    {/* ===== VIEW MODAL ===== */}
+    {selectedReport && (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-3">
+        <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-5">
+
+          <h3 className="text-lg font-bold text-center mb-3">
+            Report Details
+          </h3>
+
+          <div className="space-y-2 text-gray-800 text-sm">
+            <p><b>Project:</b> {selectedReport.projectName || "—"}</p>
+            <p><b>Plazas:</b> {selectedReport.plazaNames?.join(", ") || "—"}</p>
+            <p><b>Emails:</b> {selectedReport.emails?.join(", ") || "—"}</p>
+
+            <div className="flex items-center gap-2">
+              <b>Permission:</b>
+              <select
+                value={permission}
+                onChange={(e) => handlePermissionChange(e.target.value)}
+                className="border rounded px-2 py-1 text-xs"
+              >
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="mt-4 text-center">
             <button
-              onClick={handlePrev}
-              disabled={currentPage === 1}
-              className={`px-5 py-2 rounded-lg text-white font-medium ${
-                currentPage === 1
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
+              onClick={() => setSelectedReport(null)}
+              className="px-4 py-1 bg-red-500 text-white rounded text-xs"
             >
-              Previous
-            </button>
-            <span className="text-gray-700 font-medium">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={handleNext}
-              disabled={currentPage === totalPages}
-              className={`px-5 py-2 rounded-lg text-white font-medium ${
-                currentPage === totalPages
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              Next
+              Close
             </button>
           </div>
-        )}
-      </div>
-     {/* 👁️ View Modal */}
-{selectedReport && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-    <div className="bg-white p-10 rounded-2xl shadow-2xl w-[90%] max-w-lg">
-      <h3 className="text-3xl font-bold mb-8 text-center text-gray-900">
-        Report Details
-      </h3>
-
-      <div className="space-y-5 text-gray-800 text-xl font-medium">
-        {/* Project Name */}
-        <p>
-          <span className="font-bold text-gray-900">Project Name:</span>{" "}
-          {selectedReport.projectName || "—"}
-        </p>
-
-        {/* Plaza Names */}
-        <p>
-          <span className="font-bold text-gray-900">Plaza Names:</span>{" "}
-          {selectedReport.plazaNames && selectedReport.plazaNames.length > 0
-            ? selectedReport.plazaNames.join(", ")
-            : "—"}
-        </p>
-
-        {/* Client Emails */}
-        <p>
-          <span className="font-bold text-gray-900">Client Emails:</span>{" "}
-          {selectedReport.emails && selectedReport.emails.length > 0
-            ? selectedReport.emails.join(", ")
-            : "—"}
-        </p>
-
-        {/* Permission Field */}
-        <div className="flex items-center gap-4">
-          <span className="font-bold text-gray-900">Permission:</span>
-          <select
-            value={permission}
-            onChange={(e) => handlePermissionChange(e.target.value)}
-            className="border border-gray-300 rounded-lg px-4 py-2 text-lg focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
         </div>
       </div>
+    )}
 
-      {/* Close Button */}
-      <div className="mt-10 flex justify-center">
+
+
+      {/* Add Email Modal */}
+   {addEmailReport && (
+  <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-3">
+    <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-md">
+
+      <h3 className="text-lg font-bold mb-4 text-center text-gray-900">
+        Add Client Emails
+      </h3>
+
+      <div className="space-y-3">
+        {emailList.map((email, index) => (
+          <div key={index} className="flex gap-2">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => handleEmailChange(index, e.target.value)}
+              placeholder="Enter client email"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none"
+            />
+
+            {emailList.length > 1 && (
+              <button
+                onClick={() => handleRemoveField(index)}
+                className="bg-red-500 text-white px-3 rounded-md hover:bg-red-600"
+              >
+                <FaMinus size={12} />
+              </button>
+            )}
+          </div>
+        ))}
+
         <button
-          onClick={() => setSelectedReport(null)}
-          className="px-8 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-xl font-semibold"
+          onClick={handleAddField}
+          className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-sm font-medium mt-2"
         >
-          Close
+          <FaPlus size={12} /> Add Another
+        </button>
+      </div>
+
+      <div className="mt-5 flex justify-center gap-3">
+        <button
+          onClick={handleSaveEmails}
+          className="px-4 py-1.5 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm font-semibold"
+        >
+          Save
+        </button>
+
+        <button
+          onClick={() => {
+            setAddEmailReport(null);
+            setEmailList([""]);
+          }}
+          className="px-4 py-1.5 bg-gray-700 text-white rounded-md hover:bg-gray-800 text-sm font-semibold"
+        >
+          Cancel
         </button>
       </div>
     </div>
@@ -328,101 +384,52 @@ const ReportScheduler = () => {
 )}
 
 
-      {/* Add Email Modal */}
-      {addEmailReport && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-          <div className="bg-white p-10 rounded-2xl shadow-2xl w-[90%] max-w-lg">
-            <h3 className="text-3xl font-extrabold mb-8 text-center text-gray-900">
-              Add Client Emails
-            </h3>
-
-            <div className="space-y-4">
-              {emailList.map((email, index) => (
-                <div key={index} className="flex gap-2">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => handleEmailChange(index, e.target.value)}
-                    placeholder="Enter client email"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:ring-2 focus:ring-blue-500"
-                  />
-                  {emailList.length > 1 && (
-                    <button
-                      onClick={() => handleRemoveField(index)}
-                      className="bg-red-500 text-white px-3 rounded-lg"
-                    >
-                      <FaMinus />
-                    </button>
-                  )}
-                </div>
-              ))}
-              <button
-                onClick={handleAddField}
-                className="text-blue-600 hover:text-blue-800 flex items-center gap-2 mt-3 font-medium"
-              >
-                <FaPlus /> Add Another
-              </button>
-            </div>
-
-            <div className="mt-10 flex justify-center gap-4">
-              <button
-                onClick={handleSaveEmails}
-                className="px-5 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-xl font-semibold"
-              >
-                Save
-              </button>
-              <button
-                onClick={() => {
-                  setAddEmailReport(null);
-                  setEmailList([""]);
-                }}
-                className="px-8 py-3 bg-gray-800 text-white rounded-lg transition text-xl font-semibold"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Remove Email Modal */}
-      {removeEmailReport && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-          <div className="bg-white p-10 rounded-2xl shadow-2xl w-[90%] max-w-lg">
-            <h3 className="text-3xl font-extrabold mb-8 text-center text-gray-900">
-              Remove Client Emails
-            </h3>
-            <div className="space-y-3 text-lg">
-              {removeEmailReport.emails.length > 0 ? (
-                removeEmailReport.emails.map((email, index) => (
-                  <div
-                    key={index}
-                    className="flex justify-between items-center border rounded-lg px-4 py-3"
-                  >
-                    <span>{email}</span>
-                    <button
-                      onClick={() => handleRemoveEmail(email, removeEmailReport)}
-                      className="text-red-600 hover:text-red-800 font-semibold"
-                    >
-                      <FaMinus size={16} />
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <p className="text-gray-600 text-center">No emails to remove.</p>
-              )}
-            </div>
-            <div className="mt-8 flex justify-center">
+ {removeEmailReport && (
+  <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-3">
+    <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-md">
+
+      <h3 className="text-lg font-bold mb-4 text-center text-gray-900">
+        Remove Client Emails
+      </h3>
+
+      <div className="space-y-2 text-sm">
+        {removeEmailReport.emails.length > 0 ? (
+          removeEmailReport.emails.map((email, index) => (
+            <div
+              key={index}
+              className="flex justify-between items-center border rounded-md px-3 py-2"
+            >
+              <span className="text-gray-700">{email}</span>
+
               <button
-                onClick={() => setRemoveEmailReport(null)}
-                className="px-8 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition text-xl font-semibold"
+                onClick={() => handleRemoveEmail(email, removeEmailReport)}
+                className="text-red-600 hover:text-red-800"
               >
-                Close
+                <FaMinus size={12} />
               </button>
             </div>
-          </div>
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-gray-500 text-center text-sm">
+            No emails to remove.
+          </p>
+        )}
+      </div>
+
+      <div className="mt-5 flex justify-center">
+        <button
+          onClick={() => setRemoveEmailReport(null)}
+          className="px-5 py-1.5 bg-gray-700 text-white rounded-md hover:bg-gray-800 text-sm font-semibold"
+        >
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

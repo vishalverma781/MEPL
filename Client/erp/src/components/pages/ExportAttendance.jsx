@@ -134,183 +134,182 @@ const ExportAttendance = () => {
     currentPage > 1 && setCurrentPage(currentPage - 1);
 
  return (
-    <div className="ml-16 p-4 md:p-8 min-h-screen ">
-      <div className="bg-white pb-40 rounded-3xl shadow-2xl p-4 md:p-8 border border-gray-200 max-w-7xl mx-auto">
-        {/* Heading + Buttons */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4 sm:gap-0">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center sm:text-left">
-            Export Attendance
-          </h1>
-          <div className="flex gap-4">
-            <button
-              onClick={handleGenerateReport}
-              disabled={!user || !startDate || !endDate}
-              className={`px-6 py-2 rounded-xl shadow-md font-semibold text-white transition ${
-                user && startDate && endDate
-                  ? "bg-gray-800 hover:bg-black"
-                  : "bg-gray-400 cursor-not-allowed"
-              }`}
-            >
-              Generate
-            </button>
-            <button
-              onClick={handleExportPDF}
-              disabled={records.length === 0}
-              className={`px-6 py-2 rounded-xl shadow-md font-semibold text-white transition flex items-center gap-2 ${
-                records.length > 0
-                  ? "bg-red-600 hover:bg-red-800"
-                  : "bg-gray-400 cursor-not-allowed"
-              }`}
-            >
-              <FaFilePdf /> Export PDF
-            </button>
-          </div>
+<div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-30 pl-1 pr-2 py-6">
+    <div className="bg-white rounded-xl shadow-xl p-4 sm:p-6 border border-gray-200 max-w-6xl mx-auto">
+
+      {/* Heading + Buttons */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-5 gap-3">
+        <h1 className="text-2xl font-bold text-gray-900 text-center sm:text-left">
+          Export Attendance
+        </h1>
+
+        <div className="flex gap-3">
+          <button
+            onClick={handleGenerateReport}
+            disabled={!user || !startDate || !endDate}
+            className={`px-4 py-1.5 rounded-md shadow text-sm font-semibold text-white transition ${
+              user && startDate && endDate
+                ? "bg-gray-800 hover:bg-black"
+                : "bg-gray-400 cursor-not-allowed"
+            }`}
+          >
+            Generate
+          </button>
+
+          <button
+            onClick={handleExportPDF}
+            disabled={records.length === 0}
+            className={`px-4 py-1.5 rounded-md shadow text-sm font-semibold text-white flex items-center gap-2 transition ${
+              records.length > 0
+                ? "bg-red-600 hover:bg-red-800"
+                : "bg-gray-400 cursor-not-allowed"
+            }`}
+          >
+            <FaFilePdf /> Export PDF
+          </button>
         </div>
-
-        {/* Filters */}
-        <div className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-4 md:gap-6 mb-8">
-          {/* Start Date */}
-          <div className="flex flex-col w-full md:w-auto">
-            <label className="text-gray-700 text-lg mb-1">Start Date</label>
-            <div className="flex items-center border border-gray-300 rounded-xl px-4 py-2 bg-white w-full md:w-40">
-              <FaCalendarAlt className="text-gray-500 mr-2" />
-              <input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="outline-none w-full text-gray-900 text-lg font-medium"
-              />
-            </div>
-          </div>
-
-          {/* End Date */}
-          <div className="flex flex-col w-full md:w-auto">
-            <label className="text-gray-700 text-lg mb-1">End Date</label>
-            <div className="flex items-center border border-gray-300 rounded-xl px-4 py-2 bg-white w-full md:w-40">
-              <FaCalendarAlt className="text-gray-500 mr-2" />
-              <input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="outline-none w-full text-gray-900 text-lg font-medium"
-              />
-            </div>
-          </div>
-
-          {/* Status Filter */}
-          <div className="flex flex-col w-full md:w-auto">
-            <label className="text-gray-700 text-lg mb-1">Status</label>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="border border-gray-300 rounded-xl px-4 py-2 bg-white outline-none w-full md:w-40 text-gray-900 text-lg font-medium"
-            >
-              <option>All Status</option>
-              <option>Present</option>
-              <option>Absent</option>
-              <option>On Leave</option>
-              <option>WFH</option>
-            </select>
-          </div>
-
-          {/* Employee Filter */}
-          <div className="flex flex-col w-full md:w-auto">
-            <label className="text-gray-700 text-lg mb-1">Employee</label>
-            <select
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
-              className="border border-gray-300 rounded-xl px-4 py-2 bg-white outline-none w-full md:w-72 text-gray-900 text-lg font-medium"
-            >
-              <option value="">Select Employee</option>
-              {employees.map((emp) => (
-                <option key={emp._id} value={emp.fullName}>
-                  {emp.fullName} ({emp.email})
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Table */}
-        {showTable && records.length > 0 && (
-          <div className="overflow-x-auto rounded-xl">
-            <table className="min-w-full border border-gray-300 text-base sm:text-lg">
-              <thead>
-                <tr className="bg-gray-800 text-white">
-                  <th className="py-3 px-2 sm:px-4 text-left">Date</th>
-                  <th className="py-3 px-2 sm:px-4 text-left">Full Name</th>
-                  <th className="py-3 px-2 sm:px-4 text-left">Status</th>
-                  <th className="py-3 px-2 sm:px-4 text-left">Marked By</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentRecords.map((rec, idx) => (
-                  <tr key={idx} className="hover:bg-gray-100 transition">
-                    <td className="py-3 px-2 sm:px-4">
-                      {format(new Date(rec.date), "dd-MM-yyyy")}
-                    </td>
-                    <td className="py-3 px-2 sm:px-4">{rec.fullName}</td>
-                    <td
-                      className={`py-3 px-2 sm:px-4 font-semibold ${
-                        rec.status === "Present"
-                          ? "text-green-600"
-                          : rec.status === "Absent"
-                          ? "text-red-600"
-                          : rec.status === "On Leave"
-                          ? "text-yellow-600"
-                          : "text-blue-600"
-                      }`}
-                    >
-                      {rec.status}
-                    </td>
-                    <td className="py-3 px-2 sm:px-4">{rec.markedBy}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        {/* No Records */}
-        {showTable && records.length === 0 && (
-          <p className="text-center text-gray-500 font-medium mt-8">
-            No records found for selected filters.
-          </p>
-        )}
-
-        {/* Pagination */}
-        {records.length > recordsPerPage && (
-          <div className="flex flex-col sm:flex-row justify-center items-center mt-6 space-y-2 sm:space-y-0 sm:space-x-4">
-            <button
-              onClick={handlePrev}
-              disabled={currentPage === 1}
-              className={`px-5 py-2 rounded-lg text-white font-medium ${
-                currentPage === 1
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gray-900 hover:bg-black"
-              }`}
-            >
-              Previous
-            </button>
-            <span className="text-gray-700 font-medium text-base">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={handleNext}
-              disabled={currentPage === totalPages}
-              className={`px-5 py-2 rounded-lg text-white font-medium ${
-                currentPage === totalPages
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gray-900 hover:bg-black"
-              }`}
-            >
-              Next
-            </button>
-          </div>
-        )}
       </div>
+
+      {/* Filters */}
+      <div className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-3 mb-5">
+
+        {/* Start Date */}
+        <div className="flex flex-col w-full md:w-auto">
+          <label className="text-gray-700 text-sm mb-1">Start Date</label>
+          <div className="flex items-center border border-gray-300 rounded-md px-2 py-1 bg-white md:w-36">
+            <FaCalendarAlt className="text-gray-500 mr-2 text-sm" />
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="outline-none w-full text-sm"
+            />
+          </div>
+        </div>
+
+        {/* End Date */}
+        <div className="flex flex-col w-full md:w-auto">
+          <label className="text-gray-700 text-sm mb-1">End Date</label>
+          <div className="flex items-center border border-gray-300 rounded-md px-2 py-1 bg-white md:w-36">
+            <FaCalendarAlt className="text-gray-500 mr-2 text-sm" />
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="outline-none w-full text-sm"
+            />
+          </div>
+        </div>
+
+        {/* Status */}
+        <div className="flex flex-col w-full md:w-auto">
+          <label className="text-gray-700 text-sm mb-1">Status</label>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="border border-gray-300 rounded-md px-2 py-1 bg-white md:w-36 text-sm"
+          >
+            <option>All Status</option>
+            <option>Present</option>
+            <option>Absent</option>
+            <option>On Leave</option>
+            <option>WFH</option>
+          </select>
+        </div>
+
+        {/* Employee */}
+        <div className="flex flex-col w-full md:w-auto">
+          <label className="text-gray-700 text-sm mb-1">Employee</label>
+          <select
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
+            className="border border-gray-300 rounded-md px-2 py-1 bg-white md:w-64 text-sm"
+          >
+            <option value="">Select Employee</option>
+            {employees.map((emp) => (
+              <option key={emp._id} value={emp.fullName}>
+                {emp.fullName} ({emp.email})
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Table */}
+      {showTable && records.length > 0 && (
+        <div className="overflow-x-auto rounded-md">
+          <table className="min-w-full border border-gray-300 text-sm">
+            <thead>
+              <tr className="bg-gray-800 text-white">
+                <th className="py-2 px-2 text-left">Date</th>
+                <th className="py-2 px-2 text-left">Full Name</th>
+                <th className="py-2 px-2 text-left">Status</th>
+                <th className="py-2 px-2 text-left">Marked By</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentRecords.map((rec, idx) => (
+                <tr key={idx} className="hover:bg-gray-100 transition">
+                  <td className="py-2 px-2">
+                    {format(new Date(rec.date), "dd-MM-yyyy")}
+                  </td>
+                  <td className="py-2 px-2">{rec.fullName}</td>
+                  <td className={`py-2 px-2 font-semibold ${
+                    rec.status === "Present"
+                      ? "text-green-600"
+                      : rec.status === "Absent"
+                      ? "text-red-600"
+                      : rec.status === "On Leave"
+                      ? "text-yellow-600"
+                      : "text-blue-600"
+                  }`}>
+                    {rec.status}
+                  </td>
+                  <td className="py-2 px-2">{rec.markedBy}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* No Records */}
+      {showTable && records.length === 0 && (
+        <p className="text-center text-gray-500 text-sm mt-5">
+          No records found for selected filters.
+        </p>
+      )}
+
+      {/* Pagination */}
+      {records.length > recordsPerPage && (
+        <div className="flex justify-center items-center mt-4 space-x-3">
+          <button
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+            className={`px-4 py-1 rounded text-white text-sm ${
+              currentPage === 1 ? "bg-gray-400" : "bg-gray-900 hover:bg-black"
+            }`}
+          >
+            Previous
+          </button>
+          <span className="text-gray-700 text-sm">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-1 rounded text-white text-sm ${
+              currentPage === totalPages ? "bg-gray-400" : "bg-gray-900 hover:bg-black"
+            }`}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
-  );
+  </div>
+);
+
 };
 
 export default ExportAttendance;

@@ -74,169 +74,157 @@ const AllPlaza = () => {
   const handleNext = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
   const handlePrev = () => currentPage > 1 && setCurrentPage(currentPage - 1);
 
- return (
-    <div className="w-full min-h-screen flex justify-center items-start p-4 sm:p-10">
-      <div className="bg-white shadow-2xl rounded-2xl p-8 sm:p-8 w-full max-w-full sm:max-w-7xl">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 sm:mb-6 text-gray-900">
-          All Plazas
-        </h2>
+return (
+  <div className="flex-1 min-h-screen overflow-y-auto transition-all duration-300 md:ml-40 px-6 py-8">
+    <div className="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-7xl mx-auto">
 
-        {plazas.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg">
-            No plazas added yet.
-          </p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
-              <thead>
-                <tr className="bg-gray-800 text-white text-lg sm:text-xl">
-                  <th className="p-3 sm:p-5 text-left">Plaza Name</th>
-                  <th className="p-3 sm:p-5 text-left">Project Name</th>
-                  <th className="p-3 sm:p-5 text-left hidden sm:table-cell">
-                    PIU Name
-                  </th>
-                  <th className="p-3 sm:p-5 text-left hidden sm:table-cell">
-                    Location
-                  </th>
-                  <th className="p-3 sm:p-5 text-left hidden sm:table-cell">
-                    Total Employees
-                  </th>
-                  <th className="p-3 sm:p-5 text-center">View</th>
-                  <th className="p-3 sm:p-5 text-center">Delete</th>
+      <h2 className="text-xl sm:text-2xl font-bold text-center mb-6 text-gray-900">
+        All Plazas
+      </h2>
+
+      {plazas.length === 0 ? (
+        <p className="text-center text-gray-500 text-base">
+          No plazas added yet.
+        </p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full border border-gray-300 rounded-xl overflow-hidden">
+            <thead>
+              <tr className="bg-gray-800 text-white text-sm sm:text-base">
+                <th className="p-3 text-left">Plaza</th>
+                <th className="p-3 text-left">Project</th>
+                <th className="p-3 hidden sm:table-cell">PIU</th>
+                <th className="p-3 hidden sm:table-cell">Location</th>
+                <th className="p-3 hidden sm:table-cell">Employees</th>
+                <th className="p-3 text-center">View</th>
+                <th className="p-3 text-center">Delete</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {currentPlazas.map((plaza) => (
+                <tr
+                  key={plaza._id}
+                  className="border-b border-gray-200 hover:bg-gray-50 text-sm"
+                >
+                  <td className="p-3">{plaza.plazaName}</td>
+                  <td className="p-3">
+                    {plaza.projectId?.projectName || "-"}
+                  </td>
+                  <td className="p-3 hidden sm:table-cell">
+                    {plaza.projectId?.piuName || "-"}
+                  </td>
+                  <td className="p-3 hidden sm:table-cell">
+                    {plaza.projectId?.location || "-"}
+                  </td>
+                  <td className="p-3 hidden sm:table-cell">
+                    {plaza.totalEmployees || 0}
+                  </td>
+
+                  <td className="p-3 text-center">
+                    <button
+                      onClick={() => setSelectedPlaza(plaza)}
+                      className="text-green-600 hover:text-green-800"
+                    >
+                      <FaEye size={16} />
+                    </button>
+                  </td>
+
+                  <td className="p-3 text-center">
+                    <button
+                      onClick={() => handleDelete(plaza._id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      <FaTrash size={16} />
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {currentPlazas.map((plaza) => (
-                  <tr
-                    key={plaza._id}
-                    className="border-b border-gray-200 hover:bg-gray-100 transition text-base sm:text-lg"
-                  >
-                    <td className="py-4 px-2 sm:py-6 sm:px-4">{plaza.plazaName}</td>
-                    <td className="py-4 px-2 sm:py-6 sm:px-4">
-                      {plaza.projectId?.projectName || "-"}
-                    </td>
-                    <td className="py-4 px-2 sm:py-6 sm:px-4 hidden sm:table-cell">
-                      {plaza.projectId?.piuName || "-"}
-                    </td>
-                    <td className="py-4 px-2 sm:py-6 sm:px-4 hidden sm:table-cell">
-                      {plaza.projectId?.location || "-"}
-                    </td>
-                    <td className="py-4 px-2 sm:py-6 sm:px-4 hidden sm:table-cell">
-                      {plaza.totalEmployees || 0}
-                    </td>
-                    <td className="py-4 px-2 sm:py-6 sm:px-4 text-center">
-                      <button
-                        onClick={() => setSelectedPlaza(plaza)}
-                        className="text-green-600 hover:text-green-800"
-                      >
-                        <FaEye size={20} />
-                      </button>
-                    </td>
-                    <td className="py-4 px-2 sm:py-6 sm:px-4 text-center">
-                      <button
-                        onClick={() => handleDelete(plaza._id)}
-                        className="text-red-600 hover:text-red-800"
-                      >
-                        <FaTrash size={20} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
-        {/* Pagination */}
-        {plazas.length > plazasPerPage && (
-          <div className="flex justify-center items-center mt-4 sm:mt-6 space-x-2 sm:space-x-4">
-            <button
-              onClick={handlePrev}
-              disabled={currentPage === 1}
-              className={`px-3 sm:px-5 py-1 sm:py-2 rounded-lg text-white font-medium ${
-                currentPage === 1
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              Previous
-            </button>
-            <span className="text-gray-700 font-medium text-sm sm:text-base">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={handleNext}
-              disabled={currentPage === totalPages}
-              className={`px-3 sm:px-5 py-1 sm:py-2 rounded-lg text-white font-medium ${
-                currentPage === totalPages
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              Next
-            </button>
-          </div>
-        )}
-      </div>
+      {/* Pagination */}
+      {plazas.length > plazasPerPage && (
+        <div className="flex justify-center items-center mt-5 gap-4">
+          <button
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded text-sm text-white ${
+              currentPage === 1
+                ? "bg-gray-400"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            Previous
+          </button>
 
-      {/* View Modal */}
-      {selectedPlaza && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
-          <div className="bg-white p-4 sm:p-10 rounded-2xl shadow-2xl w-full max-w-full sm:max-w-lg overflow-y-auto max-h-[90vh]">
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-4 sm:mb-8 text-center text-gray-900">
-              Plaza Details
-            </h3>
-            <div className="space-y-2 sm:space-y-5 text-gray-800 text-sm sm:text-xl font-medium">
-              <p>
-                <span className="font-bold">Plaza Name:</span>{" "}
-                {selectedPlaza.plazaName}
-              </p>
-              <p>
-                <span className="font-bold">Project Name:</span>{" "}
-                {selectedPlaza.projectId?.projectName || "-"}
-              </p>
-              <p className="hidden sm:block">
-                <span className="font-bold">PIU Name:</span>{" "}
-                {selectedPlaza.projectId?.piuName || "-"}
-              </p>
-              <p className="hidden sm:block">
-                <span className="font-bold">Location:</span>{" "}
-                {selectedPlaza.projectId?.location || "-"}
-              </p>
-              <p className="hidden sm:block">
-                <span className="font-bold">Total Employees:</span>{" "}
-                {selectedPlaza.totalEmployees || 0}
-              </p>
+          <span className="text-sm text-gray-700">
+            Page {currentPage} of {totalPages}
+          </span>
 
-              <div>
-                <span className="font-bold">Employees:</span>
-                {selectedPlaza.employeeList &&
-                selectedPlaza.employeeList.length > 0 ? (
-                  <ul className="list-disc list-inside mt-1 sm:mt-3 text-sm sm:text-lg">
-                    {selectedPlaza.employeeList.map((emp, idx) => (
-                      <li key={idx}>{emp.employeeId?.fullName || emp.name}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-gray-500 text-sm sm:text-base">
-                    No employees yet.
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="mt-4 sm:mt-10 flex justify-center">
-              <button
-                onClick={() => setSelectedPlaza(null)}
-                className="px-4 sm:px-8 py-2 sm:py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-sm sm:text-xl font-semibold"
-              >
-                Close
-              </button>
-            </div>
-          </div>
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded text-sm text-white ${
+              currentPage === totalPages
+                ? "bg-gray-400"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            Next
+          </button>
         </div>
       )}
     </div>
-  );
+
+    {/* ===== View Modal ===== */}
+    {selectedPlaza && (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 text-sm">
+
+          <h3 className="text-lg font-bold text-center mb-4">
+            Plaza Details
+          </h3>
+
+          <div className="space-y-3 text-gray-800">
+            <p><b>Plaza:</b> {selectedPlaza.plazaName}</p>
+            <p><b>Project:</b> {selectedPlaza.projectId?.projectName || "-"}</p>
+            <p><b>PIU:</b> {selectedPlaza.projectId?.piuName || "-"}</p>
+            <p><b>Location:</b> {selectedPlaza.projectId?.location || "-"}</p>
+            <p><b>Total Employees:</b> {selectedPlaza.totalEmployees || 0}</p>
+
+            <div>
+              <b>Employees:</b>
+              {selectedPlaza.employeeList?.length > 0 ? (
+                <ul className="list-disc list-inside mt-2">
+                  {selectedPlaza.employeeList.map((emp, idx) => (
+                    <li key={idx}>
+                      {emp.employeeId?.fullName || emp.name}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-500">No employees yet.</p>
+              )}
+            </div>
+          </div>
+
+          <div className="mt-5 text-center">
+            <button
+              onClick={() => setSelectedPlaza(null)}
+              className="px-5 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600"
+            >
+              Close
+            </button>
+          </div>
+
+        </div>
+      </div>
+    )}
+  </div>
+);
 };
 
 export default AllPlaza;
