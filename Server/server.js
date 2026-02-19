@@ -36,7 +36,7 @@ app.use(express.json());
 // CORS
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://erp.mahakalinfra.in",
+  "https://employee.mahakalinfra.in",
   "https://mahakalinfra.in",
 ];
 
