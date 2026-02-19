@@ -5,8 +5,8 @@ import Employee from "../model/EmployeeModel.js";
 
 const authController = {
   login: async (req, res) => {
-    const { identifier, password } = req.body;
-
+   const { identifier, password } = req.body || {};
+console.log("LOGIN BODY:", req.body);
     try {
       if (!identifier || !password) {
         return res.status(400).json({ message: "Credentials required" });
