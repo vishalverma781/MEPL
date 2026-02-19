@@ -35,9 +35,11 @@ app.use(express.json());
 
 // CORS
 const allowedOrigins = [
-  "http://localhost:5173",  // Vite
-  "https://mepl-erp.co.in", // ✅ Live domain (Hostinger)  // CRA
+  "http://localhost:5173",
+  "https://erp.mahakalinfra.in",
+  "https://mahakalinfra.in",
 ];
+
 
 app.use(
   cors({
@@ -73,7 +75,6 @@ app.use("/api/issues", issueRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/leaves", leaveRoutes);
 app.use("/api/payrolls", payrollRoutes);
-app.use("/api/dashboard", employeeDashboardRoutes);
 app.use("/api/dashboard", employeeDashboardRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/emails", emailRoutes);
